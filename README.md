@@ -96,7 +96,7 @@ Sobald es eine Funktionstüchtige Version gibt werden wir diese natürlich ein A
 
 
 
-### Genutze Projekte
+### Genutzte Projekte
 
 Hier verlinken wir alle Projekte welche wir genutzt haben. 
 
