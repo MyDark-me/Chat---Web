@@ -125,7 +125,7 @@ Hier werden alle Vorbereitungen später einmal stehen.
 
 Dieser Bereich wird bestimmt bald entstehen!
 
-<p align="right">(<a href="#top">Zurück zum Anfang!</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
 
 
 
@@ -172,7 +172,7 @@ Vergessen Sie nicht, dem Projekt einen Stern zu geben! Nochmals vielen Dank!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#top">Zurück zum Anfang!</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
 
 
 
@@ -181,7 +181,7 @@ Vergessen Sie nicht, dem Projekt einen Stern zu geben! Nochmals vielen Dank!
 
 Geteilt unter der MIT-Lizenz. Siehe `LICENSE.txt` für weitere Informationen.
 
-<p align="right">(<a href="#top">Zurück zum Anfang!</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
 
 
 
@@ -192,7 +192,7 @@ MyDark-me - [@your_twitter](https://twitter.com/mydark.me) - github@mydark.me
 
 Project Link: [https://github.com/MyDark-me/Chat-Web](https://github.com/MyDark-me/Chat-Web)
 
-<p align="right">(<a href="#top">Zurück zum Anfang!</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
 
 
 
@@ -209,7 +209,7 @@ Project Link: [https://github.com/MyDark-me/Chat-Web](https://github.com/MyDark-
 * [SimpleDBClass](https://github.com/codewithmark/PHP-Simple-Database-Class)
 * [AltoRouter](https://github.com/dannyvankooten/AltoRouter)
 
-<p align="right">(<a href="#top">Zurück zum Anfang!</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
 
 
 
