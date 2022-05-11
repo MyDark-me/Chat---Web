@@ -1,17 +1,17 @@
 <?php
 
-// MySQL settings 
+// MySQL Einstellungen
 
-// database hostname 
+// Datenbank Server
 define('DB_HOST', 'localhost'); 
 
-// database username 
+// Datenbank Benutzername
 define('DB_USER', 'root'); 
 
-// database password 
+// Datenbank Passwort
 define('DB_PASSWORD', ''); 
 
-// database name 
+// Datenbank Name
 define('DB_NAME', 'example');
 
 ?>
