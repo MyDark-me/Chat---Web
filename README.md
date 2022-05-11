@@ -159,7 +159,7 @@ Eine vollständige Liste der vorgeschlagenen Funktionen (und bekannten Probleme)
 
 
 <!-- CONTRIBUTING -->
-## Mitarbeiter
+## Mitentwickler
 
 Commits sind es, die die Open-Source-Gemeinschaft zu einem so wunderbaren Ort des Lernens, der Inspiration und der Kreativität machen. Jeder Beitrag, den Sie leisten, wird **sehr geschätzt**.
 
