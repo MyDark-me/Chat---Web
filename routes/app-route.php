@@ -1,13 +1,24 @@
-// map homepage
-$router->map('GET', '/', function() {
-    require __DIR__ . '/views/home.php';
-});
+<?php
 
-// dynamic named route
-$router->map('GET|POST', '/users/[i:id]/', function($id) {
-  $user = .....
-  require __DIR__ . '/views/user/details.php';
-}, 'user-details');
+// MySQL connection erstellen
+function app_db ()
+{
+    include_once ROOTPATH.'/protected/config.php';
 
-// echo URL to user-details page for ID 5
-echo $router->generate('user-details', ['id' => 5]); // Output: "/users/5"
+    $db_conn = array(
+        'host' => DB_HOST, 
+        'user' => DB_USER,
+        'pass' => DB_PASSWORD,
+        'database' => DB_NAME, 
+    );
+    $db = new SimpleDBClass($db_conn);
+
+    return $db;     
+}
+
+// Leite zur richtigen seite weiter
+$router->map('GET', '/public', '/public/home.php','home');
+$router->map('GET', '/public/login', '/public/login.php','login');
+$router->map('GET', '/public/signup', '/public/signup.php','signup');
+
+?>
