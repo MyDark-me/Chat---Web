@@ -62,7 +62,7 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#vorraussetzungen">Vorraussetzungen</a></li>
+        <li><a href="#voraussetzungen">Vorraussetzungen</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
