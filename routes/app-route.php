@@ -1,6 +1,6 @@
 <?php
 
-// MySQL connection erstellen
+// MySQL Verbindung
 function app_db ()
 {
     include_once ROOTPATH.'/protected/config.php';
@@ -16,7 +16,7 @@ function app_db ()
     return $db;     
 }
 
-// Leite zur richtigen seite weiter
+// Weiterleitung zur richtigen Seite
 $router->map('GET', '/public', '/public/home.php','home');
 $router->map('GET', '/public/login', '/public/login.php','login');
 $router->map('GET', '/public/signup', '/public/signup.php','signup');
