@@ -230,3 +230,5 @@ Project Link: [https://github.com/MyDark-me/Chat-Web](https://github.com/MyDark-
 [product-screenshot]: images/screenshot.png
 [release-url]: https://github.com/MyDark-me/Chat-Web/releases
 [release-shield]: https://img.shields.io/github/v/tag/mydark-me/Chat-Web.svg?label=Latest%20Release&style=for-the-badge
+[commit-url]: https://github.com/MyDark-me/Chat-Web/commits
+[commit-shield]: https://img.shields.io/github/commit-activity/w/MyDark-me/Chat-Web.svg?label=Commits&style=for-the-badge
