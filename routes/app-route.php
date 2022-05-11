@@ -17,8 +17,12 @@ function app_db ()
 }
 
 // Weiterleitung zur richtigen Seite
-$router->map('GET', '/public', '/public/home.php','home');
-$router->map('GET', '/public/login', '/public/login.php','login');
-$router->map('GET', '/public/signup', '/public/signup.php','signup');
+
+// homepage
+$router->map('GET', '/', function() {
+    require ROOTPATH.'/public/home.php';
+});
+
+
 
 ?>
