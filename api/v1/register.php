@@ -29,20 +29,43 @@ try {
                     $password = $db->CleanDBData($_POST['password']);
                     $email = $db->CleanDBData($_POST['email']);
 
-                    // TODO:
-                    // Es wird geprüft ob der Benutzer existiert
-                    //$result = $db->query("");
-                    // nach der if abfrage
-                    // Danach wird der user angelegt
-                    //$result = $db->query("");
-                    
-                    // Erfolgreich registriert
-                    $BFBresponse = BruteForceBlock::addRegisterRequestAttempt(GetRealUserIp());
-                    die(json_encode(array
-		            (
-			            'status'=>'succes',		
-			            'message' => 'Successfully registered',
-		            )));
+                    // Abfrage ob die E-Mail existiert
+                    $result = $db->query("SELECT `Username` FROM `Nutzerdatenbank` WHERE `Email`= '$email';");
+                    $row = $result->fetch_assoc();
+                    // Wenn der die E-Mail nicht existiert, wird die Benutzername Prüfung durchgeführt
+                    if($result != false && mysqli_num_rows($result) == 0) {
+                        // Abfrage ob der Benutzer existiert
+                        $result = $db->query("SELECT `Username` FROM `Nutzerdatenbank` WHERE `Username`= '$username';");
+                        $row = $result->fetch_assoc();
+                        // Wenn der Benutzer nicht existiert, kann der registrierungsfortschritt fortgesetzt werden
+                        if($result != false && mysqli_num_rows($result) == 0) {
+                            // Danach wird der user angelegt
+                            $db->query("INSERT INTO `Nutzerdatenbank` (`Username`, `Password`, `Email`) VALUES ('$username', '$password', '$email');");
+                            
+                            // Erfolgreich registriert
+                            $BFBresponse = BruteForceBlock::addRegisterRequestAttempt(GetRealUserIp());
+                            die(json_encode(array
+                            (
+                                'status'=>'succes',		
+                                'message' => 'Successfully registered',
+                            )));
+
+                        } else {
+                            // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
+                            $BFBresponse = BruteForceBlock::addRegisterRequestAttempt($username, GetRealUserIp());
+                            die(json_encode(array(
+                                'status'=>'failure',			
+                                'message' => 'Username already exists',
+                            )));
+                        }
+                    } else {
+                        // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
+                        $BFBresponse = BruteForceBlock::addRegisterRequestAttempt($username, GetRealUserIp());
+                        die(json_encode(array(
+                            'status'=>'failure',			
+                            'message' => 'Email already exists',
+                        )));
+                    }
                 } else
                 // Falls nicht gebe eine Fehlermeldung zurück
                 $BFBresponse = BruteForceBlock::addRegisterRequestAttempt(GetRealUserIp());
@@ -58,7 +81,7 @@ try {
                 $error_message = $BFBresponse['message'];
                 throw new Exeption($error_message);
             case 'delay':
-                //Erforderliche Zeitspanne bis zur nächsten Anmeldung
+                //Erforderliche Zeitspanne bis zur nächsten Registrierung
                 $remaining_delay_in_seconds = $BFBresponse['message'];
                 throw new LoginDelayExeption($remaining_delay_in_seconds);
             case 'captcha':

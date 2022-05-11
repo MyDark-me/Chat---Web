@@ -1,6 +1,10 @@
 <?php
 namespace ejfrancis;
 /**
+ * Project  BruteForceBlock
+ *
+ * Link      https://github.com/ejfrancis/brute-force-block
+ * 
  * 				Brute Force Block class
  *
  * 	Implementation by Evan Francis for use in AlpineAuth library, 2014. 

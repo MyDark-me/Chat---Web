@@ -1,7 +1,7 @@
 <?php
 
 // Importieren Sie die erforderlichen Klassen
-require_once(ROOTPATH . '/routes/lib/BruteForceBlock.php');
+require_once ROOTPATH . '/routes/lib/BruteForceBlock.php';
 use ejfrancis\BruteForceBlock;
 
 // Erstellen Sie eine Costom-Exception-Klasse für das Delay

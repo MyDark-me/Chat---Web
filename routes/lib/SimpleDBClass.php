@@ -426,5 +426,44 @@ class SimpleDBClass
     
     return $result;
   } 
+  function Query($SQLStatement)
+  {
+    /*
+    * This will get all of the rows from the table.  
+      Call it like - 
+      $db = new SimpleDBClass("host_name", "user_id", "password","database")
+      $Qry = $db->Query( "SELECT * FROM Users WHERE site='codewithmark'")  
+    */
+    
+    // Create connection
+    $con =  $this->isConn;
+
+    // Check connection
+    if (!$con) 
+    {
+      die("Connection failed in Query function - " . mysqli_connect_error());
+    }
+
+    // Connection is made
+    if ($con) 
+    {
+      //$SQLStatement = "SELECT * FROM UserProfile WHERE user_id='markkumar'"; 
+
+      $q = $con->query($SQLStatement);
+
+      //Fail to run query.
+      if(!$q)
+      {
+        //show error message
+        if($this->ShowQryErrors == 'on')
+        {
+          die( mysqli_error($con) );  
+        }        
+      }
+      $result = $q;
+      //Will return the query data
+      return $result;
+      }
+  }
 }
 ?>

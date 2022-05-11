@@ -23,6 +23,17 @@ $router->map('GET', '/', function() {
     require ROOTPATH.'/public/home.php';
 });
 
+// APIs
+
+// Register
+$router->map('POST|GET', '/api/v1/register', function() {
+    require ROOTPATH.'/api/v1/register.php';
+});
+
+// Login
+$router->map('POST|GET', '/api/v1/login', function() {
+    require ROOTPATH.'/api/v1/login.php';
+});
 
 
 ?>
