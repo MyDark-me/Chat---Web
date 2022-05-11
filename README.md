@@ -113,7 +113,7 @@ Hier verlinken wir alle Projekte welche wir genutzt haben.
 
 Dieser Bereich wird entstehen sobald das erste Release entstanden ist!
 
-### Prerequisites
+### Voraussetzungen
 
 Hier werden alle Vorbereitungen später einmal stehen. 
 * Coming Soon
