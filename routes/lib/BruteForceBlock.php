@@ -108,7 +108,25 @@ class BruteForceBlock {
 		
 		//attempt to insert failed login attempt
 		try{
-			$stmt = $db->query('INSERT INTO user_failed_logins SET user_id = '.$user_id.', ip_address = INET_ATON("'.$ip_address.'"), attempted_at = NOW()');
+			$stmt = $db->query('INSERT INTO Failedloginsdatabase SET UserID = '.$user_id.', ip_address = INET_ATON("'.$ip_address.'"), attempted_at = NOW()');
+			//$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return true;
+		} catch(\PDOException $ex){
+			//return errors
+			return $ex;
+		}
+	}
+    //add a register request attempt to database. returns true, or error 
+	public static function addRegisterRequestAttempt($ip_address){
+		//get db connection
+		$db = BruteForceBlock::_databaseConnect();
+		
+		//get current timestamp
+		$timestamp = date('Y-m-d H:i:s');
+		
+		//attempt to insert failed login attempt
+		try{
+			$stmt = $db->query('INSERT INTO Registerrequestdatabase SET ip_address = INET_ATON("'.$ip_address.'"), attempted_at = NOW()');
 			//$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			return true;
 		} catch(\PDOException $ex){
@@ -133,7 +151,7 @@ class BruteForceBlock {
 		$row = null;
 		$latest_failed_attempt_datetime = null;
 		try{
-			$stmt = $db->query('SELECT MAX(attempted_at) AS attempted_at FROM user_failed_logins');
+			$stmt = $db->query('SELECT MAX(attempted_at) AS attempted_at FROM Failedloginsdatabase');
 			$latest_failed_logins = mysqli_num_rows($stmt);
 			$row = $stmt->fetch_assoc();
 			//$latest_failed_logins = $stmt->rowCount();
@@ -166,8 +184,8 @@ class BruteForceBlock {
 		//attempt to retrieve latest failed login attempts
 		try{
 			//get all failed attempst within time frame
-			$get_number = $db->select('SELECT * FROM user_failed_logins WHERE attempted_at > DATE_SUB(NOW(), INTERVAL '.self::$time_frame_minutes.' MINUTE)');
-			$get_number = $db->query('SELECT * FROM user_failed_logins WHERE attempted_at > DATE_SUB(NOW(), INTERVAL '.self::$time_frame_minutes.' MINUTE)');
+			$get_number = $db->select('SELECT * FROM Failedloginsdatabase WHERE attempted_at > DATE_SUB(NOW(), INTERVAL '.self::$time_frame_minutes.' MINUTE)');
+			$get_number = $db->query('SELECT * FROM Failedloginsdatabase WHERE attempted_at > DATE_SUB(NOW(), INTERVAL '.self::$time_frame_minutes.' MINUTE)');
 			
 			$number_recent_failed = mysqli_num_rows($get_number);
 			//$number_recent_failed = $get_number->rowCount();
@@ -214,7 +232,125 @@ class BruteForceBlock {
 				try{
 					//get current timestamp
 					$now = date('Y-m-d H:i:s');
-					$stmt = $db->query('DELETE from user_failed_logins WHERE attempted_at < DATE_SUB(NOW(), INTERVAL '.(self::$time_frame_minutes * 2).' MINUTE)');
+					$stmt = $db->query('DELETE from Failedloginsdatabase WHERE attempted_at < DATE_SUB(NOW(), INTERVAL '.(self::$time_frame_minutes * 2).' MINUTE)');
+					//$stmt->execute();
+					
+				} catch(\PDOException $ex){
+					$response_array['status'] = 'error';
+					$response_array['message'] = $ex;
+				}
+			}
+			
+		} catch(\PDOException $ex){
+			//return error
+			$response_array['status'] = 'error';
+			$response_array['message'] = $ex;
+		}
+		
+		//return the response array containing status and message 
+		return $response_array;
+	}
+
+    //get the current register request status. either safe, delay, catpcha, or error
+	public static function getRegisterRequestStatus($options = null){
+		//get db connection
+		$db = BruteForceBlock::_databaseConnect();
+		
+		//setup response array
+		$response_array = array(
+			'status' => 'safe',
+			'message' => null
+		);
+		
+		//attempt to retrieve latest failed login attempts
+		$stmt = null;
+		$latest_failed_logins = null;
+		$row = null;
+		$latest_failed_attempt_datetime = null;
+		try{
+			$stmt = $db->query('SELECT MAX(attempted_at) AS attempted_at FROM Registerrequestdatabase');
+			$latest_failed_logins = mysqli_num_rows($stmt);
+			$row = $stmt->fetch_assoc();
+			//$latest_failed_logins = $stmt->rowCount();
+			//$row = $stmt-> fetch();
+			//get latest attempt's timestamp
+			if($row['attempted_at'] != null) 
+				$notnull = $row['attempted_at'];
+			else 
+				$notnull = 'now';
+			$latest_failed_attempt_datetime = (int) date('U', strtotime($notnull));
+			
+			//$latest_failed_attempt_datetime = (int) date('U', strtotime($row['attempted_at']));
+		} catch(\PDOException $ex){
+			//return error
+			$response_array['status'] = 'error';
+			$response_array['message'] = $ex;
+		}
+		
+		//get local var of throttle settings. check if options parameter set
+		if($options == null){
+			$throttle_settings = self::$default_throttle_settings;
+		}else{
+			//use options passed in
+			$throttle_settings = $options;
+		}
+		//grab first throttle limit from key
+		reset($throttle_settings);
+		$first_throttle_limit = key($throttle_settings);
+
+		//attempt to retrieve latest failed login attempts
+		try{
+			//get all failed attempst within time frame
+			$get_number = $db->select('SELECT * FROM Registerrequestdatabase WHERE attempted_at > DATE_SUB(NOW(), INTERVAL '.self::$time_frame_minutes.' MINUTE)');
+			$get_number = $db->query('SELECT * FROM Registerrequestdatabase WHERE attempted_at > DATE_SUB(NOW(), INTERVAL '.self::$time_frame_minutes.' MINUTE)');
+			
+			$number_recent_failed = mysqli_num_rows($get_number);
+			//$number_recent_failed = $get_number->rowCount();
+			
+			//reverse order of settings, for iteration
+			krsort($throttle_settings);
+			
+			//if number of failed attempts is >= the minimum threshold in throttle_settings, react
+			if($number_recent_failed >= $first_throttle_limit ){				
+				//it's been decided the # of failed logins is troublesome. time to react accordingly, by checking throttle_settings
+				foreach ($throttle_settings as $attempts => $delay) {
+					if ($number_recent_failed > $attempts) {
+						// we need to throttle based on delay
+						if (is_numeric($delay)) {
+							//find the time of the next allowed login
+							$next_login_minimum_time = $latest_failed_attempt_datetime + $delay;
+							
+							//if the next allowed login time is in the future, calculate the remaining delay
+							if(time() < $next_login_minimum_time){
+								$remaining_delay = $next_login_minimum_time - time();
+								// add status to response array
+								$response_array['status'] = 'delay';
+								$response_array['message'] = $remaining_delay;
+							}else{
+								// delay has been passed, safe to login
+								$response_array['status'] = 'safe';
+							}
+							//$remaining_delay = $delay - (time() - $latest_failed_attempt_datetime); //correct
+							//echo 'You must wait ' . $remaining_delay . ' seconds before your next login attempt';
+
+							
+						} else {
+							// add status to response array
+							$response_array['status'] = 'captcha';
+						}
+						break;
+					}
+				}  
+				
+			}
+			//clear database if config set
+			if(self::$_db['auto_clear'] == true){
+				//attempt to delete all records that are no longer recent/relevant
+				try{
+					//get current timestamp
+					$now = date('Y-m-d H:i:s');
+					$stmt = $db->query('DELETE from Failedloginsdatabase WHERE attempted_at < DATE_SUB(NOW(), INTERVAL '.(self::$time_frame_minutes * 2).' MINUTE)');
+					$stmt = $db->query('DELETE from Registerrequestdatabase WHERE attempted_at < DATE_SUB(NOW(), INTERVAL '.(self::$time_frame_minutes * 2).' MINUTE)');
 					//$stmt->execute();
 					
 				} catch(\PDOException $ex){
@@ -240,7 +376,8 @@ class BruteForceBlock {
 		
 		//attempt to delete all records
 		try{
-			$stmt = $db->query('DELETE from user_failed_logins');
+			$stmt = $db->query('DELETE from Failedloginsdatabase');
+			$stmt = $db->query('DELETE from Registerrequestdatabase');
 			return true;
 		} catch(\PDOException $ex){
 			//return errors
