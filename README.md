@@ -209,5 +209,4 @@ Project Link: [https://github.com/MyDark-me/Chat-Web](https://github.com/MyDark-
 [issues-url]: https://github.com/MyDark-me/Chat-Web/issues
 [license-shield]: https://img.shields.io/github/license/MyDark-me/Chat-Web.svg?style=for-the-badge
 [license-url]: https://github.com/MyDark-me/Chat-Web/blob/main/LICENSE
-
 [product-screenshot]: images/screenshot.png
