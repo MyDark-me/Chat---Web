@@ -103,6 +103,7 @@ Hier verlinken wir alle Projekte welche wir genutzt haben.
 
 * [SimpleDBClass](https://github.com/codewithmark/PHP-Simple-Database-Class)
 * [AltoRouter](https://github.com/dannyvankooten/AltoRouter)
+* [BruteForceBlock](https://github.com/ejfrancis/brute-force-block)
 
 
 <p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
