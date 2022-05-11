@@ -72,7 +72,6 @@ try {
                 die(json_encode(array(
 			        'status'=>'failure',			
 			        'message' => 'Incorrect inputs',
-			        'code' => 'Wrong Inputs',
 		            )));
 
                 break;

@@ -45,6 +45,26 @@ $router->map('GET', '/resources/FontAwesome/all.js', function() {
     require ROOTPATH.'/public/dashboard/resources/FontAwesome/all.js';
 });
 
+// Map
+$router->map('GET', '/resources/Bootstrap/bootstrap.css.map', function() {
+    require ROOTPATH.'/public/dashboard/resources/Bootstrap/bootstrap.css.map';
+});
+$router->map('GET', '/resources/FontAwesome/all.css.map', function() {
+    require ROOTPATH.'/public/dashboard/resources/FontAwesome/all.css.map';
+});
+$router->map('GET', '/resources/jQuery/jquery.js.map', function() {
+    require ROOTPATH.'/public/dashboard/resources/jQuery/jquery.js.map';
+});
+$router->map('GET', '/resources/Popper/popper.min.js.map', function() {
+    require ROOTPATH.'/public/dashboard/resources/Popper/popper.min.js.map';
+});
+$router->map('GET', '/resources/Bootstrap/bootstrap.bundle.js.map', function() {
+    require ROOTPATH.'/public/dashboard/resources/Bootstrap/bootstrap.bundle.js.map';
+});
+$router->map('GET', '/resources/FontAwesome/all.js.map', function() {
+    require ROOTPATH.'/public/dashboard/resources/FontAwesome/all.js.map';
+});
+
 // APIs
 
 // Register
