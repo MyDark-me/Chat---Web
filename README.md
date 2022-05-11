@@ -119,7 +119,7 @@ Dieser Bereich wird bestimmt bald entstehen!
 Dieser Bereich  wird bald entstehen!
 _For more examples, please refer to the [Documentation](https://example.com)_
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
 
 
 
@@ -181,7 +181,7 @@ Project Link: [https://github.com/MyDark-me/Chat-Web](https://github.com/MyDark-
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## Danksagungen
 
 * [Choose an Open Source License](https://choosealicense.com)
 * [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
