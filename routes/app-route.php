@@ -20,7 +20,29 @@ function app_db ()
 
 // homepage
 $router->map('GET', '/', function() {
-    require ROOTPATH.'/public/home.php';
+    require ROOTPATH.'/public/dashboard/index.html';
+});
+
+// CSS
+$router->map('GET', '/resources/Bootstrap/bootstrap.css', function() {
+    require ROOTPATH.'/public/dashboard/resources/Bootstrap/bootstrap.css';
+});
+$router->map('GET', '/resources/FontAwesome/all.css', function() {
+    require ROOTPATH.'/public/dashboard/resources/FontAwesome/all.css';
+});
+
+// Scripts
+$router->map('GET', '/resources/jQuery/jquery.js', function() {
+    require ROOTPATH.'/public/dashboard/resources/jQuery/jquery.js';
+});
+$router->map('GET', '/resources/Popper/popper.min.js', function() {
+    require ROOTPATH.'/public/dashboard/resources/Popper/popper.min.js';
+});
+$router->map('GET', '/resources/Bootstrap/bootstrap.bundle.js', function() {
+    require ROOTPATH.'/public/dashboard/resources/Bootstrap/bootstrap.bundle.js';
+});
+$router->map('GET', '/resources/FontAwesome/all.js', function() {
+    require ROOTPATH.'/public/dashboard/resources/FontAwesome/all.js';
 });
 
 // APIs
