@@ -14,7 +14,7 @@ else {
 }
 
 // Pfad abfragen und speichern
-$app_url = ($ssl  )
+$app_url = ($ssl)
           . "://".$_SERVER['HTTP_HOST']
           . (dirname($_SERVER["SCRIPT_NAME"]) == DIRECTORY_SEPARATOR ? "" : "/")
           . trim(str_replace("\\", "/", dirname($_SERVER["SCRIPT_NAME"])), "/");

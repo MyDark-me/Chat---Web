@@ -12,6 +12,6 @@ define('DB_USER', 'root');
 define('DB_PASSWORD', ''); 
 
 // Datenbank Name
-define('DB_NAME', 'example');
+define('DB_NAME', 'webchat');
 
 ?>

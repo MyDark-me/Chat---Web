@@ -1,26 +1,27 @@
 
 CREATE TABLE IF NOT EXISTS `Gruppendatenbank` (
 	`ID` INT NOT NULL AUTO_INCREMENT,
-	`Name` VARCHAR(50) NOT NULL,
-	`Displayname` VARCHAR(10) NOT NULL DEFAULT NULL,
-	`Color` VARCHAR(10) NOT NULL DEFAULT 'gray',
-	`Icon` VARCHAR(10) NOT NULL DEFAULT 'http://localhost/api/v1/icons/default.png',
+	`Name` VARCHAR(32) NOT NULL,
+	`Displayname` VARCHAR(32) DEFAULT NULL,
+	`Color` VARCHAR(20) DEFAULT 'gray',
+	`Icon` VARCHAR(100) DEFAULT 'http://localhost/api/v1/icons/default.png',
     PRIMARY KEY (`ID`)
 );
 
 INSERT INTO `Gruppendatenbank`(`ID`, `Name`, `Displayname`, `Color`, `Icon`) VALUES (1, 'default', 'Default', 'gray', 'http://localhost/api/v1/icons/default.png');
-INSERT INTO `Gruppendatenbank`(`ID`, `Name`, `Displayname`, `Color`, `Icon`) VALUES (2, 'supporter', 'Supporter', 'blue', 'http://localhost/api/v1/icons/default.png');
-INSERT INTO `Gruppendatenbank`(`ID`, `Name`, `Displayname`, `Color`, `Icon`) VALUES (3, 'moderator', 'Moderator', 'red', 'http://localhost/api/v1/icons/default.png');
+INSERT INTO `Gruppendatenbank`(`ID`, `Name`, `Displayname`, `Color`, `Icon`) VALUES (2, 'supporter', 'Supporter', 'green', 'http://localhost/api/v1/icons/default.png');
+INSERT INTO `Gruppendatenbank`(`ID`, `Name`, `Displayname`, `Color`, `Icon`) VALUES (3, 'moderator', 'Moderator', 'purple', 'http://localhost/api/v1/icons/default.png');
+INSERT INTO `Gruppendatenbank`(`ID`, `Name`, `Displayname`, `Color`, `Icon`) VALUES (4, 'administrator', 'Administrator', 'red', 'http://localhost/api/v1/icons/default.png');
 
 CREATE TABLE IF NOT EXISTS `Nutzerdatenbank` (
 	`ID` INT NOT NULL AUTO_INCREMENT,
-	`Username` VARCHAR(50) NOT NULL,
-	`Displayname` VARCHAR(10) NOT NULL DEFAULT NULL,
-	`Password` VARCHAR(10) NOT NULL,
-	`Email` VARCHAR(10) NOT NULL,
-	`Icon` VARCHAR(10) NOT NULL DEFAULT 'http://localhost/api/v1/icons/default.png',
+	`Username` VARCHAR(32) NOT NULL,
+	`Displayname` VARCHAR(32) DEFAULT NULL,
+	`Password` VARCHAR(255) NOT NULL,
+	`Email` VARCHAR(255) NOT NULL,
+	`Icon` VARCHAR(100) DEFAULT 'http://localhost/api/v1/icons/default.png',
 	`isOnline` BOOLEAN,
-	`GroupID` INT NOT NULL DEFAULT '1',
+	`GroupID` INT DEFAULT '1',
     PRIMARY KEY (`ID`),
     FOREIGN KEY (`GroupID`) REFERENCES `Gruppendatenbank`(`ID`)
 );
@@ -28,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `Nutzerdatenbank` (
 CREATE TABLE IF NOT EXISTS `Logindatabase` (
     `ID` INT NOT NULL AUTO_INCREMENT,
     `UserID` INT NOT NULL,
-    `lastlogin` datetime NOT NULL,
+    `lastlogin` datetime DEFAULT NOW(),
     `ipaddress` int(11) unsigned DEFAULT NULL,
     PRIMARY KEY (`ID`),
     FOREIGN KEY (`UserID`) REFERENCES `Nutzerdatenbank`(`ID`)
@@ -37,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `Logindatabase` (
 CREATE TABLE IF NOT EXISTS `Tokendatabase` (
     `ID` INT NOT NULL AUTO_INCREMENT,
     `LoginID` INT NOT NULL,
-    `token` VARCHAR(10) NOT NULL,
-    `endtime` VARCHAR(10) NOT NULL DEFAULT NOW(),
+    `token` VARCHAR(255) NOT NULL,
+    `endtime` Timestamp DEFAULT NOW(),
     PRIMARY KEY (`ID`),
     FOREIGN KEY (`LoginID`) REFERENCES `Logindatabase`(`ID`)
 );
@@ -48,8 +49,8 @@ CREATE TABLE IF NOT EXISTS `Messagedatenbank` (
     `UserID` INT NOT NULL,
     `Timestamp` Timestamp NOT NULL,
     `LoginID` INT NOT NULL,
-    `Content` VARCHAR(10) NOT NULL,
-    PRIMARY KEY (`ID`)
-    FOREIGN KEY (`UserID`) REFERENCES `Nutzerdatenbank`(`ID`)
-    FOREIGN KEY (`LoginID`) REFERENCES `Nutzerdatenbank`(`ID`)
+    `Content` VARCHAR(500) NOT NULL,
+    PRIMARY KEY (`ID`),
+    FOREIGN KEY (`UserID`) REFERENCES `Nutzerdatenbank`(`ID`),
+    FOREIGN KEY (`LoginID`) REFERENCES `Logindatabase`(`ID`)
 );
