@@ -189,7 +189,7 @@ Geteilt unter der MIT-Lizenz. Siehe `LICENSE.txt` für weitere Informationen.
 <!-- CONTACT -->
 ## Kontakt
 
-MyDark-me - [@your_twitter](https://twitter.com/mydark.me) - github@mydark.me
+MyDark-me - [@your_twitter](https://twitter.com/MyDarkMe_DEV) - github@mydark.me
 
 Project Link: [https://github.com/MyDark-me/Chat-Web](https://github.com/MyDark-me/Chat-Web)
 
