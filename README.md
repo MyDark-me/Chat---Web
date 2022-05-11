@@ -54,24 +54,24 @@
   <summary>Inhaltsverzeichnis</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Über das Projekt</a>
+      <a href="#über-das-projekt">Über das Projekt</a>
       <ul>
-        <li><a href="#built-with">Genutze Projekte</a></li>
+        <li><a href="#Genutzte-Projekte">Genutze Projekte</a></li>
       </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Vorraussetzungen</a></li>
+        <li><a href="#vorraussetzungen">Vorraussetzungen</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Nutzung</a></li>
+    <li><a href="#nutzung">Nutzung</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Mitentwickler</a></li>
-    <li><a href="#license">Lizenz</a></li>
-    <li><a href="#contact">Kontakt</a></li>
-    <li><a href="#acknowledgments">Danksagungen</a></li>
+    <li><a href="#mitentwickler">Mitentwickler</a></li>
+    <li><a href="#lizenz">Lizenz</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+    <li><a href="#danksagungen">Danksagungen</a></li>
   </ol>
 </details>
 
