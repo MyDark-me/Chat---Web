@@ -22,6 +22,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
+[![RELEASES][release-shield][release-url]
 
 
 <!-- PROJECT LOGO -->
@@ -226,3 +227,5 @@ Project Link: [https://github.com/MyDark-me/Chat-Web](https://github.com/MyDark-
 [license-shield]: https://img.shields.io/github/license/MyDark-me/Chat-Web.svg?style=for-the-badge
 [license-url]: https://github.com/MyDark-me/Chat-Web/blob/main/LICENSE
 [product-screenshot]: images/screenshot.png
+[release-url]: https://github.com/MyDark-me/Chat-Web/releases
+[release-shield]; https://img.shields.io/github/v/tag/mydark-me/Chat-Web?label=Latest%20Release&style=for-the-badge
