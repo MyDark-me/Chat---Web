@@ -191,7 +191,7 @@ class AltoRouter
      * @param string $requestMethod
      * @return array|boolean Array with route information on success, false on failure (no match).
      */
-    public function match($requestUrl = null, $requestMethod = null)
+    /*public function match($requestUrl = null, $requestMethod = null)
     {
 
         $params = [];
@@ -264,7 +264,7 @@ class AltoRouter
             }
         }
         return false;
-    }
+    }*/
 
     /**
      * Compile the regex for a given route (EXPENSIVE)
