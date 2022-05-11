@@ -2,7 +2,7 @@
 
 //********* APP URL *********
 
-// Fragt ab ob der Server auf https oder http läuft
+// Überprüfen nach HTTPS / HTTP
 if (isset($_SERVER['HTTPS']) &&
     ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
     isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
@@ -13,7 +13,7 @@ else {
   $ssl = 'http';
 }
 
-// Holt sich den pfart des Servers
+// Pfad abfragen und speichern
 $app_url = ($ssl  )
           . "://".$_SERVER['HTTP_HOST']
           . (dirname($_SERVER["SCRIPT_NAME"]) == DIRECTORY_SEPARATOR ? "" : "/")
@@ -21,22 +21,22 @@ $app_url = ($ssl  )
 
 //********* GLOBAL DEFINES *********
 
-// Macht app_url global sichtbar
+// app_url Global sichtbar stellen
 define("APPURL", $app_url);
-// Speichert die AJAX_URL global
+// Speichert die AJAX_URL Global
 define("AJAX_URL", $app_url.'/api');
 // Absoluter Pfad zum Stammverzeichnis der Anwendung
 define("ROOTPATH", str_replace("\\", "/",  dirname(__FILE__) ));
 
 //********* GLOBAL INCLUDES *********
 
-// libs
+// Libs
 include_once ROOTPATH. '/routes/lib/AltoRouter.php'; 
 include_once ROOTPATH. '/routes/lib/SimpleDBClass.php'; 
 
 //********* Alto Router *********
 
-//Inizialisiert die Alto Router library
+//Initialisiert die Alto Router Library
 $router = new AltoRouter();
 $base_path = trim(str_replace("\\", "/", dirname($_SERVER["SCRIPT_NAME"])), "/");
 $router->setBasePath($base_path ? "/".$base_path : "");
@@ -45,18 +45,18 @@ $router->setBasePath($base_path ? "/".$base_path : "");
 //Einbindung der Request Management Class
 include_once ROOTPATH. '/routes/app-route.php';
 
-//Holt sich die aktuelle abgefragte URL
+//Holt sich die aktuell abgefragte URL
 $match = $router->match();
 
 
-//Ruft näher oder wirft ein 404-Status
+//Aufrufbaren Pfad verwenden oder 404-Status ausgeben
 if( $match && is_callable( $match['target'] ) ) 
 {    
     call_user_func_array( $match['target'], array_values($match['params'] )); 
 } 
 else 
 {
-  //Es wurde keine Route gefunden
+  //Keine Route gefunden darum 404 Seite senden
   $app_url_asset = APPURL;
   http_response_code(404);
   header("HTTP/1.1 404 Not Found", TRUE);
