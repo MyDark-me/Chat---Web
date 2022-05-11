@@ -23,6 +23,7 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![RELEASE][release-shield]][release-url]
+[![Commits][commit-shield]][commit-url]
 
 
 <!-- PROJECT LOGO -->
