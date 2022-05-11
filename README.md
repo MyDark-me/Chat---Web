@@ -159,7 +159,7 @@ Eine vollständige Liste der vorgeschlagenen Funktionen (und bekannten Probleme)
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+## Mitarbeiter
 
 Commits sind es, die die Open-Source-Gemeinschaft zu einem so wunderbaren Ort des Lernens, der Inspiration und der Kreativität machen. Jeder Beitrag, den Sie leisten, wird **sehr geschätzt**.
 
@@ -177,7 +177,7 @@ Vergessen Sie nicht, dem Projekt einen Stern zu geben! Nochmals vielen Dank!
 
 
 <!-- LICENSE -->
-## License
+## Lizenz
 
 Geteilt unter der MIT-Lizenz. Siehe `LICENSE.txt` für weitere Informationen.
 
@@ -186,7 +186,7 @@ Geteilt unter der MIT-Lizenz. Siehe `LICENSE.txt` für weitere Informationen.
 
 
 <!-- CONTACT -->
-## Contact
+## Kontakt
 
 MyDark-me - [@your_twitter](https://twitter.com/mydark.me) - github@mydark.me
 
