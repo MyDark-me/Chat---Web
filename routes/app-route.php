@@ -22,16 +22,16 @@ $router->map('GET','/', function() { require ROOTPATH .'/public/dashboard/index.
 //$router->map('GET','/datenschutz','datenschutz.php','datenschutz');
 //$router->map('GET','/impressum','impressum.php','impressum');
 
-
 // Hier werden die css/js/map resources freigeschaltet
-$router->map( 'GET', '/resources/[a:where]/[a:datei]', function( $where, $datei ) {
+$router->map( 'GET', '/resources/[a:where]/[*:datei]', function( $where, $datei ) {
+    echo $where . ' ' . $datei;
     // Setze den richtigen header
     if(str_ends_with($datei, '.css'))
         header("Content-Type: text/css");
     if(str_ends_with($datei, '.js'))
         header("Content-Type: text/javascript");
     // Gebe den Inhalt der Datei aus
-    echo file_get_contents(ROOTPATH.'/public/dashboard/resources' . $where . '/' . $datei);
+    echo file_get_contents(ROOTPATH.'/public/dashboard/resources/' . $where . '/' . $datei);
 });
 
 // ****************APIs****************

@@ -56,7 +56,6 @@ if( $match && is_callable( $match['target'] ) )
 else 
 {
   //Keine Route gefunden darum 404 Seite senden
-  $app_url_asset = APPURL;
   http_response_code(404);
   header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
   //header("HTTP/1.1 404 Not Found", TRUE);
