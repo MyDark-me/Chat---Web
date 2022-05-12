@@ -4,7 +4,7 @@
 require_once ROOTPATH . '/routes/lib/BruteForceBlock.php';
 use ejfrancis\BruteForceBlock;
 
-// Erstellen Sie eine Costom-Exception-Klasse für das Delay
+// Erstellen Sie eine Custom-Exception-Klasse für das Delay
 class LoginDelayExeption extends Exception {
     public function getDelay() {
       // Rückgabe der Fehlermeldung "Delay"

@@ -16,56 +16,25 @@ function app_db ()
     return $db;     
 }
 
-// Weiterleitung zur richtigen Seite
+// ****************Weiterleitung zur richtigen Seite****************
 
-// homepage
-$router->map('GET', '/', function() {
-    require ROOTPATH.'/public/dashboard/index.html';
-});
+$router->map('GET','/', function() { require ROOTPATH .'/public/dashboard/index.html'; } ,'home');
+//$router->map('GET','/datenschutz','datenschutz.php','datenschutz');
+//$router->map('GET','/impressum','impressum.php','impressum');
 
-// CSS
-$router->map('GET', '/resources/Bootstrap/bootstrap.css', function() {
-    require ROOTPATH.'/public/dashboard/resources/Bootstrap/bootstrap.css';
-});
-$router->map('GET', '/resources/FontAwesome/all.css', function() {
-    require ROOTPATH.'/public/dashboard/resources/FontAwesome/all.css';
-});
 
-// Scripts
-$router->map('GET', '/resources/jQuery/jquery.js', function() {
-    require ROOTPATH.'/public/dashboard/resources/jQuery/jquery.js';
-});
-$router->map('GET', '/resources/Popper/popper.min.js', function() {
-    require ROOTPATH.'/public/dashboard/resources/Popper/popper.min.js';
-});
-$router->map('GET', '/resources/Bootstrap/bootstrap.bundle.js', function() {
-    require ROOTPATH.'/public/dashboard/resources/Bootstrap/bootstrap.bundle.js';
-});
-$router->map('GET', '/resources/FontAwesome/all.js', function() {
-    require ROOTPATH.'/public/dashboard/resources/FontAwesome/all.js';
+// Hier werden die css/js/map resources freigeschaltet
+$router->map( 'GET', '/resources/[a:where]/[a:datei]', function( $where, $datei ) {
+    // Setze den richtigen header
+    if(str_ends_with($datei, '.css'))
+        header("Content-Type: text/css");
+    if(str_ends_with($datei, '.js'))
+        header("Content-Type: text/javascript");
+    // Gebe den Inhalt der Datei aus
+    echo file_get_contents(ROOTPATH.'/public/dashboard/resources' . $where . '/' . $datei);
 });
 
-// Map
-$router->map('GET', '/resources/Bootstrap/bootstrap.css.map', function() {
-    require ROOTPATH.'/public/dashboard/resources/Bootstrap/bootstrap.css.map';
-});
-$router->map('GET', '/resources/FontAwesome/all.css.map', function() {
-    require ROOTPATH.'/public/dashboard/resources/FontAwesome/all.css.map';
-});
-$router->map('GET', '/resources/jQuery/jquery.js.map', function() {
-    require ROOTPATH.'/public/dashboard/resources/jQuery/jquery.js.map';
-});
-$router->map('GET', '/resources/Popper/popper.min.js.map', function() {
-    require ROOTPATH.'/public/dashboard/resources/Popper/popper.min.js.map';
-});
-$router->map('GET', '/resources/Bootstrap/bootstrap.bundle.js.map', function() {
-    require ROOTPATH.'/public/dashboard/resources/Bootstrap/bootstrap.bundle.js.map';
-});
-$router->map('GET', '/resources/FontAwesome/all.js.map', function() {
-    require ROOTPATH.'/public/dashboard/resources/FontAwesome/all.js.map';
-});
-
-// APIs
+// ****************APIs****************
 
 // Register
 $router->map('POST|GET', '/api/v1/register', function() {

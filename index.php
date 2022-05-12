@@ -42,12 +42,11 @@ $base_path = trim(str_replace("\\", "/", dirname($_SERVER["SCRIPT_NAME"])), "/")
 $router->setBasePath($base_path ? "/".$base_path : "");
 
 //********* REQUEST MANAGEMENT *********
-//Einbindung der Request Management Class
+//Einbindung der Routes Management Class
 include_once ROOTPATH. '/routes/app-route.php';
 
 //Holt sich die aktuell abgefragte URL
 $match = $router->match();
-
 
 //Aufrufbaren Pfad verwenden oder 404-Status ausgeben
 if( $match && is_callable( $match['target'] ) ) 
@@ -59,7 +58,8 @@ else
   //Keine Route gefunden darum 404 Seite senden
   $app_url_asset = APPURL;
   http_response_code(404);
-  header("HTTP/1.1 404 Not Found", TRUE);
+  header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+  //header("HTTP/1.1 404 Not Found", TRUE);
   die('
   <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
   <html>
