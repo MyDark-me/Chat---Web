@@ -49,13 +49,14 @@ $router->map('POST|GET', AJAXPATH . '/users/register', function() {
 } ,'register');
 
 // Login
-$router->map('POST|GET', AJAXPATH . '/users/login', function() { 
+$router->map('POST', AJAXPATH . '/users/login', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
+    $users->cookieAutoLogin();
     require_once ROOTPATH.'/api/v1/users/login.php'; 
 } ,'login');
 
-$router->map( 'POST|GET', AJAXPATH . '/users/account/[a:type]/[*:data]', function( $type, $data ) {
+$router->map('POST', AJAXPATH . '/users/account/[a:type]/[*:data]', function( $type, $data ) {
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH.'/api/v1/users/account.php'; 

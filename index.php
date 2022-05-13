@@ -49,6 +49,11 @@ include_once ROOTPATH . AJAXPATH . '/users/users.php';
 // Wir initialisieren die User Class um User Einstellungen zu ermöglichen
 $users = new Users();
 
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+// Prüft den Loginstatus
+$users->setUserLoginStatus();
+
 //********* Alto Router *********
 
 //Initialisiert die Alto Router Library

@@ -22,7 +22,7 @@ switch ($BFBresponse['status']){
             if($users->usernameCount($username) != 0 && $users->checkPassword($username, $password)) {
                 if (session_status() === PHP_SESSION_NONE) session_start();
                 // Session-Variablen werden gesetzt
-                $users->setSession($username);
+                $users->setSession($username, isset($_POST['remember']));
                         
                 // Erfolgreich eingeloggt
                 http_response_code(200);
