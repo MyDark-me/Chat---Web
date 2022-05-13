@@ -63,7 +63,7 @@ class BruteForceBlock {
 		50 => 2, 			//delay in seconds
 		150 => 4, 			//delay in seconds
 		300 => 'captcha'	//captcha
-];
+	];
 	/*private static $default_throttle_settings = [
 			50 => 2, 			//delay in seconds
 			150 => 4, 			//delay in seconds

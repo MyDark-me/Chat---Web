@@ -39,17 +39,22 @@ $router->map( 'GET', '/resources/[a:where]/[*:datei]', function( $where, $datei 
 $router->map('POST|GET','/api/v1/users/register', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
-    require_once(ROOTPATH . '/routes/lib/BruteForceBlock.php');
-    require ROOTPATH.'/api/v1/users/register.php'; 
+    require_once ROOTPATH . '/routes/lib/BruteForceBlock.php';
+    require_once ROOTPATH.'/api/v1/users/register.php'; 
 } ,'register');
 
 // Login
 $router->map('POST|GET','/api/v1/users/login', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
-    require_once(ROOTPATH . '/routes/lib/BruteForceBlock.php');
-    require ROOTPATH.'/api/v1/users/login.php'; 
+    require_once ROOTPATH . '/routes/lib/BruteForceBlock.php';
+    require_once ROOTPATH.'/api/v1/users/login.php'; 
 } ,'login');
 
+$router->map( 'POST|GET', '/api/v1/users/account/[a:type]/[*:data]', function( $type, $data ) {
+    // Rückgabe erfolgt nur als json
+    header('Content-type: application/json');
+    require_once ROOTPATH.'/api/v1/users/account.php'; 
+}, 'account');
 
 ?>

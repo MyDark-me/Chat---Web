@@ -24,7 +24,7 @@ $app_url = ($ssl)
 // app_url Global sichtbar stellen
 define("APPURL", $app_url);
 // Speichert die AJAX_URL Global
-define("AJAX_URL", $app_url.'/api');
+define("AJAX_URL", $app_url.'/api/v1');
 // Absoluter Pfad zum Stammverzeichnis der Anwendung
 define("ROOTPATH", str_replace("\\", "/",  dirname(__FILE__) ));
 
