@@ -5,7 +5,8 @@
  */
 
 use ejfrancis\BruteForceBlock;
-
+// Wir benutzen User Class um nutzerabfragen zu ermöglichen
+$users = new Users();
 // Erstellen Sie eine Instanz der BruteForceBlock-Klasse ob ein Loginversuch möglich ist
 $BFBresponse = BruteForceBlock::getLoginStatus();
 // Switch-Anweisung zur Abfrage des Login-Status

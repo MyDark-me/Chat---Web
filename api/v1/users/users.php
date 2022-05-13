@@ -4,6 +4,9 @@
  * Das hier stellt die Datenbank user info abfragen bereit.
  * Verändert ein user Profil
  */
+
+use ReallySimpleJWT\Token;
+
 class Users {
 
     private static $salt = '1234_oder_so';
@@ -16,7 +19,7 @@ class Users {
      *
      * @param string $email Die zu prüfende E-Mail Adresse
      */
-    public function emailCount($email): int {
+    public function emailCount($email) {
         // Datenbankverbindung herstellen
         $db = app_db();   
         // SQL gegen injektion schützen
@@ -35,7 +38,7 @@ class Users {
      *
      * @param string $username Der zu prüfende Benutzername
      */
-    public function usernameCount($username): int {
+    public function usernameCount($username) {
         // Datenbankverbindung herstellen
         $db = app_db();   
         // SQL gegen injektion schützen
@@ -79,7 +82,7 @@ class Users {
      * @param string $username Der zu prüfende Benutzername
      * @param string $password Das zu prüfende Passwort
      */
-    public function checkPassword($username, $password): bool {
+    public function checkPassword($username, $password) {
         // Datenbankverbindung herstellen
         $db = app_db();   
         // SQL gegen injektion schützen
@@ -104,29 +107,22 @@ class Users {
      * @param string $remember Ob der Benutzer das Token merken möchte
      */
     public function setSession($username, $remember) {
-        //  Irgendwie muss ein Token erstellt werden
-        $token = bin2hex(random_bytes(32));
-        // Muss in der Datenbank gespeichert werden
-        $db = app_db();
-        // SQL gegen injektion schützen
-        $token = $db->CleanDBData($token);
-        $username = $db->CleanDBData($username);
-        // Token in der Datenbank speichern
-        /*
-        $insert_arrays = array
-        (
-        'Username' => "$username",
-        'Token' => "$token"
-        );
-        $db->Insert('Nutzerdatenbank',$insert_arrays);
-        */
+        // Erstellt mit ReallySimpleJWT einen Token
+        $payload = [
+            'iat' => time(),
+            'username' => $username,
+            'exp' => time() + 10,
+            'iss' => 'localhost'
+        ];
+        $token = Token::customPayload($payload, $salt);;
+       
         // Setze den Token in die Session
         $_SESSION['token'] = $token;
         $_SESSION['LAST_ACTIVITY'] = time();
         if ($remember == true) {
             // Token in den Cookies speichern
             $expired_seconds = time() + 60 * 60 * 24 * 7;
-            setcookie('chat_token', md5($salt . $token), $expired_seconds);
+            setcookie('chat_token', $salt . $token, $expired_seconds);
         }
     }
 
@@ -169,22 +165,18 @@ class Users {
         $username = null;
         if (isset($_COOKIE['chat_token'])) {
             // Validierung des Tokens
-            // Aus der Datenbank alle funktionierenden Tokens abfragen
-            /*
-            $result = $db->query("SELECT `Token` FROM `Nutzerdatenbank` WHERE `Username`= '$username' OR `Email`= '$username';");
-            $row = $result->fetch_assoc();
-            foreach ($data as $row) {
-                if (md5($salt . $row['token']) == $_COOKIE['chat_token']) {
-                    $username = $row['username'];
-                }
+            $result = Token::validate($token, $salt);
+            if ($result) {
+                // Token ist gültig
+                $username = $result['username'];
             }
-            */
+            // Setze neuen Token
             if (!empty($username)) {
                 $_SESSION['token'] = $token;
                 $_SESSION['LAST_ACTIVITY'] = time();
                 if ($remember == true) {
                     $expired_seconds = time() + 60 * 60 * 24 * 7;
-                    setcookie('chat_token', md5($salt . $token), $expired_seconds);
+                    setcookie('chat_token', $token, $expired_seconds);
                 }
             }
         }

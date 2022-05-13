@@ -4,9 +4,9 @@
  * Stellt das Registrierungsferfahren bereit.
  */
 
+use ejfrancis\BruteForceBlock;
 // Wir benutzen User Class um nutzerabfragen zu ermöglichen
 $users = new Users();
-use ejfrancis\BruteForceBlock;
 // Erstellen Sie eine Instanz der BruteForceBlock-Klasse ob ein Registrierungsversuch möglich ist
 $BFBresponse = BruteForceBlock::getRegisterRequestStatus();
 // Switch-Anweisung zur Abfrage des Register Request Status

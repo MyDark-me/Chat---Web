@@ -4,6 +4,9 @@
  * Das hier stellt die Account info abfragen bereit.
  */
 
+// Wir initialisieren die User Class um User Einstellungen zu ermöglichen
+$users = new Users();
+
 // Rückgabe ob die E-Mail Adresse bereits vorhanden ist
 if($type == 'email') {
     if($users->emailCount($data) != 0) {

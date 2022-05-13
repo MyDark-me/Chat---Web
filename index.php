@@ -38,21 +38,15 @@ define("ROOTPATH", str_replace("\\", "/",  dirname(__FILE__) ));
 //********* GLOBAL INCLUDES *********
 
 // Libs
-include_once ROOTPATH. '/routes/lib/AltoRouter.php'; 
-include_once ROOTPATH. '/routes/lib/SimpleDBClass.php'; 
-include_once ROOTPATH . '/routes/lib/BruteForceBlock.php';
+foreach (glob(ROOTPATH . '/routes/lib/*') as $filename) {
+  if(str_ends_with($filename, '.php')) require_once $filename;
+}
 // Sql Lib
-include_once ROOTPATH . AJAXPATH . '/users/users.php';
+require_once ROOTPATH . AJAXPATH . '/users/users.php';
 
 //********* Users *********
 
-// Wir initialisieren die User Class um User Einstellungen zu ermöglichen
-$users = new Users();
-
 if (session_status() === PHP_SESSION_NONE) session_start();
-
-// Prüft den Loginstatus
-$users->setUserLoginStatus();
 
 //********* Alto Router *********
 
@@ -64,7 +58,7 @@ $router->setBasePath($base_path ? "/".$base_path : "");
 
 //********* REQUEST MANAGEMENT *********
 //Einbindung der Routes Management Class
-include_once ROOTPATH. '/routes/app-route.php';
+require_once ROOTPATH. '/routes/app-route.php';
 
 //Holt sich die aktuell abgefragte URL
 $match = $router->matcher();
