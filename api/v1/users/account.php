@@ -1,14 +1,12 @@
 <?php
+/**
+ * Name account.php
+ * Das hier stellt die Account info abfragen bereit.
+ */
 
 // Rückgabe ob die E-Mail Adresse bereits vorhanden ist
 if($type == 'email') {
-    $db = app_db();
-    $email = $db->CleanDBData($data);
-    // Abfrage ob die E-Mail existiert
-    $result = $db->query("SELECT `Username` FROM `Nutzerdatenbank` WHERE `Email`= '$email';");
-    $row = $result->fetch_assoc();
-    // Wenn der die E-Mail existiert
-    if($result != false && mysqli_num_rows($result) != 0) {
+    if($users->emailCount($data) != 0) {
         // Falls der die E-Mail existiert, wird eine existierende E-Mail zurückgegeben
         http_response_code(200);
         die(json_encode(array(
@@ -30,13 +28,8 @@ if($type == 'email') {
 }
 
 if($type == 'username') {
-    $db = app_db();
-    $username = $db->CleanDBData($data);
-    // Abfrage ob die E-Mail existiert
-    $result = $db->query("SELECT `Username` FROM `Nutzerdatenbank` WHERE `Username`= '$username';");
-    $row = $result->fetch_assoc();
-    // Wenn der die E-Mail existiert
-    if($result != false && mysqli_num_rows($result) != 0) {
+    // Abfrage ob der Username existiert
+    if($users->usernameCount($data) != 0) {
         // Falls der die E-Mail existiert, wird eine existierende E-Mail zurückgegeben
         http_response_code(200);
         die(json_encode(array(

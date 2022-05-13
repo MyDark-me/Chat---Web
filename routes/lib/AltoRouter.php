@@ -193,7 +193,7 @@ class AltoRouter
      * @param string $requestMethod
      * @return array|boolean Array with route information on success, false on failure (no match).
      */
-    public function match($requestUrl = null, $requestMethod = null)
+    public function matcher($requestUrl = null, $requestMethod = null) // This is normally called match. But match already exists in PHP.
     {
 
         $params = [];

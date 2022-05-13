@@ -1,9 +1,13 @@
 <?php
+/**
+ * Name app-route.php
+ * Das hier stellt die Standard-Routen für die App bereit.
+ */
 
 // MySQL Verbindung
 function app_db ()
 {
-    include_once ROOTPATH.'/protected/config.php';
+    require_once ROOTPATH.'/protected/config.php';
 
     $db_conn = array(
         'host' => DB_HOST, 
@@ -11,6 +15,7 @@ function app_db ()
         'pass' => DB_PASSWORD,
         'database' => DB_NAME, 
     );
+    // Wir benutzen SimpleDBClass um die Datenbank zu benutzen
     $db = new SimpleDBClass($db_conn);
 
     return $db;     
@@ -36,7 +41,7 @@ $router->map( 'GET', '/resources/[a:where]/[*:datei]', function( $where, $datei 
 // ****************APIs****************
 
 // Register
-$router->map('POST|GET', APIPATH . '/users/register', function() { 
+$router->map('POST|GET', AJAXPATH . '/users/register', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH . '/routes/lib/BruteForceBlock.php';
@@ -44,14 +49,13 @@ $router->map('POST|GET', APIPATH . '/users/register', function() {
 } ,'register');
 
 // Login
-$router->map('POST|GET', APIPATH . '/users/login', function() { 
+$router->map('POST|GET', AJAXPATH . '/users/login', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
-    require_once ROOTPATH . '/routes/lib/BruteForceBlock.php';
     require_once ROOTPATH.'/api/v1/users/login.php'; 
 } ,'login');
 
-$router->map( 'POST|GET', APIPATH . '/users/account/[a:type]/[*:data]', function( $type, $data ) {
+$router->map( 'POST|GET', AJAXPATH . '/users/account/[a:type]/[*:data]', function( $type, $data ) {
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH.'/api/v1/users/account.php'; 

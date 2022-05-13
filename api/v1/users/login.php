@@ -2,10 +2,10 @@
 
 use ejfrancis\BruteForceBlock;
 
-    // Erstellen Sie eine Instanz der BruteForceBlock-Klasse
-    $BFBresponse = BruteForceBlock::getLoginStatus();
-    // Switch-Anweisung zur Abfrage des Login-Status
-        switch ($BFBresponse['status']){
+// Erstellen Sie eine Instanz der BruteForceBlock-Klasse ob ein Loginversuch möglich ist
+$BFBresponse = BruteForceBlock::getLoginStatus();
+// Switch-Anweisung zur Abfrage des Login-Status
+switch ($BFBresponse['status']){
             // Falls es sicher ist
             case 'safe':
                 // Abfrage ob username und password gesendet wurden
