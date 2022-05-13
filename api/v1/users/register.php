@@ -4,8 +4,6 @@
  * Stellt das Registrierungsferfahren bereit.
  */
 
-include_once ROOTPATH . AJAXPATH . '/users/users.php';
-
 // Wir benutzen User Class um nutzerabfragen zu ermöglichen
 $users = new Users();
 use ejfrancis\BruteForceBlock;
@@ -15,12 +13,14 @@ $BFBresponse = BruteForceBlock::getRegisterRequestStatus();
 switch ($BFBresponse['status']){
     // Falls es sicher ist
     case 'safe':
+        // Der liste hinzufügen, dass ein Registrierungsversuch statt gefunden hat
+        $BFBresponse = BruteForceBlock::addRegisterRequestAttempt(GetRealUserIp());
         // Abfrage ob username und password gesendet wurden
         if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email'])) {
             // Die Eingaben werden in variablen gespeichert
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $email = $_POST['email'];
+            $username = $_POST['username'] ?? null;
+            $password = $_POST['password'] ?? null;
+            $email = $_POST['email'] ?? null;
 
             // Abfragen ob die E-Mail nicht existiert, wird die Benutzername Prüfung durchgeführt
             if(!$users->emailCount($email) != 0) {
@@ -31,7 +31,6 @@ switch ($BFBresponse['status']){
                             
                     // Erfolgreich registriert
                     http_response_code(200);
-                    $BFBresponse = BruteForceBlock::addRegisterRequestAttempt(GetRealUserIp());
                     die(json_encode(array
                     (
                         'status'=>'succes',		
@@ -42,22 +41,16 @@ switch ($BFBresponse['status']){
                 } else {
                     // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
                     http_response_code(202);
-                    // Der liste hinzufügen, dass ein Registrierungsversuch statt gefunden hat
-                    $BFBresponse = BruteForceBlock::addRegisterRequestAttempt($username, GetRealUserIp());
                     die(json_encode($feedback, JSON_PRETTY_PRINT));
                 }
             } else {
                 // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
                 http_response_code(202);
-                // Der liste hinzufügen, dass ein Registrierungsversuch statt gefunden hat
-                $BFBresponse = BruteForceBlock::addRegisterRequestAttempt($username, GetRealUserIp());
                 die(json_encode($feedback, JSON_PRETTY_PRINT));
             }
         } else {
             // Falls nicht gebe eine Fehlermeldung zurück
             http_response_code(202);
-            // Der liste hinzufügen, dass ein Registrierungsversuch statt gefunden hat
-            $BFBresponse = BruteForceBlock::addRegisterRequestAttempt(BruteForceBlock::GetRealUserIp());
             die(json_encode(array(
 			    'status'=>'failure',			
 			    'message' => 'Field is missing',	
@@ -92,5 +85,6 @@ switch ($BFBresponse['status']){
 		    'message' => 'Captcha required',		
 		    'code' => '203',
 		    ), JSON_PRETTY_PRINT));
-    }
+    default:
+}
 ?>
