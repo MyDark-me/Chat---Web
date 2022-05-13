@@ -58,8 +58,7 @@ else
   //Keine Route gefunden darum 404 Seite senden
   http_response_code(404);
   header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
-  //header("HTTP/1.1 404 Not Found", TRUE);
-  die('
+  echo '
   <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
   <html>
     <head>
@@ -70,6 +69,7 @@ else
         <p>The requested URL '. htmlspecialchars($_SERVER['REQUEST_URI']) .' was not found on this server.</p>
     </body>
   </html>
-  ');
+  ';
+  exit;
 }
 ?>

@@ -20,9 +20,6 @@ function app_db ()
 
 $router->map('GET','/', function() { require ROOTPATH .'/public/dashboard/index.html'; } ,'home');
 
-//$router->map('GET','/datenschutz','datenschutz.php','datenschutz');
-//$router->map('GET','/impressum','impressum.php','impressum');
-
 // Hier werden die css/js/map resources freigeschaltet
 $router->map( 'GET', '/resources/[a:where]/[*:datei]', function( $where, $datei ) {
     // Setze den richtigen header
@@ -39,14 +36,20 @@ $router->map( 'GET', '/resources/[a:where]/[*:datei]', function( $where, $datei 
 // ****************APIs****************
 
 // Register
-$router->map('POST|GET', '/api/v1/register', function() {
-    require ROOTPATH.'/api/v1/register.php';
-});
+$router->map('POST|GET','/api/v1/users/register', function() { 
+    // Rückgabe erfolgt nur als json
+    header('Content-type: application/json');
+    require_once(ROOTPATH . '/routes/lib/BruteForceBlock.php');
+    require ROOTPATH.'/api/v1/users/register.php'; 
+} ,'register');
 
 // Login
-$router->map('POST|GET', '/api/v1/login', function() {
-    require ROOTPATH.'/api/v1/login.php';
-});
+$router->map('POST|GET','/api/v1/users/login', function() { 
+    // Rückgabe erfolgt nur als json
+    header('Content-type: application/json');
+    require_once(ROOTPATH . '/routes/lib/BruteForceBlock.php');
+    require ROOTPATH.'/api/v1/users/login.php'; 
+} ,'login');
 
 
 ?>

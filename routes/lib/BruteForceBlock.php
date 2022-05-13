@@ -1,6 +1,7 @@
 <?php
 namespace ejfrancis;
 /**
+ * !This file has been modified personalized!
  * Project  BruteForceBlock
  *
  * Link      https://github.com/ejfrancis/brute-force-block
@@ -387,5 +388,44 @@ class BruteForceBlock {
 			//return errors
 			return $ex;
 		}
+	}
+	
+	/**
+	 * Get real user ip
+	 *
+	 * Usage sample:
+	 * GetRealUserIp();
+	 * GetRealUserIp('ERROR',FILTER_FLAG_NO_RES_RANGE);
+	 *
+	 * @param string|null $default default return value if no valid ip found
+	 * @param int $filter_options filter options. default is FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+	 *
+	 * @return string real user ip
+	 */
+	public static function GetRealUserIp()
+	{
+		// Get real visitor IP behind CloudFlare network
+		if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+				$_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+				$_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+		}
+		$client  = @$_SERVER['HTTP_CLIENT_IP'];
+		$forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+		$remote  = $_SERVER['REMOTE_ADDR'];
+
+		if(filter_var($client, FILTER_VALIDATE_IP))
+		{
+			$ip = $client;
+		}
+		elseif(filter_var($forward, FILTER_VALIDATE_IP))
+		{
+			$ip = $forward;
+		}
+		else
+		{
+			$ip = $remote;
+		}
+
+		return $ip;
 	}
 }
