@@ -59,7 +59,12 @@ namespace ejfrancis;
 //brute force block
 class BruteForceBlock {
 	// array of throttle settings. # failed_attempts => response
-	private static $default_throttle_settings = [
+	private static $default_throttle_settings_login = [
+		50 => 2, 			//delay in seconds
+		150 => 4, 			//delay in seconds
+		300 => 'captcha'	//captcha
+	];
+	private static $default_throttle_settings_register = [
 		50 => 2, 			//delay in seconds
 		150 => 4, 			//delay in seconds
 		300 => 'captcha'	//captcha
@@ -177,7 +182,8 @@ class BruteForceBlock {
 		
 		//get local var of throttle settings. check if options parameter set
 		if($options == null){
-			$throttle_settings = self::$default_throttle_settings;
+			//$throttle_settings = self::$default_throttle_settings;
+			$throttle_settings = self::$default_throttle_settings_login;
 		}else{
 			//use options passed in
 			$throttle_settings = $options;
@@ -294,7 +300,8 @@ class BruteForceBlock {
 		
 		//get local var of throttle settings. check if options parameter set
 		if($options == null){
-			$throttle_settings = self::$default_throttle_settings;
+			//$throttle_settings = self::$default_throttle_settings;
+			$throttle_settings = self::$default_throttle_settings_register;
 		}else{
 			//use options passed in
 			$throttle_settings = $options;
