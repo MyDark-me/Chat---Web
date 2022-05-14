@@ -111,11 +111,11 @@ class Users {
         $password = $db->CleanDBData($password);
 
         // Aus der Datenbank das Passwort abfragen entweder mit dem Benutzername oder mit der E-Mail
-        $result = $db->query("SELECT `Username`, `Password` FROM `Nutzerdatenbank` WHERE `Username`= '$username' OR `Email`= '$username';");
+        $result = $db->query("SELECT `Password` FROM `Nutzerdatenbank` WHERE `Username`= '$username' OR `Email`= '$username';");
         $row = $result->fetch_assoc();
         
         // Prüfung ob das Passwort korrekt ist
-        if(password_verify($row['Password'], $password))
+        if(password_verify($password, $row['Password']))
             return true;
         else
             return false;

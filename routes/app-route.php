@@ -25,7 +25,14 @@ function app_db ()
 
 $router->map('GET',  '/', function() { require ROOTPATH .'/public/dashboard/index.html'; } ,'home');
 $router->map('GET', '/register', function() { require ROOTPATH .'/public/dashboard/register.html'; } ,'register');
-$router->map('GET', '/login', function() { require ROOTPATH .'/public/dashboard/login.html'; } ,'login');
+$router->map('GET', '/login', function() { 
+    
+    // Wir benutzen User Class um nutzerabfragen zu ermöglichen
+    $users = new Users();
+    $users->cookieAutoLogin();
+    $users->userLoggedIn();
+    require ROOTPATH .'/public/dashboard/login.html'; 
+} ,'login');
 $router->map('GET', '/logout', function() { 
     session_destroy();
     session_unset();
