@@ -66,11 +66,13 @@ class Users {
         $username = $db->CleanDBData($username);
         $password = $db->CleanDBData($password);
         $email = $db->CleanDBData($email);
+        // Passwort verslüsselungsrichtlinien
+        $options = [ "cost" => 15 ];
         // User hinzufügen
         $insert_arrays = array
         (
         'Username' => "$username",
-        'Password' => "$password",
+        'Password' => password_hash("$password", PASSWORD_BCRYPT, $options),
         'Email'=> "$email"
         );
         $db->Insert('Nutzerdatenbank',$insert_arrays);

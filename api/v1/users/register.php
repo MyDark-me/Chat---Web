@@ -22,10 +22,43 @@ switch ($BFBresponse['status']){
             $password = $_POST['password'] ?? null;
             $email = $_POST['email'] ?? null;
 
+            // Prüfen ob der Username den richrlinien entspricht
+            if(!preg_match('/^[a-zA-Z0-9]{3,20}$/', $username)) {
+                // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
+                http_response_code(202);
+                die(json_encode(array(
+                    'status'=>'failure',			
+                    'message' => ' Username is invalid',	
+                    'code' => '4',
+                ), JSON_PRETTY_PRINT));
+            }
+
+            // Prüfen ob die E-Mail Adresse den richrlinien entspricht
+            if(!preg_match('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/', $email)) {
+                // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
+                http_response_code(202);
+                die(json_encode(array(
+                    'status'=>'failure',			
+                    'message' => ' E-Mail is invalid',	
+                    'code' => '5',
+                ), JSON_PRETTY_PRINT));
+            }
+
+            // Prüfen ob das Passwort den richrlinien entspricht
+            if(!preg_match('/^[a-zA-Z0-9]{6,20}$/', $password)) {
+                // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
+                http_response_code(202);
+                die(json_encode(array(
+                    'status'=>'failure',			
+                    'message' => ' Password is invalid',	
+                    'code' => '6',
+                ), JSON_PRETTY_PRINT));
+            }
+
             // Abfragen ob die E-Mail nicht existiert, wird die Benutzername Prüfung durchgeführt
-            if(!$users->emailCount($email) == 0) {
+            if($users->emailCount($email) == 0) {
                 // Abfragen ob der Benutzer nicht existiert, kann der registrierungsfortschritt fortgesetzt werden
-                if(!$users->usernameCount($data) == 0) {
+                if($users->usernameCount($username) == 0) {
                     // Danach wird der user angelegt
                     $users->addUser($username, $password, $email);
                             
@@ -41,12 +74,20 @@ switch ($BFBresponse['status']){
                 } else {
                     // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
                     http_response_code(202);
-                    die(json_encode($feedback, JSON_PRETTY_PRINT));
+                    die(json_encode(array(
+                        'status'=>'failure',	
+                        'message' => 'Username already exists',	
+                        'code' => '10_005',
+                    ), JSON_PRETTY_PRINT));
                 }
             } else {
                 // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
                 http_response_code(202);
-                die(json_encode($feedback, JSON_PRETTY_PRINT));
+                die(json_encode(array(
+                    'status'=>'failure',	
+                    'message' => 'Email already exists',	
+                    'code' => '10_005',
+                ), JSON_PRETTY_PRINT));
             }
         } else {
             // Falls nicht gebe eine Fehlermeldung zurück
