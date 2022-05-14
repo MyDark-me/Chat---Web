@@ -7,6 +7,9 @@
 use ejfrancis\BruteForceBlock;
 // Wir benutzen User Class um nutzerabfragen zu ermöglichen
 $users = new Users();
+
+$users->cookieAutoLogin();
+
 // Erstellen Sie eine Instanz der BruteForceBlock-Klasse ob ein Loginversuch möglich ist
 $BFBresponse = BruteForceBlock::getLoginStatus();
 // Switch-Anweisung zur Abfrage des Login-Status
@@ -18,29 +21,40 @@ switch ($BFBresponse['status']){
             // Die Eingaben werden in variablen gespeichert
             $username = $_POST['username'] ?? null;
             $password = $_POST['password'] ?? null;
-                
             // Abfrage ob der Benutzer existiert, wird die Passwortprüfung durchgeführt
-            if($users->usernameCount($username) != 0 && $users->checkPassword($username, $password)) {
-                if (session_status() === PHP_SESSION_NONE) session_start();
-                // Session-Variablen werden gesetzt
-                $users->setSession($username, isset($_POST['remember']));
-                        
-                // Erfolgreich eingeloggt
-                http_response_code(200);
-                die(json_encode(array
-		        (
-			        'status'=>'succes',		
-			        'message' => 'Logged in succesfully',	
-                    'code' => '201',
-		        ), JSON_PRETTY_PRINT));
+            if($users->validUserCount($username) != 0) {
+                if($users->checkPassword($username, $password)) {
+                    if (session_status() === PHP_SESSION_NONE) session_start();
+                    // Session-Variablen werden gesetzt
+                    $users->setSession($username, isset($_POST['remember']));
+                            
+                    // Erfolgreich eingeloggt
+                    http_response_code(200);
+                    die(json_encode(array
+                    (
+                        'status'=>'succes',		
+                        'message' => 'Logged in succesfully',	
+                        'code' => '201',
+                    ), JSON_PRETTY_PRINT));
+                } else {
+                    // Falls der Einloggversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
+                    http_response_code(202);
+                    // Der liste hinzufügen, dass ein Falscher Loginversuch statt gefunden hat
+                    $BFBresponse = BruteForceBlock::addFailedLoginAttempt($users->useridOf($username), BruteForceBlock::GetRealUserIp());
+                    die(json_encode(array(
+                        'status'=>'failure',			
+                        'message' => ' Password is invalid',	
+                        'code' => '3',
+                    ), JSON_PRETTY_PRINT)); 
+                }
             } else {
                 // Falls der Einloggversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
                 http_response_code(202);
                 // Der liste hinzufügen, dass ein Falscher Loginversuch statt gefunden hat
-                $BFBresponse = BruteForceBlock::addFailedLoginAttempt($username, GetRealUserIp());
+                $BFBresponse = BruteForceBlock::addFailedLoginAttempt($users->useridOf($username), BruteForceBlock::GetRealUserIp());
                 die(json_encode(array(
 			        'status'=>'failure',			
-			        'message' => ' 	Email address is invalid',	
+			        'message' => ' Username or Email address is invalid',	
                     'code' => '2',
 		        ), JSON_PRETTY_PRINT));
             }

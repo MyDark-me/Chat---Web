@@ -58,7 +58,6 @@ $router->map('POST', AJAXPATH . '/users/register', function() {
 $router->map('POST', AJAXPATH . '/users/login', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
-    $users->cookieAutoLogin();
     require_once ROOTPATH . AJAXPATH . '/users/login.php'; 
 });
 

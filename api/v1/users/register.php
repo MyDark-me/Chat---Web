@@ -14,7 +14,7 @@ switch ($BFBresponse['status']){
     // Falls es sicher ist
     case 'safe':
         // Der liste hinzufügen, dass ein Registrierungsversuch statt gefunden hat
-        $BFBresponse = BruteForceBlock::addRegisterRequestAttempt(GetRealUserIp());
+        $BFBresponse = BruteForceBlock::addRegisterRequestAttempt(BruteForceBlock::GetRealUserIp());
         // Abfrage ob username und password gesendet wurden
         if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email'])) {
             // Die Eingaben werden in variablen gespeichert
@@ -23,9 +23,9 @@ switch ($BFBresponse['status']){
             $email = $_POST['email'] ?? null;
 
             // Abfragen ob die E-Mail nicht existiert, wird die Benutzername Prüfung durchgeführt
-            if(!$users->emailCount($email) != 0) {
+            if(!$users->emailCount($email) == 0) {
                 // Abfragen ob der Benutzer nicht existiert, kann der registrierungsfortschritt fortgesetzt werden
-                if(!$users->usernameCount($data) != 0) {
+                if(!$users->usernameCount($data) == 0) {
                     // Danach wird der user angelegt
                     $users->addUser($username, $password, $email);
                             

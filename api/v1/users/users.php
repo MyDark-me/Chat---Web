@@ -77,6 +77,25 @@ class Users {
     }
 
     /**
+     * Zählt die Anzahl der Benutzer mit der angegebenen Benutzernamen oder E-Mail Adresse
+     *
+     * @param string $username Der zu prüfende Benutzername oder E-Mail Adresse
+     */
+    public function validUserCount($username) {
+        // Datenbankverbindung herstellen
+        $db = app_db();   
+        // SQL gegen injektion schützen
+        $username = $db->CleanDBData($username);
+        // Abfrage der E-Mail anzahl
+        $result = $db->select("SELECT `Username` FROM `Nutzerdatenbank` WHERE `Username`= '$username' OR `Email`= '$username';");
+        // Rückgabe wie viele user mit diesem username existieren
+        if($result != false)
+            return $result;
+        else
+            return false;
+    }
+
+    /**
      * Prüft das Passwort mit dem in der Datenbank gespeicherten Passwort
      *
      * @param string $username Der zu prüfende Benutzername
@@ -90,14 +109,37 @@ class Users {
         $password = $db->CleanDBData($password);
 
         // Aus der Datenbank das Passwort abfragen entweder mit dem Benutzername oder mit der E-Mail
-        $result = $db->query("SELECT `Password` FROM `Nutzerdatenbank` WHERE `Username`= '$username' OR `Email`= '$username';");
+        $result = $db->query("SELECT `Username`, `Password` FROM `Nutzerdatenbank` WHERE `Username`= '$username' OR `Email`= '$username';");
         $row = $result->fetch_assoc();
         
         // Prüfung ob das Passwort korrekt ist
-        if(assword_verify($row['Password'], $password))
+        if(password_verify($row['Password'], $password))
             return true;
         else
             return false;
+    }
+
+    /**
+     * Gibt von dem Username oder E-Mail Adresse falls möglich die ID zurück
+     * Sonst bekommt man eine 0
+     *
+     * @param string $username Der zu prüfende Benutzername oder E-Mail Adresse
+     */
+    public function useridOf($username) {
+        // Datenbankverbindung herstellen
+        $db = app_db();   
+        // SQL gegen injektion schützen
+        $username = $db->CleanDBData($username);
+
+        // Aus der Datenbank das Passwort abfragen entweder mit dem Benutzername oder mit der E-Mail
+        $result = $db->query("SELECT `ID` FROM `Nutzerdatenbank` WHERE `Username`= '$username' OR `Email`= '$username';");
+        $row = $result->fetch_assoc();
+        
+        // Rückgabe der User ID
+        if(!empty($row['ID']))
+            return $row['ID'];
+        else
+            return 0;
     }
 
     /**

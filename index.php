@@ -58,7 +58,7 @@ $router->setBasePath($base_path ? "/".$base_path : "");
 
 //********* REQUEST MANAGEMENT *********
 //Einbindung der Routes Management Class
-require_once ROOTPATH. '/routes/app-route.php';
+require_once ROOTPATH . '/routes/app-route.php';
 
 //Holt sich die aktuell abgefragte URL
 $match = $router->matcher();
