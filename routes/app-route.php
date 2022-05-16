@@ -24,32 +24,18 @@ function app_db ()
 // ****************Weiterleitung zur richtigen Seite****************
 
 $router->map('GET',  '/', function() { require ROOTPATH .'/public/dashboard/index.html'; } ,'home');
-$router->map('GET', '/register', function() { require ROOTPATH .'/public/dashboard/register.html'; } ,'register');
-$router->map('GET', '/login', function() { 
-    
-    // Wir benutzen User Class um nutzerabfragen zu ermöglichen
-    $users = new Users();
-    $users->cookieAutoLogin();
-    require ROOTPATH .'/public/dashboard/login.html'; 
-} ,'login');
-$router->map('GET', '/logout', function() { 
-    $users = new Users();
-    $users->logoutUser();
-    if($users->userLoggedIn())
-        // Header aktualisieren
-        header("Location: /login");
-    require ROOTPATH .'/public/dashboard/logout.html'; 
-} ,'logout');
 
 // Hier werden die css/js/map resources freigeschaltet
+/**
+ * Das hier gibt dynamisch die css/js/map resources frei.
+ * /resources/<ordnernamen>/<filenamen>
+ */
 $router->map( 'GET', '/resources/[a:where]/[*:datei]', function( $where, $datei ) {
-    // Setze den richtigen header
+    // Setze ggf. den richtigen header
     if(str_ends_with($datei, '.css')) 
         header("Content-Type: text/css");
     if(str_ends_with($datei, '.js')) 
         header("Content-Type: application/javascript");
-    if(str_ends_with($datei, '.map')) 
-        header("Content-Type: application/json");
     // Gebe den Inhalt der Datei aus
     echo file_get_contents(ROOTPATH.'/public/dashboard/resources/' . $where . '/' . $datei);
 });
@@ -61,14 +47,14 @@ $router->map('POST', AJAXPATH . '/users/register', function() {
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH . AJAXPATH . '/users/register.php'; 
-});
+}, 'register');
 
 // Login
 $router->map('POST', AJAXPATH . '/users/login', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH . AJAXPATH . '/users/login.php'; 
-});
+}, 'login');
 
 $router->map('POST|GET', AJAXPATH . '/users/account/[a:type]/[*:data]', function( $type, $data ) {
     // Rückgabe erfolgt nur als json

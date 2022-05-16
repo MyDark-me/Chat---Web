@@ -125,12 +125,12 @@ class Users {
     }
 
     /**
-     * Speichert ein persönliches Thoken in den Cookies
+     * Gibt den Persönlichen Token zurück
      *
-     * @param string $username Den Benutzernamen um den user zu identifizieren
+     * @param int $userId Die ID des Benutzers
      * @return string Gibt den Token zurück
      */
-    public static function getToken($userId, $remember) {
+    public static function getToken($userId) {
         // Dauer des Tokens in Sekunden das 7 Tage sind
         $expired_seconds = time() + 60 * 60 * 24 * 7;
 
@@ -138,6 +138,7 @@ class Users {
         $payload = [
             'iat' => time(),
             'uid' => 1,
+            'bot' => true,
             'exp' => $expired_seconds,
             'iss' => 'localhost'
         ];
@@ -146,6 +147,31 @@ class Users {
 
         return Token::customPayload($payload, $secret);
     }
-    
+
+    /**
+     * Prüft ob der Token gültig ist
+     *
+     * @param string $token Der zu prüfende Token
+     * @return bool True wenn der Token gültig ist, sonst false
+     */
+    public static function verifyToken($token) {
+        if(Token::verify($token))
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * Prüft ob der Token für bots gültig ist
+     *
+     * @param string $token Der zu prüfende Token
+     * @return bool True wenn der Token gültig ist, sonst false
+     */
+    public static function verifyBotToken($token) {
+        if(Token::verify($token))
+            return true;
+        else
+            return false;
+    }
 }
 ?>

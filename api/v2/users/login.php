@@ -5,10 +5,7 @@
  */
 
 use ejfrancis\BruteForceBlock;
-// Wir benutzen User Class um nutzerabfragen zu ermöglichen
-$users = new Users();
-
-$users->cookieAutoLogin();
+use Chat\Users;
 
 // Erstellen Sie eine Instanz der BruteForceBlock-Klasse ob ein Loginversuch möglich ist
 $BFBresponse = BruteForceBlock::getLoginStatus();
@@ -22,14 +19,9 @@ switch ($BFBresponse['status']){
             $username = $_POST['username'] ?? null;
             $password = $_POST['password'] ?? null;
             // Abfrage ob der Benutzer existiert, wird die Passwortprüfung durchgeführt
-            if($users->validUserCount($username) != 0) {
-                if($users->checkPassword($username, $password)) {
-                    if (session_status() === PHP_SESSION_NONE) session_start();
-                    // Session-Variablen werden gesetzt
-                    if($users->userLoggedIn())
-                        // Header aktualisieren
-                        header("Location: /");
-                    $users->setSession($users->useridOf($username), isset($_POST['remember']));
+            if(Users::existEmail($username) || Users::existUsername($username)) {
+                if(Users::checkPassword($username, $password)) {
+                    // TODO: Login erfolgreich, Session starten
                             
                     // Erfolgreich eingeloggt
                     http_response_code(200);

@@ -5,8 +5,8 @@
  */
 
 use ejfrancis\BruteForceBlock;
-// Wir benutzen User Class um nutzerabfragen zu ermöglichen
-$users = new Users();
+use Chat\Users;
+
 // Erstellen Sie eine Instanz der BruteForceBlock-Klasse ob ein Registrierungsversuch möglich ist
 $BFBresponse = BruteForceBlock::getRegisterRequestStatus();
 // Switch-Anweisung zur Abfrage des Register Request Status
@@ -28,7 +28,7 @@ switch ($BFBresponse['status']){
                 http_response_code(202);
                 die(json_encode(array(
                     'status'=>'failure',			
-                    'message' => ' Username is invalid',	
+                    'message' => 'Username is invalid',	
                     'code' => '4',
                 ), JSON_PRETTY_PRINT));
             }
@@ -39,7 +39,7 @@ switch ($BFBresponse['status']){
                 http_response_code(202);
                 die(json_encode(array(
                     'status'=>'failure',			
-                    'message' => ' E-Mail is invalid',	
+                    'message' => 'E-Mail is invalid',	
                     'code' => '5',
                 ), JSON_PRETTY_PRINT));
             }
@@ -50,15 +50,15 @@ switch ($BFBresponse['status']){
                 http_response_code(202);
                 die(json_encode(array(
                     'status'=>'failure',			
-                    'message' => ' Password is invalid',	
+                    'message' => 'Password is invalid',	
                     'code' => '6',
                 ), JSON_PRETTY_PRINT));
             }
 
             // Abfragen ob die E-Mail nicht existiert, wird die Benutzername Prüfung durchgeführt
-            if($users->emailCount($email) == 0) {
+            if(!Users::existEmail($username)) {
                 // Abfragen ob der Benutzer nicht existiert, kann der registrierungsfortschritt fortgesetzt werden
-                if($users->usernameCount($username) == 0) {
+                if(!Users::existUsername($username)) {
                     // Danach wird der user angelegt
                     $users->addUser($username, $password, $email);
                             
