@@ -4,6 +4,8 @@
  * Das hier stellt die Standard-Routen für die App bereit.
  */
 
+ use codewithmark\SimpleDB;
+
 // MySQL Verbindung
 function app_db ()
 {
