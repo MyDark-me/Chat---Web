@@ -34,9 +34,10 @@ switch ($BFBresponse['status']){
                         ), JSON_PRETTY_PRINT));
                     }
 
+                    // Dauer des Tokens in Sekunden das 7 Tage sind
+                    $expired_seconds = time() + 60 * 60 * 24 * 7;
                     // Login erfolgreich, Cookie wird erstellt
-
-                    $_COOKIE['chat_token'] = Users::createToken($username);
+                    setcookie('chat_token', Users::createToken($username), $expired_seconds);
                             
                     // Erfolgreich eingeloggt
                     http_response_code(200);

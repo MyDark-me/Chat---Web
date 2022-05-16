@@ -139,11 +139,11 @@ class Users {
 
         // Erstellt mit ReallySimpleJWT einen Token
         $payload = [
-            'iat' => time(),
-            'uid' => 1,
+            'created' => time(),
+            'userid' => $userId,
             'bot' => true,
-            'exp' => $expired_seconds,
-            'iss' => 'localhost'
+            'expiration' => $expired_seconds,
+            'issuer' => $_SERVER['HTTP_HOST']
         ];
         
         require_once ROOTPATH . '/protected/config.php';
