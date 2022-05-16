@@ -14,4 +14,7 @@ define('DB_PASSWORD', '');
 // Datenbank Name
 define('DB_NAME', 'webchat');
 
+// Token secret
+define('TOKEN_SECRET', 'Hello&MikeFooBar123');
+
 ?>

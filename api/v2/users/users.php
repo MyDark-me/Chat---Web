@@ -7,6 +7,9 @@
 namespace Chat;
 
 use ReallySimpleJWT\Token;
+use ReallySimpleJWT\Parse;
+use ReallySimpleJWT\Jwt;
+use ReallySimpleJWT\Decode;
 
 class Users {
 
@@ -143,8 +146,8 @@ class Users {
             'iss' => 'localhost'
         ];
         
-        $secret = 'Hello&MikeFooBar123';
-
+        require_once ROOTPATH . '/protected/config.php';
+        $secret = TOKEN_SECRET;
         return Token::customPayload($payload, $secret);
     }
 
@@ -160,15 +163,15 @@ class Users {
 
         // Erstellt mit ReallySimpleJWT einen Token
         $payload = [
-            'iat' => time(),
-            'uid' => 1,
+            'created' => time(),
+            'userid' => $userId,
             'bot' => true,
-            'exp' => $expired_seconds,
-            'iss' => 'localhost'
+            'expiration' => $expired_seconds,
+            'issuer' => $_SERVER['HTTP_HOST']
         ];
-        
-        $secret = 'Hello&MikeFooBar123';
 
+        require_once ROOTPATH . '/protected/config.php';
+        $secret = TOKEN_SECRET;
         return Token::customPayload($payload, $secret);
     }
 
@@ -179,7 +182,10 @@ class Users {
      * @return bool True wenn der Token gültig ist, sonst false
      */
     public static function verifyToken($token) {
-        if(Token::verify($token))
+        require_once ROOTPATH . '/protected/config.php';
+        $secret = TOKEN_SECRET;
+
+        if(Token::validate($token, $secret) && Token::validateExpiration($token) && Token::validateNotBefore($token))
             return true;
         else
             return false;
@@ -192,8 +198,25 @@ class Users {
      * @return bool True wenn der Token gültig ist, sonst false
      */
     public static function verifyBotToken($token) {
-        if(Token::verify($token))
-            return true;
+        require_once ROOTPATH . '/protected/config.php';
+        $secret = TOKEN_SECRET;
+
+        if(Token::validate($token, $secret) && Token::validateExpiration($token) && Token::validateNotBefore($token)) {
+            // Parse Token
+            $jwt = new Jwt($token);
+
+            $parse = new Parse($jwt, new Decode());
+            $parsed = $parse->parse();
+            
+            // Return the token payload claims as an associative array.
+            $parsed->getPayload();
+
+            // Prüfung ob der Token für einen Bot ist
+            if($parsed->getPayload()['bot'])
+                return true;
+            else
+                return false;
+        }
         else
             return false;
     }
