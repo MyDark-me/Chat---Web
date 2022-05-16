@@ -18,10 +18,24 @@ switch ($BFBresponse['status']){
             // Die Eingaben werden in variablen gespeichert
             $username = $_POST['username'] ?? null;
             $password = $_POST['password'] ?? null;
+            $token = $_COOKIE['chat_token'] ?? null;
             // Abfrage ob der Benutzer existiert, wird die Passwortprüfung durchgeführt
             if(Users::existEmail($username) || Users::existUsername($username)) {
                 if(Users::checkPassword($username, $password)) {
-                    // TODO: Login erfolgreich, Session starten
+                    if(!empty($token) && Users::verifyToken($token)) { 
+                        // Already logged in
+                        http_response_code(200);
+                        die(json_encode(array
+                        (
+                            'status'=>'failure',		
+                            'message' => 'Already logged in',	
+                            'code' => '7',
+                        ), JSON_PRETTY_PRINT));
+                    }
+
+                    // Login erfolgreich, Cookie wird erstellt
+
+                    $_COOKIE['chat_token'] = Users::createToken($username);
                             
                     // Erfolgreich eingeloggt
                     http_response_code(200);

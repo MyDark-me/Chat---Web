@@ -7,7 +7,7 @@
 // MySQL Verbindung
 function app_db ()
 {
-    require_once ROOTPATH.'/protected/config.php';
+    require_once ROOTPATH . '/protected/config.php';
 
     $db_conn = array(
         'host' => DB_HOST, 

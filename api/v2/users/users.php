@@ -130,7 +130,7 @@ class Users {
      * @param int $userId Die ID des Benutzers
      * @return string Gibt den Token zurück
      */
-    public static function getToken($userId) {
+    public static function createToken($userId) {
         // Dauer des Tokens in Sekunden das 7 Tage sind
         $expired_seconds = time() + 60 * 60 * 24 * 7;
 
