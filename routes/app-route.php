@@ -60,7 +60,7 @@ $router->map('POST', AJAXPATH . '/users/login', function() {
 }, 'login');
 
 // Logout
-$router->map('POST', AJAXPATH . '/users/logout', function() { 
+$router->map('POST|GET', AJAXPATH . '/users/logout', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH . AJAXPATH . '/users/logout.php'; 

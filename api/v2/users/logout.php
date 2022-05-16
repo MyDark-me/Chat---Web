@@ -4,8 +4,8 @@
  * Loggt den Benutzer aus
  */
 // Cookie löschen
-$_COOKIE['chat_token'] = "";
 if(isset($_COOKIE['chat_token'])) {
+    setcookie('chat_token', null, -1, $_SERVER['HTTP_HOST']); 
     unset($_COOKIE['chat_token']);
 }
 
