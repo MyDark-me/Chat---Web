@@ -1,0 +1,6 @@
+{
+    "require": {
+        "rbdwllr/reallysimplejwt": "^5.0",
+        "altorouter/altorouter": "1.1.0"
+    }
+}

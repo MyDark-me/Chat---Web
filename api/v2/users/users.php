@@ -4,6 +4,7 @@
  * Das hier stellt die Datenbank user info abfragen bereit.
  * Verändert ein user Profil
  */
+namespace Chat;
 
 use ReallySimpleJWT\Token;
 
@@ -145,83 +146,6 @@ class Users {
 
         return Token::customPayload($payload, $secret);
     }
-
-    // ********************* PHP Session *********************
-
-    /**
-     * Prüft ob der Benutzer länger als 30 Minuten nichts gemacht hat
-     *
-     */
-    public function setUserLoginStatus() {
-        // Bei keine Aktivität mehr als 30 minuten soll der nutzer automatisch ausgeloggt werden
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
-            // request was 30 minutes ago
-            session_destroy();
-            session_unset();
-        }
-        $_SESSION['LAST_ACTIVITY'] = time(); // Aktualisiere die letzte Aktivität
-        if (session_status() != 2 || !isset($_SESSION['token']) || $_SESSION['token'] == "") {
-            // there is no session or the session is not set
-            session_destroy();
-            session_unset();
-            // Header aktualisieren zu login
-            header('Location: /login');
-        }
-    }
-
-    /**
-     * Prüft ob der Benutzer länger als 30 Minuten nichts gemacht hat
-     *
-     */
-    public function logoutUser() {
-        // Session löschen
-        if(isset($_SESSION['token'])) $_SESSION['token'] == "";
-        session_destroy();
-        session_unset();
-        // Cookies löschen
-        if(isset($_COOKIE['chat_token'])) $_COOKIE['chat_token'] == "";
-        // Header aktualisieren zu login
-        header('Location: /login');
-    }
-
-    /**
-     * Prüft ob der Benutzer eingeloggt ist
-     *
-     */
-    public function userLoggedIn() {
-        if (session_status() === PHP_SESSION_NONE) session_start();
-        if (!isset($_SESSION['token']) || $_SESSION['token'] == "") {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Prüft ob automatisch einloggen möglich ist.
-     * Falls ja, wird der Nutzer automatisch eingeloggt
-     * 
-     */
-    public function cookieAutoLogin() {
-        $username = null;
-        if (isset($_COOKIE['chat_token'])) {
-            // Validierung des Tokens
-            $result = Token::validate($token, 'sec!ReT423*&');
-            if ($result) {
-                // Token ist gültig
-                $username = $result['username'];
-            }
-            // Setze neuen Token
-            if (!empty($username)) {
-                $_SESSION['token'] = $token;
-                $_SESSION['LAST_ACTIVITY'] = time();
-                if ($remember == true) {
-                    $expired_seconds = time() + 60 * 60 * 24 * 7;
-                    setcookie('chat_token', $token, $expired_seconds);
-                }
-            }
-        }
-    }
-
     
 }
 ?>

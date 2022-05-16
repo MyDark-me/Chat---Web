@@ -5,11 +5,11 @@
  */
 
 // Wir initialisieren die User Class um User Einstellungen zu ermöglichen
-$users = new Users();
+use Chat\Users;
 
 // Rückgabe ob die E-Mail Adresse bereits vorhanden ist
 if($type == 'email') {
-    if($users->emailCount($data) != 0) {
+    if(Users::existEmail($data)) {
         // Falls der die E-Mail existiert, wird eine existierende E-Mail zurückgegeben
         http_response_code(200);
         die(json_encode(array(
@@ -32,7 +32,7 @@ if($type == 'email') {
 
 if($type == 'username') {
     // Abfrage ob der Username existiert
-    if($users->usernameCount($data) != 0) {
+    if(Users::existUsername($data)) {
         // Falls der die E-Mail existiert, wird eine existierende E-Mail zurückgegeben
         http_response_code(200);
         die(json_encode(array(
@@ -52,10 +52,6 @@ if($type == 'username') {
         ), JSON_PRETTY_PRINT));
     }
 }
-/*if($type == 'test') {
-    $feedback = json_decode(file_get_contents(AJAX_URL . '/users/account/email/' . $data));
-    echo $feedback->code; 
-}*/
 
 // Wenn ein falscher Typ angegeben wurde, wird eine Fehlermeldung zurückgegeben
 http_response_code(404);
