@@ -9,8 +9,6 @@ use ReallySimpleJWT\Token;
 
 class Users {
 
-    private static $salt = '1234_oder_so';
-
     public function __construct() {
     }
 
@@ -150,23 +148,19 @@ class Users {
      * @param string $username Den Benutzernamen um den user zu identifizieren
      * @param string $remember Ob der Benutzer das Token merken möchte
      */
-    public function setSession($username, $remember) {
+    public function setSession($userId, $remember) {
         // Erstellt mit ReallySimpleJWT einen Token
-        $payload = [
-            'iat' => time(),
-            'username' => $username,
-            'exp' => time() + 10,
-            'iss' => 'localhost'
-        ];
-        $token = Token::customPayload($payload, $salt);;
-       
+        $expired_seconds = time() + 60 * 60 * 24 * 7;
+        
+        $issuer = 'localhost';
+
+        $token = Token::create($userId, 'sec!ReT423*&', $expired_seconds, $issuer);
         // Setze den Token in die Session
         $_SESSION['token'] = $token;
         $_SESSION['LAST_ACTIVITY'] = time();
         if ($remember == true) {
             // Token in den Cookies speichern
-            $expired_seconds = time() + 60 * 60 * 24 * 7;
-            setcookie('chat_token', $salt . $token, $expired_seconds);
+            setcookie('chat_token', $token, $expired_seconds);
         }
     }
 
@@ -190,14 +184,32 @@ class Users {
             header('Location: /login');
         }
     }
+
+    /**
+     * Prüft ob der Benutzer länger als 30 Minuten nichts gemacht hat
+     *
+     */
+    public function logoutUser() {
+        // Session löschen
+        if(isset($_SESSION['token'])) $_SESSION['token'] == "";
+        session_destroy();
+        session_unset();
+        // Cookies löschen
+        if(isset($_COOKIE['chat_token'])) $_COOKIE['chat_token'] == "";
+        // Header aktualisieren zu login
+        header('Location: /login');
+    }
+
     /**
      * Prüft ob der Benutzer eingeloggt ist
      *
      */
     public function userLoggedIn() {
-        if (isset($_SESSION['token'])) {
-            header("Location: /");
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        if (!isset($_SESSION['token']) || $_SESSION['token'] == "") {
+            return false;
         }
+        return true;
     }
 
     /**
@@ -209,7 +221,7 @@ class Users {
         $username = null;
         if (isset($_COOKIE['chat_token'])) {
             // Validierung des Tokens
-            $result = Token::validate($token, $salt);
+            $result = Token::validate($token, 'sec!ReT423*&');
             if ($result) {
                 // Token ist gültig
                 $username = $result['username'];
@@ -224,8 +236,6 @@ class Users {
                 }
             }
         }
-        // Header aktualisieren
-        header('Location: /');
     }
 
     

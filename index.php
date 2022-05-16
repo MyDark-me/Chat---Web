@@ -38,10 +38,32 @@ define("ROOTPATH", str_replace("\\", "/",  dirname(__FILE__) ));
 //********* GLOBAL INCLUDES *********
 
 // Libs
-foreach (glob(ROOTPATH . '/routes/lib/*') as $filename) {
-  if(str_ends_with($filename, '.php')) require_once $filename;
+/*
+foreach (glob(ROOTPATH . '/routes/lib/*.php') as $filename) {
+  require_once $filename;
 }
-// Sql Lib
+*/
+require_once ROOTPATH . '/routes/lib/SimpleDBClass.php';
+require_once ROOTPATH . '/routes/lib/BruteForceBlock.php';
+require_once ROOTPATH . '/routes/lib/AltoRouter.php';
+
+// Import ReallySimpleJWT
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Token.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Tokens.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Build.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Interfaces/Validator.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Interfaces/Encode.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Helper/Validator.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Helper/JsonEncoder.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Helper/Base64.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Validate.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Encoders/EncodeHS256.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Encoders/EncodeHS256Strong.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Exception/EncodeException.php';
+require_once ROOTPATH . '/routes/lib/ReallySimpleJWT/Jwt.php';
+
+
+// Other Libs
 require_once ROOTPATH . AJAXPATH . '/users/users.php';
 
 //********* Users *********

@@ -30,12 +30,14 @@ $router->map('GET', '/login', function() {
     // Wir benutzen User Class um nutzerabfragen zu ermöglichen
     $users = new Users();
     $users->cookieAutoLogin();
-    $users->userLoggedIn();
     require ROOTPATH .'/public/dashboard/login.html'; 
 } ,'login');
 $router->map('GET', '/logout', function() { 
-    session_destroy();
-    session_unset();
+    $users = new Users();
+    $users->logoutUser();
+    if($users->userLoggedIn())
+        // Header aktualisieren
+        header("Location: /login");
     require ROOTPATH .'/public/dashboard/logout.html'; 
 } ,'logout');
 
