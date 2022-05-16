@@ -149,6 +149,30 @@ class Users {
     }
 
     /**
+     * Gibt einen Bot Token zurück
+     *
+     * @param int $userId Die ID des Benutzers
+     * @return string Gibt den Token zurück
+     */
+    public static function createBotToken($userId) {
+        // Dauer des Tokens in Sekunden das 7 Tage sind
+        $expired_seconds = time() + 60 * 60 * 24 * 7;
+
+        // Erstellt mit ReallySimpleJWT einen Token
+        $payload = [
+            'iat' => time(),
+            'uid' => 1,
+            'bot' => true,
+            'exp' => $expired_seconds,
+            'iss' => 'localhost'
+        ];
+        
+        $secret = 'Hello&MikeFooBar123';
+
+        return Token::customPayload($payload, $secret);
+    }
+
+    /**
      * Prüft ob der Token gültig ist
      *
      * @param string $token Der zu prüfende Token

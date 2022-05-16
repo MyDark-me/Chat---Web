@@ -19,6 +19,7 @@ switch ($BFBresponse['status']){
             $username = $_POST['username'] ?? null;
             $password = $_POST['password'] ?? null;
             $token = $_COOKIE['chat_token'] ?? null;
+            
             // Abfrage ob der Benutzer existiert, wird die Passwortprüfung durchgeführt
             if(Users::existEmail($username) || Users::existUsername($username)) {
                 if(Users::checkPassword($username, $password)) {

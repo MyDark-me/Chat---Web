@@ -1,24 +1,24 @@
 <?php
 namespace codewithmark;
 
-/*
-  !This file has been modified personalized!
- 
-  Project  SimpleDBClass  
-
-  Author    Mark Kumar
-
-  Site      http://codewithmark.com/
-  
-  Link      https://github.com/codewithmark/php-simple-database-functions
-
-  Howto Doc http://codewithmark.com/php-simple-database-class
-  
-  version   1.17.05.08
-
-  copyright Copyright (c) 2010-2016
-  license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
-
+/**
+ * !This file has been modified personalized!
+ * 
+ * Project  SimpleDBClass  
+ * 
+ * Author    Mark Kumar
+ * 
+ * Site      http://codewithmark.com/
+ *   
+ * Link      https://github.com/codewithmark/php-simple-database-functions
+ * 
+ * Howto Doc http://codewithmark.com/php-simple-database-class
+ *   
+ * version   1.17.05.08
+ * 
+ * copyright Copyright (c) 2010-2016
+ * license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
+ * 
  */
 
 class SimpleDBClass

@@ -23,8 +23,8 @@ function app_db ()
 
 // ****************Weiterleitung zur richtigen Seite****************
 
-$router->map('GET',  '/', function() { require ROOTPATH .'/public/dashboard/index.html'; } ,'home');
-$router->map('GET',  '/impressum', function() { require ROOTPATH .'/public/dashboard/impressum.html'; } ,'impressum');
+$router->map('GET',  '/', function() { require ROOTPATH . '/public/dashboard/index.html'; } ,'home');
+$router->map('GET',  '/impressum', function() { require ROOTPATH . '/public/dashboard/impressum.html'; } ,'impressum');
 
 // Hier werden die css/js/map resources freigeschaltet
 /**
@@ -38,7 +38,7 @@ $router->map( 'GET', '/resources/[a:where]/[*:datei]', function( $where, $datei 
     if(str_ends_with($datei, '.js')) 
         header("Content-Type: application/javascript");
     // Gebe den Inhalt der Datei aus
-    echo file_get_contents(ROOTPATH.'/public/dashboard/resources/' . $where . '/' . $datei);
+    echo file_get_contents(ROOTPATH . '/public/dashboard/resources/' . $where . '/' . $datei);
 });
 
 // ****************APIs****************
@@ -56,6 +56,13 @@ $router->map('POST', AJAXPATH . '/users/login', function() {
     header('Content-type: application/json');
     require_once ROOTPATH . AJAXPATH . '/users/login.php'; 
 }, 'login');
+
+// Logout
+$router->map('POST', AJAXPATH . '/users/logout', function() { 
+    // Rückgabe erfolgt nur als json
+    header('Content-type: application/json');
+    require_once ROOTPATH . AJAXPATH . '/users/logout.php'; 
+}, 'logout');
 
 $router->map('POST|GET', AJAXPATH . '/users/account/[a:type]/[*:data]', function( $type, $data ) {
     // Rückgabe erfolgt nur als json
