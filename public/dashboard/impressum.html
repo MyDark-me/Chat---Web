@@ -1,0 +1,131 @@
+<!--HTML-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- META TAGS -->
+  <meta content="Sebastian Schindler, Paul Rakutt" name="Author">
+  </meta>
+  <meta content="Selfhosted WebChat Application with Roles and Friends" name="Description">
+  </meta>
+  <meta content="MyDark.me, CookieLeaks.de 2022" name="Copyright">
+  </meta>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  </meta>
+  <meta charset="utf-8">
+  </meta>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- TITLE & IMPORTS -->
+  <title>My Dark Chat</title>
+  <link rel="stylesheet" href="resources/Bootstrap/bootstrap.css">
+  </link>
+  <link rel="stylesheet" href="resources/FontAwesome/all.css">
+  </link>
+  <!-- jQuery -->
+  <script src="resources/jQuery/jquery.js"></script>
+  <!-- Popper -->
+  <script src="resources/Popper/popper.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="resources/Bootstrap/bootstrap.bundle.js"></script>
+  <!-- FontAwesome -->
+  <script src="resources/FontAwesome/all.js"></script>
+</head>
+
+<body class="bg-dark">
+  <noscript>
+    <h1>Hab Kekse!</h1>
+  </noscript>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">WebChat</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#"><i class="fa-solid fa-house"></i> Home<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-grip"></i> Mehr </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#"><i class="fa-solid fa-flask-vial"></i> Demo</a>
+            <a class="dropdown-item" href="https://github.com/MyDark-me/Chat-Web" target="_blank"><i
+                class="fa-solid fa-code-branch"></i> GitHub</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#"><i class="fa-solid fa-address-card"></i> Impressum</a>
+          </div>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><button type="button" class="btn btn-success form-group btn-group" data-toggle="modal" data-target="#login">Login</button></li>
+        <li>&nbsp;</li>
+        <li><button type="button" class="btn btn-danger btn-group" data-toggle="modal" data-target="#register">Register</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">WebChat - MyDark-Me</h1>
+      <p class="lead">Hier wird die Webpräsenz für den WebChat von MyDark.Me entstehen!<br>Dies ist ein Test</p>
+    </div>
+  </div>
+  
+  <!-- LOGIN MODAL -->
+  <div class="modal fade" id="login" tabindex="-1" data-backdrop="static">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="login">Login</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form action="http://localhost/api/v1/users/login" method="post">
+        <div class="modal-body">
+          <!--Hier Modal Inhalt-->
+          
+            <input type="text" name="username" placeholder="Username" class="form-control form-group" required>
+            <input type="password" name="password" placeholder="Password" class="form-control form-group" required>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+          <button type="submit" class="btn btn-primary" value="Login">Login</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER MODAL -->
+  <div class="modal fade" id="register" tabindex="-1" data-backdrop="static">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="register">Registrieren</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form action="http://localhost/api/v1/users/register" method="post">
+        <div class="modal-body">
+          <!--Hier Modal Inhalt-->
+
+          <input type="text" name="username" placeholder="Username" class="form-control form-group" required>
+          <input type="password" name="password" placeholder="Password" class="form-control form-group" required>
+          <input type="email" name="email" placeholder="Email" class="form-control form-group" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+          <button type="submit" class="btn btn-primary" value="Register">Registrieren</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

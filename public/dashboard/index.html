@@ -31,6 +31,8 @@
   <script src="resources/Bootstrap/bootstrap.bundle.js"></script>
   <!-- FontAwesome -->
   <script src="resources/FontAwesome/all.js"></script>
+  <!-- OwnScripts-->
+  <script src="resources/JavaScript/scripts.js"></script>
 </head>
 
 <body class="bg-dark">
@@ -57,7 +59,7 @@
             <a class="dropdown-item" href="https://github.com/MyDark-me/Chat-Web" target="_blank"><i
                 class="fa-solid fa-code-branch"></i> GitHub</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#"><i class="fa-solid fa-address-card"></i> Impressum</a>
+            <a class="dropdown-item" href="./impressum.htmlsssss"><i class="fa-solid fa-address-card"></i> Impressum</a>
           </div>
         </li>
       </ul>
@@ -82,7 +84,7 @@
     <div class="modal-dialog  modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Login</h4>
+          <h4 class="modal-title" id="login">Login</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <form action="http://localhost/api/v1/users/login" method="post">
@@ -107,7 +109,7 @@
     <div class="modal-dialog  modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Registrieren</h4>
+          <h4 class="modal-title" id="register">Registrieren</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <form action="http://localhost/api/v1/users/register" method="post">
@@ -115,12 +117,14 @@
           <!--Hier Modal Inhalt-->
 
           <input type="text" name="username" placeholder="Username" class="form-control form-group" required>
-          <input type="password" name="password" placeholder="Password" class="form-control form-group" required>
+          <input type="password" name="password" placeholder="Password" onchange="pwdcheck()" class="form-control form-group" id="fpwd" required>
+          <input type="password" name="password" placeholder="Password" onchange="pwdcheck()" class="form-control form-group" id="spwd" required>
           <input type="email" name="email" placeholder="Email" class="form-control form-group" required>
+          <p id="pwdcheck"></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
-          <button type="submit" class="btn btn-primary" value="Register">Registrieren</button>
+          <button type="submit" class="btn btn-primary" value="Register" id="btn-register">Registrieren</button>
         </div>
       </form>
       </div>
