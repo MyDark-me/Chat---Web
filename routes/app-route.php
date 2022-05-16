@@ -24,6 +24,7 @@ function app_db ()
 // ****************Weiterleitung zur richtigen Seite****************
 
 $router->map('GET',  '/', function() { require ROOTPATH .'/public/dashboard/index.html'; } ,'home');
+$router->map('GET',  '/impressum', function() { require ROOTPATH .'/public/dashboard/impressum.html'; } ,'impressum');
 
 // Hier werden die css/js/map resources freigeschaltet
 /**

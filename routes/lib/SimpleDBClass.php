@@ -1,4 +1,6 @@
 <?php
+namespace codewithmark;
+
 /*
   !This file has been modified personalized!
  
