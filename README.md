@@ -94,7 +94,7 @@ Wieso wir das denken:
 Natürlich gibt es auch gute Chatanwendungen aber wir haben uns dazu entschieden eine eigene Anwendung zu erstellen welche unseren Ansprüchen entspricht!
 Sobald es eine Funktionstüchtige Version gibt werden wir diese natürlich ein ALPHA Release erstellen für euch!
 
-<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang ⤴️</a>)</p>
 
 
 
@@ -105,9 +105,10 @@ Hier verlinken wir alle Projekte welche wir genutzt haben.
 * [SimpleDBClass](https://github.com/codewithmark/PHP-Simple-Database-Class)
 * [AltoRouter](https://github.com/dannyvankooten/AltoRouter)
 * [BruteForceBlock](https://github.com/ejfrancis/brute-force-block)
+* [ReallySimpleJWT](https://github.com/RobDWaller/ReallySimpleJWT)
 
 
-<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang ⤴️ ⤴️</a>)</p>
 
 
 
@@ -128,7 +129,7 @@ Hier werden alle Vorbereitungen später einmal stehen.
 
 Dieser Bereich wird bestimmt bald entstehen!
 
-<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang ⤴️</a>)</p>
 
 
 
@@ -138,26 +139,26 @@ Dieser Bereich wird bestimmt bald entstehen!
 Dieser Bereich  wird bald entstehen!
 _For more examples, please refer to the [Documentation](https://example.com)_
 
-<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang ⤴️</a>)</p>
 
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Create Repository
-- [x] Add LICENSE
-- [X] Create README.md
+- [X] Create Repository
+- [X] Add LICENSE
+- [X] Change README.md
 
-- [ ] Multi-Plattform Support
-    - [ ] WEBSERVER [NGINX, APACHE]
+- [~] Multi-Plattform Support
+    - [~] WEBSERVER [NGINX, APACHE]
     - [ ] WINDOWS
     - [ ] LINUX
     - [ ] ANDROID, IOS
 
 Eine vollständige Liste der vorgeschlagenen Funktionen (und bekannten Probleme) finden Sie unter [open issues] (https://github.com/MyDark-me/Chat-Web/issues).
 
-<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang ⤴️</a>)</p>
 
 
 
@@ -175,7 +176,7 @@ Vergessen Sie nicht, dem Projekt einen Stern zu geben! Nochmals vielen Dank!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang ⤴️</a>)</p>
 
 
 
@@ -184,7 +185,7 @@ Vergessen Sie nicht, dem Projekt einen Stern zu geben! Nochmals vielen Dank!
 
 Geteilt unter der MIT-Lizenz. Siehe `LICENSE.txt` für weitere Informationen.
 
-<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang ⤴️</a>)</p>
 
 
 
@@ -195,7 +196,7 @@ MyDark-me - [@MyDarkMe_DEV](https://twitter.com/MyDarkMe_DEV) - github@mydark.me
 
 Project Link: [https://github.com/MyDark-me/Chat-Web](https://github.com/MyDark-me/Chat-Web)
 
-<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang ⤴️</a>)</p>
 
 
 
@@ -211,8 +212,10 @@ Project Link: [https://github.com/MyDark-me/Chat-Web](https://github.com/MyDark-
 * [Font Awesome](https://fontawesome.com)
 * [SimpleDBClass](https://github.com/codewithmark/PHP-Simple-Database-Class)
 * [AltoRouter](https://github.com/dannyvankooten/AltoRouter)
+* [BruteForceBlock](https://github.com/ejfrancis/brute-force-block)
+* [ReallySimpleJWT](https://github.com/RobDWaller/ReallySimpleJWT)
 
-<p align="right">(<a href="#top">Zurück zum Anfang</a>)</p>
+<p align="right">(<a href="#top">Zurück zum Anfang ⤴️</a>)</p>
 
 
 
