@@ -185,7 +185,7 @@ class Users {
         require_once ROOTPATH . '/protected/config.php';
         $secret = TOKEN_SECRET;
 
-        if(Token::validate($token, $secret) && Token::validateExpiration($token) && Token::validateNotBefore($token))
+        if(Token::validate($token, $secret))
             return true;
         else
             return false;
@@ -201,7 +201,7 @@ class Users {
         require_once ROOTPATH . '/protected/config.php';
         $secret = TOKEN_SECRET;
 
-        if(Token::validate($token, $secret) && Token::validateExpiration($token) && Token::validateNotBefore($token)) {
+        if(Token::validate($token, $secret)) {
             // Parse Token
             $jwt = new Jwt($token);
 
