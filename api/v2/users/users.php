@@ -168,9 +168,10 @@ class Users {
         $insert_arrays = array
         (
         'UserID' => "$userId",
-        'Created'=> "$created",
+        'Created'=> date(DATE_ATOM,$created),
         'Bot' => "$bot",
-        'Expiration'=> "$expiration"
+        'Token'=> "$token",
+        'Expiration'=> date(DATE_ATOM,$expiration)
         );
         $db->Insert('Tokendatenbank',$insert_arrays);
         // Rückgabe des Tokens
