@@ -23,7 +23,7 @@ switch ($BFBresponse['status']){
             // Abfrage ob der Benutzer existiert, wird die Passwortprüfung durchgeführt
             if(Users::existEmail($username) || Users::existUsername($username)) {
                 if(Users::checkPassword($username, $password)) {
-                    if(!empty($token) && Users::verifyToken($token)) { 
+                    if(Users::verifyToken($token, false)) { 
                         // Already logged in
                         http_response_code(200);
                         die(json_encode(array
@@ -34,10 +34,8 @@ switch ($BFBresponse['status']){
                         ), JSON_PRETTY_PRINT));
                     }
 
-                    // Dauer des Tokens in Sekunden das 7 Tage sind
-                    $expired_seconds = time() + 60 * 60 * 24 * 7;
                     // Login erfolgreich, Cookie wird erstellt
-                    setcookie('chat_token', Users::createToken($username), $expired_seconds, $_SERVER['HTTP_HOST']);
+                    setcookie('chat_token', Users::createToken(Users::useridOf($username), false), Users::getExpiredSeconds(), $_SERVER['HTTP_HOST']);
                             
                     // Erfolgreich eingeloggt
                     http_response_code(200);

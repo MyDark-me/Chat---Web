@@ -14,6 +14,15 @@ use ReallySimpleJWT\Decode;
 class Users {
 
     /**
+     * Gibt die zeit in Sekunden zurück wie lange ein Token gültig ist
+     * @return int Zeit wann es expiret
+     */
+    public static function getExpiredSeconds() {
+        // Gültigkeit des Tokens in Sekunden das 7 Tage sind
+        return time() + (7 * 24 * 60 * 60);
+    }
+
+    /**
      * Prüft ob die angegebene E-Mail Adresse existiert
      *
      * @param string $email Die zu prüfende E-Mail Adresse
@@ -133,46 +142,39 @@ class Users {
      * @param int $userId Die ID des Benutzers
      * @return string Gibt den Token zurück
      */
-    public static function createToken($userId) {
-        // Dauer des Tokens in Sekunden das 7 Tage sind
-        $expired_seconds = time() + 60 * 60 * 24 * 7;
+    public static function createToken($userId, $bot) {
+        // Token parameter
+        $created = time();
+        $bot = $bot ?? false;
+        $expiration = self::getExpiredSeconds();
 
         // Erstellt mit ReallySimpleJWT einen Token
         $payload = [
-            'created' => time(),
+            'created' => $created,
             'userid' => $userId,
-            'bot' => true,
-            'expiration' => $expired_seconds,
+            'bot' => $bot,
+            'expiration' => $expiration,
             'issuer' => $_SERVER['HTTP_HOST']
         ];
         
+        // Token secret aus der Konfiguration auslesen
         require_once ROOTPATH . '/protected/config.php';
         $secret = TOKEN_SECRET;
-        return Token::customPayload($payload, $secret);
-    }
+        // Erstellen des Tokens
+        $token = Token::customPayload($payload, $secret);
 
-    /**
-     * Gibt einen Bot Token zurück
-     *
-     * @param int $userId Die ID des Benutzers
-     * @return string Gibt den Token zurück
-     */
-    public static function createBotToken($userId) {
-        // Dauer des Tokens in Sekunden das 7 Tage sind
-        $expired_seconds = time() + 60 * 60 * 24 * 7;
-
-        // Erstellt mit ReallySimpleJWT einen Token
-        $payload = [
-            'created' => time(),
-            'userid' => $userId,
-            'bot' => true,
-            'expiration' => $expired_seconds,
-            'issuer' => $_SERVER['HTTP_HOST']
-        ];
-
-        require_once ROOTPATH . '/protected/config.php';
-        $secret = TOKEN_SECRET;
-        return Token::customPayload($payload, $secret);
+        // Speichern des Tokens in der Datenbank
+        $db = app_db();
+        $insert_arrays = array
+        (
+        'UserID' => "$userId",
+        'Created'=> "$created",
+        'Bot' => "$bot",
+        'Expiration'=> "$expiration"
+        );
+        $db->Insert('Tokendatenbank',$insert_arrays);
+        // Rückgabe des Tokens
+        return $token;
     }
 
     /**
@@ -181,43 +183,34 @@ class Users {
      * @param string $token Der zu prüfende Token
      * @return bool True wenn der Token gültig ist, sonst false
      */
-    public static function verifyToken($token) {
-        require_once ROOTPATH . '/protected/config.php';
-        $secret = TOKEN_SECRET;
-
-        if(Token::validate($token, $secret))
-            return true;
-        else
+    public static function verifyToken($token, $bot) {
+        // Prüfen ob der Token nicht leer ist
+        if(empty($token))
             return false;
-    }
 
-    /**
-     * Prüft ob der Token für bots gültig ist
-     *
-     * @param string $token Der zu prüfende Token
-     * @return bool True wenn der Token gültig ist, sonst false
-     */
-    public static function verifyBotToken($token) {
+        // Token secret aus der Konfiguration auslesen
         require_once ROOTPATH . '/protected/config.php';
         $secret = TOKEN_SECRET;
 
-        if(Token::validate($token, $secret)) {
-            // Parse Token
-            $jwt = new Jwt($token);
+        // Prüfen ob der Token nicht gültig ist
+        if(!Token::validate($token, $secret))
+            return false;
 
-            $parse = new Parse($jwt, new Decode());
-            $parsed = $parse->parse();
-            
-            // Return the token payload claims as an associative array.
-            $parsed->getPayload();
-
-            // Prüfung ob der Token für einen Bot ist
-            if($parsed->getPayload()['bot'])
+        // Prüfen ob der Token in der Datenbank ist
+        $db = app_db();
+        $result = $db->query("SELECT * FROM `Tokendatenbank` WHERE `Token`= '$token';");
+        $row = $result->fetch_assoc();
+        // Prüfen ob der Token gültig ist
+        if(!empty($row['Token'])) {
+            // Prüfen ob der Token gültig ist
+            if(($row['Bot'] == $bot) && ($row['Expiration'] > time()))
+                // Token ist gültig
                 return true;
             else
+                // Token ist nicht gültig
                 return false;
-        }
-        else
+        } else
+            // Token nicht in der Datenbank
             return false;
     }
 }

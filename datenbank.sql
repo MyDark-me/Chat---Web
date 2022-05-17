@@ -69,3 +69,14 @@ CREATE TABLE IF NOT EXISTS `Registerrequestdatabase` (
   `attempted_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `Tokendatenbank` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `UserID` int NOT NULL,
+  `Token` VARCHAR(500) NOT NULL,
+  `Bot` BOOLEAN DEFAULT FALSE,
+  `Created` Timestamp DEFAULT NOW(),
+  `Expiration` Timestamp DEFAULT NOW(),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`UserID`) REFERENCES `Nutzerdatenbank`(`ID`)
+) DEFAULT CHARSET=utf8;
