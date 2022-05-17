@@ -18,15 +18,14 @@ if(isset($_COOKIE['chat_token'])) {
         'message' => 'Could not delete cookie',	
         'code' => '202',
     ), JSON_PRETTY_PRINT));
-} else {
-    // Erfolgreich ausgeloggt
-    http_response_code(200);
-    die(json_encode(array
-    (
-        'status'=>'success',		
-        'message' => 'Logged out succesfully',	
-        'code' => '200',
-    ), JSON_PRETTY_PRINT));
 }
+// Erfolgreich ausgeloggt
+http_response_code(200);
+die(json_encode(array
+(
+    'status'=>'success',		
+    'message' => 'Logged out succesfully',	
+    'code' => '200',
+), JSON_PRETTY_PRINT));
 
 ?>

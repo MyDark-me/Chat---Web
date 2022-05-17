@@ -38,8 +38,7 @@ class Users {
         // Rückgabe ob die E-Mail existiert
         if($result != false && $result != 0) 
             return true;
-        else
-            return false;
+        return false;
     }
 
     /**
@@ -58,8 +57,7 @@ class Users {
         // Rückgabe ob der Username existiert
         if($result != false && $result != 0) 
             return true;
-        else
-            return false;
+        return false;
     }
 
     /**
@@ -109,8 +107,7 @@ class Users {
         // Prüfung ob das Passwort korrekt ist
         if(password_verify($password, $row['Password']))
             return true;
-        else
-            return false;
+        return false;
     }
 
     /**
@@ -132,8 +129,7 @@ class Users {
         // Rückgabe der User ID
         if(!empty($row['ID']))
             return $row['ID'];
-        else
-            return 0;
+        return 0;
     }
 
     /**
@@ -210,9 +206,9 @@ class Users {
             else
                 // Token ist nicht gültig
                 return false;
-        } else
-            // Token nicht in der Datenbank
-            return false;
+        }
+        // Token nicht in der Datenbank
+        return false;
     }
 }
 ?>
