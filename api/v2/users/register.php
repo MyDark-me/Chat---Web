@@ -2,6 +2,22 @@
 /**
  * Name register.php
  * Stellt das Registrierungsferfahren bereit.
+ * 
+ * @author KeksGauner
+ * @version 2.0
+ * 
+ * Benutzen Sie diesen Code für das Registrierung:
+ * Sende ein AJAX Request zum Server
+ * 
+ * POST: mit username password email
+ * In PHP (Javascript) - $url = "/api/{version}/users/register"
+ * Ohne Webbrowser - $url = "{server}/api/{version}/users/register"
+ * 
+ * GET:
+ * In PHP (Javascript) - $url = "/api/{version}/users/register?username={username}&password={password}&email={email}r"
+ * Ohne Webbrowser - $url = "{server}/api/{version}/users/register?username={username}&password={password}&email={email}"
+ * 
+ * Timestamp: 2020-05-18
  */
 
 use ejfrancis\BruteForceBlock;

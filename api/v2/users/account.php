@@ -2,6 +2,22 @@
 /**
  * Name account.php
  * Das hier stellt die Account info abfragen bereit.
+ * 
+ * @author KeksGauner
+ * @version 2.0
+ * 
+ * Benutzen Sie diesen Code für das Login:
+ * Sende ein AJAX Request zum Server
+ * 
+ * POST: mit token
+ * In PHP (Javascript) - $url = "/api/{version}/users/account/{type}/{request}"
+ * Ohne Webbrowser - $url = "{server}/api/{version}/users/account/{type}/{request}"
+ * 
+ * GET:
+ * In PHP (Javascript) - $url = "/api/{version}/users/account/{type}/{request}?token={token}"
+ * Ohne Webbrowser - $url = "{server}/api/{version}/users/account/{type}/{request}?token={token}"
+ * 
+ * Timestamp: 2020-05-18
  */
 
 use Chat\Users;

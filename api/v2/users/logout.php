@@ -1,7 +1,24 @@
 <?php
 /**
  * Name logout.php
- * Loggt den Benutzer aus
+ * Loggt den Benutzer aus indem der Token ungültig gesetzt wird.
+ * 
+ * @author KeksGauner
+ * @version 2.0
+ * 
+ * Benutzen Sie diesen Code zum Ausloggen:
+ * Sende ein AJAX Request zum Server
+ * 
+ * POST: mit token
+ * In PHP (Javascript) - $url = "/api/{version}/users/logout"
+ * Ohne Webbrowser - $url = "{server}/api/{version}/users/logout"
+ * 
+ * GET:
+
+ * In PHP (Javascript) - $url = "/api/{version}/users/logout?token={token}"
+ * Ohne Webbrowser - $url = "{server}/api/{version}/users/logout?token={token}"
+ * 
+ * Timestamp: 2020-05-18
  */
 
 // Bekomme Request methode

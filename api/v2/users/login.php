@@ -2,6 +2,22 @@
 /**
  * Name logiin.php
  * Stellt das Loginferfahren bereit.
+ * 
+ * @author KeksGauner
+ * @version 2.0
+ * 
+ * Benutzen Sie diesen Code für das Login:
+ * Sende ein AJAX Request zum Server
+ * 
+ * POST: mit username password
+ * In PHP (Javascript) - $url = "/api/{version}/users/login?cookie"
+ * Ohne Webbrowser - $url = "{server}/api/{version}/users/login"
+ * 
+ * GET:
+ * In PHP (Javascript) - $url = "/api/{version}/users/login?cookie&username={username}&password={password}"
+ * Ohne Webbrowser - $url = "{server}/api/{version}/users/login?username={username}&password={password}"
+ * 
+ * Timestamp: 2020-05-18
  */
 
 use ejfrancis\BruteForceBlock;
