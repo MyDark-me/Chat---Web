@@ -7,6 +7,16 @@
 use ejfrancis\BruteForceBlock;
 use Chat\Users;
 
+// Bekomme Request methode
+$request = null;
+switch($_SERVER['REQUEST_METHOD'])
+{
+    case 'GET': $request = &$_GET; break;
+    case 'POST': $request = &$_POST; break;
+
+default:
+}
+
 // Erstellen Sie eine Instanz der BruteForceBlock-Klasse ob ein Registrierungsversuch möglich ist
 $BFBresponse = BruteForceBlock::getRegisterRequestStatus();
 // Switch-Anweisung zur Abfrage des Register Request Status
@@ -16,7 +26,7 @@ switch ($BFBresponse['status']){
         // Der liste hinzufügen, dass ein Registrierungsversuch statt gefunden hat
         $BFBresponse = BruteForceBlock::addRegisterRequestAttempt(BruteForceBlock::GetRealUserIp());
         // Abfrage ob username und password gesendet wurden
-        if (!(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']))) {
+        if (!(isset($request['username']) && isset($request['password']) && isset($request['email']))) {
             // Falls nicht gebe eine Fehlermeldung zurück
             http_response_code(202);
             die(json_encode(array(
@@ -27,9 +37,9 @@ switch ($BFBresponse['status']){
         }
         
         // Die Eingaben werden in variablen gespeichert
-        $username = $_POST['username'] ?? null;
-        $password = $_POST['password'] ?? null;
-        $email = $_POST['email'] ?? null;
+        $username = $request['username'] ?? null;
+        $password = $request['password'] ?? null;
+        $email = $requestT['email'] ?? null;
 
         // Prüfen ob der Username den richrlinien entspricht
         if(!preg_match('/^[a-zA-Z0-9]{3,20}$/', $username)) {

@@ -46,14 +46,14 @@ $router->map( 'GET', '/resources/[a:where]/[*:datei]', function( $where, $datei 
 // ****************APIs****************
 
 // Register
-$router->map('POST', AJAXPATH . '/users/register', function() { 
+$router->map('POST|GET', AJAXPATH . '/users/register', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH . AJAXPATH . '/users/register.php'; 
 }, 'register');
 
 // Login
-$router->map('POST', AJAXPATH . '/users/login', function() { 
+$router->map('POST|GET', AJAXPATH . '/users/login', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH . AJAXPATH . '/users/login.php'; 

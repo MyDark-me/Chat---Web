@@ -7,6 +7,16 @@
 use ejfrancis\BruteForceBlock;
 use Chat\Users;
 
+// Bekomme Request methode
+$request = null;
+switch($_SERVER['REQUEST_METHOD'])
+{
+    case 'GET': $request = &$_GET; break;
+    case 'POST': $request = &$_POST; break;
+
+default:
+}
+
 // Erstellen Sie eine Instanz der BruteForceBlock-Klasse ob ein Loginversuch möglich ist
 $BFBresponse = BruteForceBlock::getLoginStatus();
 // Switch-Anweisung zur Abfrage des Login-Status
@@ -14,7 +24,7 @@ switch ($BFBresponse['status']){
     // Falls es sicher ist
     case 'safe':
         // Abfrage ob username und password gesendet wurden
-        if (!(isset($_POST['username']) && isset($_POST['password']))) {
+        if (!(isset($request['username']) && isset($request['password']))) {
             // Falls nicht gebe eine Fehlermeldung zurück
             http_response_code(202);
             die(json_encode(array(
@@ -25,8 +35,8 @@ switch ($BFBresponse['status']){
         }
         
         // Die Eingaben werden in variablen gespeichert
-        $username = $_POST['username'] ?? null;
-        $password = $_POST['password'] ?? null;
+        $username = $request['username'] ?? null;
+        $password = $request['password'] ?? null;
         $token = $_COOKIE['chat_token'] ?? null;
             
         // Abfrage ob der Benutzer existiert, wird die Passwortprüfung durchgeführt
@@ -68,7 +78,7 @@ switch ($BFBresponse['status']){
         // Login erfolgreich, Cookie wird erstellt
         $token = Users::createToken(Users::useridOf($username), false);
         $expire = Users::getExpiredSeconds();
-        setcookie('chat_token', $token, $expire, $_SERVER['HTTP_HOST']);
+        isset($request['cookie']) ? setcookie('chat_token', $token, $expire, $_SERVER['HTTP_HOST']) : null;
                             
         // Erfolgreich eingeloggt
         http_response_code(200);

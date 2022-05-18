@@ -48,7 +48,7 @@ switch($type) {
             // Falls der die E-Mail nicht existiert, wird eine vorhanden Meldung ausgegeben
             http_response_code(200);
             die(json_encode(array(
-                'status'=>'failure',	
+                'status'=>'success',	
                 'found'=>'false',			
                 'message' => 'Email available',	
                 'code' => '200',
@@ -73,7 +73,7 @@ switch($type) {
             // Falls der die E-Mail nicht existiert, wird eine vorhanden Meldung ausgegeben
             http_response_code(200);
             die(json_encode(array(
-                'status'=>'failure',	
+                'status'=>'success',	
                 'found'=>'false',			
                 'message' => 'Username available',	
                 'code' => '200',
