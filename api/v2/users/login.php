@@ -66,7 +66,9 @@ switch ($BFBresponse['status']){
         }
 
         // Login erfolgreich, Cookie wird erstellt
-        setcookie('chat_token', Users::createToken(Users::useridOf($username), false), Users::getExpiredSeconds(), $_SERVER['HTTP_HOST']);
+        $token = Users::createToken(Users::useridOf($username), false);
+        $expire = Users::getExpiredSeconds();
+        setcookie('chat_token', $token, $expire, $_SERVER['HTTP_HOST']);
                             
         // Erfolgreich eingeloggt
         http_response_code(200);
@@ -74,6 +76,8 @@ switch ($BFBresponse['status']){
             (
                 'status'=>'succes',		
                 'message' => 'Logged in succesfully',	
+                'token' => "$token",		
+                'expire' => "$expire",	
                 'code' => '201',
             ), JSON_PRETTY_PRINT));
     case 'error':

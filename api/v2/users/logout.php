@@ -5,6 +5,12 @@
  */
 // Cookie löschen
 if(isset($_COOKIE['chat_token'])) {
+    $token = $_COOKIE['chat_token'] ?? null;
+    // Token in der Datenbank ungültig machen
+    if(!emty($token)) {
+        $db = app_db();
+        $db->query("UPDATE `Tokendatenbank` SET `Expiration`= '-1' WHERE `Token`= '$token';");
+    }
     setcookie('chat_token', null, -1, $_SERVER['HTTP_HOST']); 
     unset($_COOKIE['chat_token']);
 }

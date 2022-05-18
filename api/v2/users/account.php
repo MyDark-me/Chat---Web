@@ -20,7 +20,7 @@ default:
  * Validiert ob der Token gültig ist
  */
 $token = $request['token'] ?? null;
-if(Users::verifyToken($token, true)) {
+if(!Users::verifyToken($token, true)) {
     http_response_code(401);
     die(json_encode(array(
         'status'=>'failure',	

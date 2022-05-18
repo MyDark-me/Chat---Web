@@ -10,6 +10,9 @@ use ReallySimpleJWT\Token;
 use ReallySimpleJWT\Parse;
 use ReallySimpleJWT\Jwt;
 use ReallySimpleJWT\Decode;
+use ReallySimpleJWT\Build;
+use ReallySimpleJWT\Helper\Validator;
+use ReallySimpleJWT\Encoders\EncodeHS256;
 
 class Users {
 
@@ -143,21 +146,30 @@ class Users {
         $created = time();
         $bot = $bot ?? false;
         $expiration = self::getExpiredSeconds();
+        $issuer = $_SERVER['HTTP_HOST'];
 
-        // Erstellt mit ReallySimpleJWT einen Token
-        $payload = [
-            'created' => $created,
-            'userid' => $userId,
-            'bot' => $bot,
-            'expiration' => $expiration,
-            'issuer' => $_SERVER['HTTP_HOST']
-        ];
-        
         // Token secret aus der Konfiguration auslesen
         require_once ROOTPATH . '/protected/config.php';
         $secret = TOKEN_SECRET;
-        // Erstellen des Tokens
-        $token = Token::customPayload($payload, $secret);
+
+        // Erstellt mit ReallySimpleJWT einen Token
+        $build = new Build('JWT', new Validator(), new EncodeHS256($secret));
+
+        // Setzt den inhalt des JWT Tokens
+        $token = $build->setContentType('JWT')
+            //->setHeaderClaim('info', 'foo')
+            //->setIssuer($issuer)
+            //->setSubject('admins')
+            //->setAudience('https://google.com')
+            ->setExpiration($expiration)
+            //->setNotBefore(time() - 30)
+            ->setIssuedAt(time())
+            //->setJwtId('123ABC')
+            ->setPayloadClaim('userid', $userId)
+            ->build();
+
+        // String abfrage des Tokens
+        $string_token = $token->getToken() ?? null;
 
         // Speichern des Tokens in der Datenbank
         $db = app_db();
@@ -166,12 +178,12 @@ class Users {
         'UserID' => "$userId",
         'Created'=> date(DATE_ATOM,$created),
         'Bot' => "$bot",
-        'Token'=> "$token",
+        'Token'=> "$string_token",
         'Expiration'=> date(DATE_ATOM,$expiration)
         );
         $db->Insert('Tokendatenbank',$insert_arrays);
         // Rückgabe des Tokens
-        return $token;
+        return $string_token;
     }
 
     /**
@@ -198,15 +210,14 @@ class Users {
         $result = $db->query("SELECT * FROM `Tokendatenbank` WHERE `Token`= '$token';");
         $row = $result->fetch_assoc();
         // Prüfen ob der Token gültig ist
-        if(!empty($row['Token'])) {
-            // Prüfen ob der Token gültig ist
-            if(($row['Bot'] == $bot) && ($row['Expiration'] > time()))
-                // Token ist gültig
-                return true;
-            else
-                // Token ist nicht gültig
-                return false;
-        }
+        if(empty($row['Token']))
+            return false;
+        
+        // Prüfen ob der Token gültig ist
+        if(($row['Bot'] == $bot) && ($row['Expiration'] > time()))
+            // Token ist gültig
+            return true;
+
         // Token nicht in der Datenbank
         return false;
     }
