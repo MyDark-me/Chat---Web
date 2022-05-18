@@ -14,60 +14,7 @@ switch ($BFBresponse['status']){
     // Falls es sicher ist
     case 'safe':
         // Abfrage ob username und password gesendet wurden
-        if (isset($_POST['username']) && isset($_POST['password'])) {
-            // Die Eingaben werden in variablen gespeichert
-            $username = $_POST['username'] ?? null;
-            $password = $_POST['password'] ?? null;
-            $token = $_COOKIE['chat_token'] ?? null;
-            
-            // Abfrage ob der Benutzer existiert, wird die Passwortprüfung durchgeführt
-            if(Users::existEmail($username) || Users::existUsername($username)) {
-                if(Users::checkPassword($username, $password)) {
-                    if(Users::verifyToken($token, false)) { 
-                        // Already logged in
-                        http_response_code(200);
-                        die(json_encode(array
-                        (
-                            'status'=>'failure',		
-                            'message' => 'Already logged in',	
-                            'code' => '7',
-                        ), JSON_PRETTY_PRINT));
-                    }
-
-                    // Login erfolgreich, Cookie wird erstellt
-                    setcookie('chat_token', Users::createToken(Users::useridOf($username), false), Users::getExpiredSeconds(), $_SERVER['HTTP_HOST']);
-                            
-                    // Erfolgreich eingeloggt
-                    http_response_code(200);
-                    die(json_encode(array
-                    (
-                        'status'=>'succes',		
-                        'message' => 'Logged in succesfully',	
-                        'code' => '201',
-                    ), JSON_PRETTY_PRINT));
-                } else {
-                    // Falls der Einloggversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
-                    http_response_code(202);
-                    // Der liste hinzufügen, dass ein Falscher Loginversuch statt gefunden hat
-                    $BFBresponse = BruteForceBlock::addFailedLoginAttempt($users->useridOf($username), BruteForceBlock::GetRealUserIp());
-                    die(json_encode(array(
-                        'status'=>'failure',			
-                        'message' => ' Password is invalid',	
-                        'code' => '3',
-                    ), JSON_PRETTY_PRINT)); 
-                }
-            } else {
-                // Falls der Einloggversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
-                http_response_code(202);
-                // Der liste hinzufügen, dass ein Falscher Loginversuch statt gefunden hat
-                $BFBresponse = BruteForceBlock::addFailedLoginAttempt($users->useridOf($username), BruteForceBlock::GetRealUserIp());
-                die(json_encode(array(
-			        'status'=>'failure',			
-			        'message' => ' Username or Email address is invalid',	
-                    'code' => '2',
-		        ), JSON_PRETTY_PRINT));
-            }
-        } else {
+        if (!(isset($_POST['username']) && isset($_POST['password']))) {
             // Falls nicht gebe eine Fehlermeldung zurück
             http_response_code(202);
             die(json_encode(array(
@@ -76,7 +23,59 @@ switch ($BFBresponse['status']){
 			    'code' => '1',
 		    ), JSON_PRETTY_PRINT));
         }
-        break;
+        
+        // Die Eingaben werden in variablen gespeichert
+        $username = $_POST['username'] ?? null;
+        $password = $_POST['password'] ?? null;
+        $token = $_COOKIE['chat_token'] ?? null;
+            
+        // Abfrage ob der Benutzer existiert, wird die Passwortprüfung durchgeführt
+        if(!(Users::existEmail($username) || Users::existUsername($username))) {
+            // Falls nicht gebe eine Fehlermeldung zurück
+            http_response_code(202);
+            die(json_encode(array(
+                'status'=>'failure',				
+                'message' => 'Field is missing',
+                'code' => '1',
+            ), JSON_PRETTY_PRINT));
+        }
+
+        // Prüfen ob das Passwort falsch ist
+        if(!Users::checkPassword($username, $password)) {
+            // Falls der Einloggversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
+            http_response_code(202);
+            // Der liste hinzufügen, dass ein Falscher Loginversuch statt gefunden hat
+            $BFBresponse = BruteForceBlock::addFailedLoginAttempt($users->useridOf($username), BruteForceBlock::GetRealUserIp());
+            die(json_encode(array(
+                'status'=>'failure',			
+                'message' => ' Password is invalid',	
+                'code' => '3',
+            ), JSON_PRETTY_PRINT)); 
+        }
+        
+        // Prüfen ob schon ein gültiger Token existiert
+        if(Users::verifyToken($token, false)) { 
+            // Already logged in
+            http_response_code(200);
+            die(json_encode(array
+            (
+                'status'=>'failure',		
+                'message' => 'Already logged in',	
+                'code' => '7',
+            ), JSON_PRETTY_PRINT));
+        }
+
+        // Login erfolgreich, Cookie wird erstellt
+        setcookie('chat_token', Users::createToken(Users::useridOf($username), false), Users::getExpiredSeconds(), $_SERVER['HTTP_HOST']);
+                            
+        // Erfolgreich eingeloggt
+        http_response_code(200);
+        die(json_encode(array
+            (
+                'status'=>'succes',		
+                'message' => 'Logged in succesfully',	
+                'code' => '201',
+            ), JSON_PRETTY_PRINT));
     case 'error':
         //Fehler ist aufgetreten. Meldung zurückgeben
         $error_message = $BFBresponse['message'];
