@@ -3,6 +3,9 @@
  * Name users.php
  * Das hier stellt die Datenbank user info abfragen bereit.
  * Verändert ein user Profil
+ * 
+ * @author KeksGauner
+ * @version 2.0
  */
 namespace Chat;
 
@@ -219,6 +222,42 @@ class Users {
             return true;
 
         // Token nicht in der Datenbank
+        return false;
+    }
+
+    /**
+     * Prüft ob der Benutzername den richtlinen entspricht
+     *
+     * @param string $username Der zu prüfende Benutzername
+     * @return bool True wenn der Benutzername gültig ist, sonst false
+     */
+    public static function verifyUsername($username) {
+        if(preg_match('/^[a-zA-Z0-9]{3,20}$/', $username))
+            return true;
+        return false;
+    }
+
+    /**
+     * Prüft ob die E-Mail Adresse den richtlinen entspricht
+     *
+     * @param string $email Der zu prüfende E-Mail Adresse
+     * @return bool True wenn der Benutzername gültig ist, sonst false
+     */
+    public static function verifyEmail($email) {
+        if(preg_match('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/', $email))
+            return true;
+        return false;
+    }
+    /**
+     * 
+     * Prüft ob die E-Mail Adresse den richtlinen entspricht
+     *
+     * @param string $email Der zu prüfende E-Mail Adresse
+     * @return bool True wenn der Benutzername gültig ist, sonst false
+     */
+    public static function verifyPassword($password) {
+        if(preg_match('/^[a-zA-Z0-9]{6,20}$/', $password))
+            return true;
         return false;
     }
 }

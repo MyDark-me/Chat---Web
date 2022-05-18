@@ -2,6 +2,10 @@
 /**
  * Name app-route.php
  * Das hier stellt die Standard-Routen für die App bereit.
+ * 
+ * @author KeksGauner
+ * @version 2.0
+ * 
  */
 
  use codewithmark\SimpleDB;

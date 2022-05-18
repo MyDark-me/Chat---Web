@@ -36,14 +36,14 @@ default:
  * Validiert ob der Token gültig ist
  */
 $token = $request['token'] ?? null;
-if(!Users::verifyToken($token, true)) {
+/*if(!Users::verifyToken($token, true) || !isset($request['devmode'])) {
     http_response_code(401);
     die(json_encode(array(
         'status'=>'failure',	
         'message' => 'Unauthorized',	
         'code' => '401',
     ), JSON_PRETTY_PRINT));
-}
+}*/
  
 switch($type) {
     /**
@@ -55,8 +55,8 @@ switch($type) {
             // Falls der die E-Mail existiert, wird eine existierende E-Mail zurückgegeben
             http_response_code(200);
             die(json_encode(array(
-                'status'=>'success',	
-                'found'=>'true',		
+                'status'=> 'success',	
+                'available'=> 'false',		
                 'message' => 'Email already exists',	
                 'code' => '10_005',
             ), JSON_PRETTY_PRINT));
@@ -64,8 +64,8 @@ switch($type) {
             // Falls der die E-Mail nicht existiert, wird eine vorhanden Meldung ausgegeben
             http_response_code(200);
             die(json_encode(array(
-                'status'=>'success',	
-                'found'=>'false',			
+                'status'=> 'success',	
+                'available'=> 'true',			
                 'message' => 'Email available',	
                 'code' => '200',
             ), JSON_PRETTY_PRINT));
@@ -80,8 +80,8 @@ switch($type) {
             // Falls der die E-Mail existiert, wird eine existierende E-Mail zurückgegeben
             http_response_code(200);
             die(json_encode(array(
-                'status'=>'success',	
-                'found'=>'true',		
+                'status'=> 'success',	
+                'available'=> 'false',		
                 'message' => 'Username already exists',	
                 'code' => '10_005',
             ), JSON_PRETTY_PRINT));
@@ -89,10 +89,10 @@ switch($type) {
             // Falls der die E-Mail nicht existiert, wird eine vorhanden Meldung ausgegeben
             http_response_code(200);
             die(json_encode(array(
-                'status'=>'success',	
-                'found'=>'false',			
+                'status' => 'success',	
+                'available'=> 'true',			
                 'message' => 'Username available',	
-                'code' => '200',
+                'code' => '200'
             ), JSON_PRETTY_PRINT));
         }
         break;
@@ -100,7 +100,7 @@ switch($type) {
         // Wenn ein falscher Typ angegeben wurde, wird eine Fehlermeldung zurückgegeben
         http_response_code(400);
         die(json_encode(array(
-            'status'=>'failure',	
+            'status'=> 'failure',	
             'message' => 'Bad Request',	
             'code' => '400',
         ), JSON_PRETTY_PRINT));

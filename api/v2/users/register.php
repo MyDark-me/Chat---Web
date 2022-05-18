@@ -58,7 +58,7 @@ switch ($BFBresponse['status']){
         $email = $requestT['email'] ?? null;
 
         // Prüfen ob der Username den richrlinien entspricht
-        if(!preg_match('/^[a-zA-Z0-9]{3,20}$/', $username)) {
+        if(!Users::verifyUsername($username)) {
             // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
             http_response_code(202);
             die(json_encode(array(
@@ -69,7 +69,7 @@ switch ($BFBresponse['status']){
         }
 
         // Prüfen ob die E-Mail Adresse den richrlinien entspricht
-        if(!preg_match('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/', $email)) {
+        if(!Users::verifyEmail($email)) {
             // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
             http_response_code(202);
             die(json_encode(array(
@@ -80,7 +80,7 @@ switch ($BFBresponse['status']){
         }
 
         // Prüfen ob das Passwort den richrlinien entspricht
-        if(!preg_match('/^[a-zA-Z0-9]{6,20}$/', $password)) {
+        if(!verifyPassword($password)) {
             // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
             http_response_code(202);
             die(json_encode(array(

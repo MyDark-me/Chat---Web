@@ -21,6 +21,8 @@
  * Timestamp: 2020-05-18
  */
 
+use Chat\Users;
+
 // Bekomme Request methode
 $request = null;
 switch($_SERVER['REQUEST_METHOD'])
