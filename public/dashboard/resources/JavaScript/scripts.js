@@ -23,14 +23,15 @@ function usernameCheck() {
         type: 'POST',
         url: "/api/v2/users/account/username/" + document.getElementById("username").value + "?devmode",
         success: function (response) {
-            if (response['available'] === "true") {
-                document.getElementById("pwdcheck").innerHTML = "Dieser Username ist frei!";
-                document.getElementById("username").style.color = "red";
+            if (response['available'] == "true") {
+                document.getElementById("usercheck").innerHTML = "Dieser Username ist frei!";
+                document.getElementById("usercheck").style.color = "green";
+                document.getElementById("username").style.color = "green";
             }
-            if (response['available'] === "false") {
-                pocument.getElementById("pwdcheck").innerHTML = "Dieser Username ist bereits vergeben!";
+            if (response['available'] == "false") {
+                pocument.getElementById("usercheck").innerHTML = "Dieser Username ist bereits vergeben!";
+                document.getElementById("usercheck").style.color = "red";
                 document.getElementById("username").style.color = "red";
-                
             }
         }
     });
@@ -41,14 +42,15 @@ function emailCheck() {
         type: 'POST',
         url: "/api/v2/users/account/email/" + document.getElementById("email").value + "?devmode",
         success: function (response) {
-            if (response['available'] === "true") {
-                //document.getElementById("email").innerHTML = "Diese E-Mail ist frei!";
-                document.getElementById("email").style.color = "red";
+            if (response['available'] == "true") {
+                document.getElementById("emailcheck").innerHTML = "Diese E-Mail ist frei!";
+                document.getElementById("emailcheck").style.color = "green";
+                document.getElementById("email").style.color = "green";
             }
-            if (response['available'] === "false") {
-                //document.getElementById("email").innerHTML = ""Diese E-Mail ist bereits vergeben!";
+            if (response['available'] == "false") {
+                document.getElementById("emailcheck").innerHTML = "Diese E-Mail ist bereits vergeben!";
+                document.getElementById("emailcheck").style.color = "red";
                 document.getElementById("email").style.color = "red";
-                
             }
         }
     });
