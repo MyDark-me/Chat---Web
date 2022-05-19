@@ -50,12 +50,6 @@ $router->map( 'GET', '/resources/[a:where]/[*:datei]', function( $where, $datei 
         case 'jQuery':
             echo file_get_contents(ROOTPATH . '/node_modules/jquery/dist/' . $datei);
             break;
-        case 'Bootstrap':
-            if(str_ends_with($datei, '.css') || str_ends_with($datei, '.css.map'))
-                echo file_get_contents(ROOTPATH . '/node_modules/bootstrap/dist/css/' . $datei);
-            if(str_ends_with($datei, '.js') || str_ends_with($datei, '.js.map')) 
-                echo file_get_contents(ROOTPATH . '/node_modules/bootstrap/dist/js/' . $datei);
-            break;
         default:
             // Gebe den Inhalt der Datei aus
             echo file_get_contents(ROOTPATH . '/public/dashboard/resources/' . $where . '/' . $datei);
