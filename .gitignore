@@ -1,9 +1,9 @@
 
 # Hier sind die Seiten Dependencies (mit composer insttalliert)
-#/vendor
+/vendor
 
 # Hier sind die Developer Dependencies (mit npm installiert)
-#/node_modules
+/node_modules
 
 # Hier stehen Passwörter und andere Sensitive Daten
 #/protected
