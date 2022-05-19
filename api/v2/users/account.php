@@ -191,12 +191,31 @@ switch($type) {
     * Prüft ob der Token gültig ist
     */
     case 'token':
+        // Abfrage ob der Token gecheckt werden soll
+        if($data != "check") {
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'failure',	
+                'message' => 'Token is not valid',	
+                'code' => '406'
+            ), JSON_PRETTY_PRINT));
+        }
         // Prüft ob der Token gültig ist
-        if(Users::verifyToken($data)) {
+        if(Users::verifyToken($token, false)) {
             // Falls der Token gültig ist, wird eine vorhanden Meldung ausgegeben
             http_response_code(200);
             die(json_encode(array(
                 'status' => 'success',	
+                'bot' => 'false',	
+                'message' => 'Token is valid',	
+                'code' => '200'
+            ), JSON_PRETTY_PRINT));
+        } else if(Users::verifyBotToken($token, true)) {
+            // Falls der Token gültig ist, wird eine vorhanden Meldung ausgegeben
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'success',	
+                'bot' => 'true',	
                 'message' => 'Token is valid',	
                 'code' => '200'
             ), JSON_PRETTY_PRINT));
