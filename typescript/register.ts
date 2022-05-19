@@ -2,6 +2,12 @@
 $(function() {
     // Password Check
     $('#form-register #fistpassword, #form-register #secondpassword').on('change', function(){
+        // Passwort als Variable speichern
+        // in js wäre das: let password = $("#fistpassword").val();
+        // in ts wäre das: const password = new String($("#fistpassword").val());
+        // Warum? Weil ts nicht erkkent, dass es ein String ist
+        // Somit muss es in einen String umgewandelt werden
+        // Wie kann man es anders Lösen? pwd:String geht mit new String auch nicht.
         const pwd = new String($("#fistpassword").val());
         const pwd2 = new String($("#secondpassword").val());
         if (pwd != pwd2) {
