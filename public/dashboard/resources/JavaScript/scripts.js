@@ -1,4 +1,5 @@
 function pwdcheck() {
+    // Warum ist hier var? Das sollte eigentlich nicht verwendet werden.
     var pwd = document.getElementById("fpwd").value;
     var pwd2 = document.getElementById("spwd").value;
     
