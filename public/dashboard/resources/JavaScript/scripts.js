@@ -21,7 +21,7 @@ function pwdcheck() {
 function usernameCheck() {
     $.ajax({
         type: 'POST',
-        url: "/api/v2/users/account/username/" + document.getElementById("username").value + "?devmode",
+        url: "/api/v2/users/account/username/" + document.getElementById("username").value + "?notoken",
         success: function (response) {
             if (response['available'] == "true") {
                 document.getElementById("usercheck").innerHTML = "Dieser Username ist frei!";
@@ -40,7 +40,7 @@ function usernameCheck() {
 function emailCheck() {
     $.ajax({
         type: 'POST',
-        url: "/api/v2/users/account/email/" + document.getElementById("email").value + "?devmode",
+        url: "/api/v2/users/account/email/" + document.getElementById("email").value + "?notoken",
         success: function (response) {
             if (response['available'] == "true") {
                 document.getElementById("emailcheck").innerHTML = "Diese E-Mail ist frei!";
