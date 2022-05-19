@@ -47,15 +47,15 @@
           <h4 class="modal-title" id="login">Login</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <form action="http://localhost/api/v2/users/login" method="post">
+        <form id="form-login">
           <div class="modal-body">
             <!-- MODAL CONTENT-->
-            <input type="text" name="username" placeholder="Username" class="form-control form-group" required>
-            <input type="password" name="password" placeholder="Password" class="form-control form-group" required>
+            <input type="text" name="username" placeholder="Username" class="form-control form-group" id="username" required>
+            <input type="password" name="password" placeholder="Password" class="form-control form-group" id="password" required>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
-            <button type="submit" class="btn btn-primary" value="Login">Login</button>
+            <button type="submit" class="btn btn-primary" value="Login" id="btn-login">Login</button>
           </div>
         </form>
       </div>
@@ -70,17 +70,15 @@
           <h4 class="modal-title" id="register">Registrieren</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <form action="http://localhost/api/v2/users/register" method="post">
+        <form id="form-register">
           <div class="modal-body">
             <!-- MODAL CONTENT -->
-            <input type="text" name="username" placeholder="Username" class="form-control form-group" id="username" onchange="usernameCheck()" required>
-            <input type="password" name="password" placeholder="Password" onchange="pwdcheck()"
-              class="form-control form-group" id="fpwd" required>
-            <input type="password" name="password" placeholder="Password" onchange="pwdcheck()"
-              class="form-control form-group" id="spwd" required>
-            <input type="email" name="email" placeholder="Email" class="form-control form-group" id="email"  onchange="emailCheck()" required>
-            <p id="usercheck"></p>
-            <p id="emailcheck"></p>
+            <input type="text" name="username" placeholder="Username" class="form-control form-group" id="username" required>
+            <input type="password" name="password" placeholder="Password"
+              class="form-control form-group" id="fistpassword" required>
+            <input type="password" name="password" placeholder="Password"
+              class="form-control form-group" id="secondpassword" required>
+            <input type="email" name="email" placeholder="Email" class="form-control form-group" id="email" required>
             <p id="pwdcheck"></p>
           </div>
           <div class="modal-footer">

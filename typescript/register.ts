@@ -1,43 +1,113 @@
-function usernameCheck() {
-    $.ajax({
-        type: 'POST',
-        url: "/api/v2/users/account/username/" + $("#username").val + "?notoken",
-        async: true,
-        contentType: "javascript/json",
-        dataType: "json",
-        success: function (response) {
-            if (response['available'] == "true") {
-                $("#usercheck").html("Dieser Username ist frei!");
-                $("#usercheck").css("color", "green");
-                $("#username").css("color", "green");
-            }
-            if (response['available'] == "false") {
-                $("#usercheck").html("Dieser Username ist bereits vergeben!");
-                $("usercheck").css("color", "red");
-                $("username").css("color", "red");
-            }
+// Einmal die Events registrieren wenn das Document geladen wird
+$(function() {
+    var pwd = $("fistpassword").val;
+    var pwd2 = $("secondpassword").val;
+    
+    if (pwd != pwd2) {
+        $("pwdcheck").html("Die angegebenen Passwörter stimmen nicht überein!");
+        $("pwdcheck").css("color", "red");
+        $("btn-register").attr('disabled', 'true');
+    } else {
+        if (pwd.length < 8) {
+            $("pwdcheck").html("Das Passwort muss mindestens 8 Zeichen lang sein!");
+            $("pwdcheck").css("color", "red");
+            $("btn-register").attr('disabled', 'false');
+        } else {
+            $("pwdcheck").html(" ");
+            $("btn-register").attr('disabled', 'false');
         }
-    });
-}
+    }
+    // Passwort Check
+    $('#form-register #username').on('change', function(){
+        // Sende eine AJAX-Request zum Server (XML)
+        $.ajax({
+            type: 'GET',
+            // URL zum Server
+            url: "/api/v2/users/account/username/" + $("#username").val + "?notoken",
+            // Die Daten die an den Server gesendet werden
+            data: {"data":"check"},
+            async: true,
+            contentType: "javascript/json",
+            dataType: "json",
+            success: function (response) {
+                // Filtern nach der Antwort des Servers
+                if (response['available'] == "true") {
+                    $("#form-register #username").css("color", "green");
+                }
+                if (response['available'] == "false") {
+                    $("#form-register #username").css("color", "red");
+                }
+            }
+        });
+   });
 
-function emailCheck() {
-    $.ajax({
-        type: 'POST',
-        url: "/api/v2/users/account/email/" + $("#email").val + "?notoken",
-        async: true,
-        contentType: "javascript/json",
-        dataType: "json",
-        success: function (response) {
-            if (response['available'] == "true") {
-                $("#emailcheck").html("Diese E-Mail ist frei!");
-                $("#emailcheck").css("color", "green");
-                $("#email").css("color", "green");
+    // Filter den Username in der HTML
+    $('#form-register #username').on('change', function(){
+        // Sende eine AJAX-Request zum Server (XML)
+        $.ajax({
+            type: 'GET',
+            // URL zum Server
+            url: "/api/v2/users/account/username/" + $("#username").val + "?notoken",
+            // Die Daten die an den Server gesendet werden
+            data: {"data":"check"},
+            async: true,
+            contentType: "javascript/json",
+            dataType: "json",
+            success: function (response) {
+                // Filtern nach der Antwort des Servers
+                if (response['available'] == "true") {
+                    $("#form-register #username").css("color", "green");
+                }
+                if (response['available'] == "false") {
+                    $("#form-register #username").css("color", "red");
+                }
             }
-            if (response['available'] == "false") {
-                $("#emailcheck").html("Diese E-Mail ist bereits vergeben!");
-                $("#emailcheck").css("color", "red");
-                $("#email").css("color", "red");
-            }
-        }
+        });
+   });
+
+    // Filter den E-Mail in der HTML
+    $('#form-register #email').on('submit', function(){
+       // Sende eine AJAX-Request zum Server (XML)
+        $.ajax({
+            type: 'GET',
+            // URL zum Server
+            url: "/api/v2/users/account/email/" + $("#email").val + "?notoken",
+            async: true,
+            contentType: "javascript/json",
+            dataType: "json",
+            success: function (response) {
+                // Filtern nach der Antwort des Servers
+                if (response['available'] == "true") {
+                    $("#form-register #email").css("color", "green");
+                }
+                if (response['available'] == "false") {
+                    $("#form-register #email").css("color", "red");
+                }
+           }
+        });
     });
-}
+
+    // Wenn der Button gedrückt wird
+    $('#form-register #btn-register').on('submit', function(){
+        const data = $("#form-login").serialize();
+        // Sende eine AJAX-Request zum Server (XML)
+         $.ajax({
+             type: 'POST',
+             // URL zum Server
+             url: "/api/v2/users/register?notoken",
+             async: true,
+             contentType: "javascript/json",
+             dataType: "json",
+             success: function (response) {
+                 // Filtern nach der Antwort des Servers
+                 /**
+                  * 
+                  * HIER SIND DIE DATEN VOM SERVER
+                  * z.B. reponse['status']
+                  * 
+                  */
+                 
+            }
+         });
+     });
+});
