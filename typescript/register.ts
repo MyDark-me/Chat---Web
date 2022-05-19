@@ -76,7 +76,7 @@ $(function() {
          $.ajax({
              type: 'POST',
              // URL zum Server
-             url: "/api/v2/users/register?notoken",
+             url: "/api/v2/users/register?cookie",
              async: true,
              contentType: "javascript/json",
              dataType: "json",

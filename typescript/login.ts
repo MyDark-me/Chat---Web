@@ -7,7 +7,7 @@ $(function() {
          $.ajax({
              type: 'POST',
              // URL zum Server
-             url: "/api/v2/users/login?notoken",
+             url: "/api/v2/users/login?cookie",
              // Die Daten die an den Server gesendet werden
              data: data,
              async: true,

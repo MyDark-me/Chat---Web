@@ -58,7 +58,7 @@ $(function () {
         const data = $("#form-login").serialize();
         $.ajax({
             type: 'POST',
-            url: "/api/v2/users/register?notoken",
+            url: "/api/v2/users/register?cookie",
             async: true,
             contentType: "javascript/json",
             dataType: "json",
