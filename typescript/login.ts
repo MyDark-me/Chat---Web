@@ -21,6 +21,7 @@ $(function() {
                   * z.B. reponse['status']
                   * 
                   */
+                console.log(response); // Für alle werte die zurückkommen
             }
          });
      });

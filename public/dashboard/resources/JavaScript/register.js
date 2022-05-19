@@ -2,7 +2,7 @@
 $(function () {
     $('#form-register #fistpassword, #form-register #secondpassword').on('change', function () {
         const pwd = new String($("#fistpassword").val());
-        const pwd2 = $("#secondpassword").val();
+        const pwd2 = new String($("#secondpassword").val());
         if (pwd != pwd2) {
             $("#pwdcheck").html("Die angegebenen Passwörter stimmen nicht überein!");
             $("#pwdcheck").css("color", "red");
@@ -63,6 +63,7 @@ $(function () {
             contentType: "javascript/json",
             dataType: "json",
             success: function (response) {
+                console.log(response);
             }
         });
     });

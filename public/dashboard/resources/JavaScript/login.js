@@ -10,6 +10,7 @@ $(function () {
             contentType: "javascript/json",
             dataType: "json",
             success: function (response) {
+                console.log(response);
             }
         });
     });
