@@ -31,19 +31,18 @@ switch($_SERVER['REQUEST_METHOD'])
 
 default:
 }
-
 /**
- * Validiert ob der Token gültig ist
+ * Prüft ob notoken oder token übergeben wurde sonst unautorisiert
  */
 $token = $request['token'] ?? null;
-/*if(!Users::verifyToken($token, true) || !isset($request['devmode'])) {
+if(isset($request['notoken']) && !isset($request['token']) || !isset($request['notoken']) && isset($request['token'])) {
     http_response_code(401);
     die(json_encode(array(
         'status'=>'failure',	
         'message' => 'Unauthorized',	
         'code' => '401',
     ), JSON_PRETTY_PRINT));
-}*/
+}
  
 switch($type) {
     /**
@@ -93,6 +92,29 @@ switch($type) {
                 'available'=> 'true',			
                 'message' => 'Username available',	
                 'code' => '200'
+            ), JSON_PRETTY_PRINT));
+        }
+        break;
+    /**
+    * Prüft ob der Token gültig ist
+    */
+    case 'token':
+        // Prüft ob der Token gültig ist
+        if(Users::verifyToken($data)) {
+            // Falls der Token gültig ist, wird eine vorhanden Meldung ausgegeben
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'success',	
+                'message' => 'Token is valid',	
+                'code' => '200'
+            ), JSON_PRETTY_PRINT));
+        } else {
+            // Falls der Token nicht gültig ist, wird eine vorhanden Meldung ausgegeben
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'failure',	
+                'message' => 'Token is not valid',	
+                'code' => '406'
             ), JSON_PRETTY_PRINT));
         }
         break;

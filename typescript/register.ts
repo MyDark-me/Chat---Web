@@ -2,8 +2,8 @@
 $(function() {
     // Password Check
     $('#form-register #fistpassword, #form-register #secondpassword').on('change', function(){
-        const pwd = new String($("#fistpassword").val());
-        const pwd2 = new String($("#secondpassword").val());
+        const pwd:String = new String($("#fistpassword").val());
+        const pwd2:String = new String($("#secondpassword").val());
         if (pwd != pwd2) {
             $("#pwdcheck").html("Die angegebenen Passwörter stimmen nicht überein!");
             $("#pwdcheck").css("color", "red");
