@@ -2,23 +2,14 @@
     'root' => array(
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'type' => 'library',
+        'type' => 'projekt',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '79454b55c061b21e1e5e7fca8c4512dffa79b148',
-        'name' => '__root__',
+        'reference' => 'a22e8520fe6f0350d647a9f043d6b50a7d49410e',
+        'name' => 'keksgauner/chat-web',
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'reference' => '79454b55c061b21e1e5e7fca8c4512dffa79b148',
-            'dev_requirement' => false,
-        ),
         'altorouter/altorouter' => array(
             'pretty_version' => 'v1.1.0',
             'version' => '1.1.0.0',
@@ -26,6 +17,15 @@
             'install_path' => __DIR__ . '/../altorouter/altorouter',
             'aliases' => array(),
             'reference' => '09d9d946c546bae6d22a7654cdb3b825ffda54b4',
+            'dev_requirement' => false,
+        ),
+        'keksgauner/chat-web' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'type' => 'projekt',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => 'a22e8520fe6f0350d647a9f043d6b50a7d49410e',
             'dev_requirement' => false,
         ),
         'rbdwllr/reallysimplejwt' => array(
