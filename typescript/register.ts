@@ -2,13 +2,17 @@
 $(function() {
     // Password Check
     $('#form-register #fistpassword, #form-register #secondpassword').on('change', function(){
-        const pwd:String = new String($("#fistpassword").val());
-        const pwd2:String = new String($("#secondpassword").val());
+        // Passwort als Variable speichern
+        const pwd = new String($("#fistpassword").val());
+        const pwd2 = new String($("#secondpassword").val());
+
+        // Passwort muss übereinstimmen
         if (pwd != pwd2) {
             $("#pwdcheck").html("Die angegebenen Passwörter stimmen nicht überein!");
             $("#pwdcheck").css("color", "red");
             $("#btn-register").attr('disabled', 'true');
         } else {
+            // Passwort muss mindestens 8 Zeichen lang sein
             if (pwd.length < 8) {
                 $("#pwdcheck").html("Das Passwort muss mindestens 8 Zeichen lang sein!");
                 $("#pwdcheck").css("color", "red");

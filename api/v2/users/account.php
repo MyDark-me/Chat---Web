@@ -96,6 +96,98 @@ switch($type) {
         }
         break;
     /**
+    * Prüft ob der Benutzername benutzbar ist
+    */
+    case 'verifyUsername':
+        // Abfrage ob der Username nutzbar ist
+        if(Users::verifyUsername($data)) {
+            // Falls der Username nutzbar ist, wird eine nutzbar Meldung ausgegeben
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'success',	
+                'message' => 'Username is usable',	
+                'code' => '200'
+            ), JSON_PRETTY_PRINT));
+        } else {
+            // Falls der Username nicht nutzbar ist, wird eine nicht nutzbar Meldung ausgegeben
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'failure',	
+                'message' => 'Username is not usable',	
+                'code' => '406'
+            ), JSON_PRETTY_PRINT));
+        }
+        break;
+    /**
+    * Prüft ob der Benutzername benutzbar ist
+    */
+    case 'verifyUsername':
+        // Abfrage ob der Username nutzbar ist
+        if(Users::verifyUsername($data)) {
+            // Falls der Username nutzbar ist, wird eine nutzbar Meldung ausgegeben
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'success',	
+                'message' => 'Username is usable',	
+                'code' => '200'
+            ), JSON_PRETTY_PRINT));
+        } else {
+            // Falls der Username nicht nutzbar ist, wird eine nicht nutzbar Meldung ausgegeben
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'failure',	
+                'message' => 'Username is not usable',	
+                'code' => '406'
+            ), JSON_PRETTY_PRINT));
+        }
+        break;
+    /**
+    * Prüft ob die E-Mail Adresse benutzbar ist
+    */
+    case 'verifyEmail':
+        // Abfrage ob die E-Mail Adresse nutzbar ist
+        if(Users::verifyEmail($data)) {
+            // Falls die E-Mail Adresse nutzbar ist, wird eine nutzbar Meldung ausgegeben
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'success',	
+                'message' => 'Email is usable',	
+                'code' => '200'
+            ), JSON_PRETTY_PRINT));
+        } else {
+            // Falls die E-Mail Adresse nicht nutzbar ist, wird eine nicht nutzbar Meldung ausgegeben
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'failure',	
+                'message' => 'Email is not usable',	
+                'code' => '406'
+            ), JSON_PRETTY_PRINT));
+        }
+        break;
+    /**
+    * Prüft ob das Passwort benutzbar ist
+    */
+    case 'verifyPassword':
+        // Abfrage ob das Passwort nutzbar ist
+        if(Users::verifyEmail($data)) {
+            // Falls das Passwort nutzbar ist, wird eine nutzbar Meldung ausgegeben
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'success',	
+                'message' => 'Password is usable',	
+                'code' => '200'
+            ), JSON_PRETTY_PRINT));
+        } else {
+            // Falls das Passwort nicht nutzbar ist, wird eine nicht nutzbar Meldung ausgegeben
+            http_response_code(200);
+            die(json_encode(array(
+                'status' => 'failure',	
+                'message' => 'Password is not usable',	
+                'code' => '406'
+            ), JSON_PRETTY_PRINT));
+        }
+        break;
+    /**
     * Prüft ob der Token gültig ist
     */
     case 'token':
