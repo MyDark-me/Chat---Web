@@ -35,9 +35,10 @@ $router->map('GET',  '/impressum', function() { require ROOTPATH . '/public/dash
 // Hier werden die css/js/map resources freigeschaltet
 /**
  * Das hier gibt dynamisch die css/js/map resources frei.
- * /resources/<ordnernamen>/<filenamen>
+ * /resources/<filenamen>
+ * 
  */
-$router->map( 'GET', '/resources/[a:where]/[*:datei]', function( $where, $datei ) {
+$router->map( 'GET', '/resources/[*:datei]', function( $datei ) {
     // Setze ggf. den richtigen header
     if(str_ends_with($datei, '.css')) 
         header("Content-Type: text/css");
@@ -45,16 +46,30 @@ $router->map( 'GET', '/resources/[a:where]/[*:datei]', function( $where, $datei 
         header("Content-Type: application/javascript");
 
 
-    // Mit einem Switch prüfen ob diese Datei bekann ist
-    switch($where) {
-        case 'jQuery':
-            echo file_get_contents(ROOTPATH . '/node_modules/jquery/dist/' . $datei);
-            break;
-        default:
-            // Gebe den Inhalt der Datei aus
-            echo file_get_contents(ROOTPATH . '/public/dashboard/resources/' . $where . '/' . $datei);
-            break;
+    // Mit prüfen ob diese Datei bekann ist, sonst file suchen.
+    if(str_starts_with($datei, "jquery")) {
+        die(file_get_contents(ROOTPATH . '/node_modules/jquery/dist/' . $datei));
     }
+    else if(str_starts_with($datei, "bootstrap")) {
+        if(str_contains($datei, 'css')) {
+            die(file_get_contents(ROOTPATH . '/node_modules/bootstrap/dist/css/' . $datei));
+        }
+        die(file_get_contents(ROOTPATH . '/node_modules/bootstrap/dist/js/' . $datei));
+    }
+    else {
+        foreach (scandir(ROOTPATH . "/public/resources") as $dianory) {
+            if ($dianory === ".." or $dianory === ".") continue;
+          
+            foreach (scandir(ROOTPATH . "/public/resources/" . $dianory) as $file) {
+                if ($file === ".." or $file === ".") continue;
+                if($file === $datei) {
+                    // Gebe den Inhalt der Datei aus
+                    die(file_get_contents(ROOTPATH . '/public/resources/' . $dianory . '/' . $file));
+                }
+            }
+        }
+    }
+    
 }, 'resources');
 
 // ****************APIs****************
