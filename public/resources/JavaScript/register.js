@@ -54,7 +54,8 @@ $(function () {
             }
         });
     });
-    $('#form-register #btn-register').on('submit', function () {
+    $('#form-register').on('submit', function (event) {
+        event.preventDefault();
         const data = $("#form-login").serialize();
         $.ajax({
             type: 'POST',

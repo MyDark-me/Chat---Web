@@ -35,20 +35,15 @@ default:
 
 $token = $_COOKIE['chat_token'] ?? $request['token'] ?? null;
 
-// Abfrage ob der Token gültig ist
-if(!Users::verifyToken($token, true)) {
-    http_response_code(401);
-    die(json_encode(array(
-        'status'=>'failure',	
-        'message' => 'Token Invalid',	
-        'code' => '401',
-    ), JSON_PRETTY_PRINT));
-}
-
 // Token in der Datenbank ungültig machen
-if(!emty($token)) {
+if(!empty($token)) {
     $db = app_db();
-    $db->query("UPDATE `Tokendatenbank` SET `Expiration`= '-1' WHERE `Token`= '$token';");
+    
+    // Abfrage ob der Token existiert
+    $result = $db->select("SELECT `ID` FROM `Nutzerdatenbank` WHERE `Token`= '$token';");
+    // Wenn er Existiert dann ungültig machen
+    if($result != false && $result != 0)
+        $db->query("UPDATE `Tokendatenbank` SET `Expiration`= '-1' WHERE `Token`= '$token';");
 }
 
 // Cookie löschen

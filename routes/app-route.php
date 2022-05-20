@@ -81,7 +81,10 @@ $router->map( 'GET', '/resources/[*:datei]', function( $datei ) {
             }
         }
     }
-    
+    // 404 Message weil nichts gefrunden wurde
+    http_response_code(404);
+    header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+    die(require ROOTPATH . '/public/error/404.php');  
 }, 'resources');
 
 // ****************APIs****************
@@ -104,14 +107,16 @@ $router->map( 'GET', '/resources/[*:datei]', function( $datei ) {
  */
 
 // Register
-$router->map('POST', AJAXPATH . '/users/register', function() { 
+// Es ist kein GET erlaubt!
+$router->map('POST|GET', AJAXPATH . '/users/register', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH . AJAXPATH . '/users/register.php'; 
 }, 'register');
 
 // Login
-$router->map('POST', AJAXPATH . '/users/login', function() { 
+// Es ist kein GET erlaubt!
+$router->map('POST|GET', AJAXPATH . '/users/login', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH . AJAXPATH . '/users/login.php'; 

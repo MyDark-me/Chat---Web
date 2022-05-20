@@ -54,6 +54,7 @@ switch ($BFBresponse['status']){
         $username = $_POST['username'] ?? null;
         $password = $_POST['password'] ?? null;
         $email = $_POST['email'] ?? null;
+        $token = $_COOKIE['chat_token'] ?? null;
 
         // Prüfen ob der Username den richrlinien entspricht
         if(!Users::verifyUsername($username)) {
@@ -107,6 +108,18 @@ switch ($BFBresponse['status']){
                 'status'=>'failure',	
                 'message' => 'Username already exists',	
                 'code' => '10_005',
+            ), JSON_PRETTY_PRINT));
+        }
+        
+        // Prüfen ob schon ein gültiger Token existiert
+        if(Users::verifyToken($token, false)) { 
+            // Already logged in
+            http_response_code(200);
+            die(json_encode(array
+            (
+                'status'=>'failure',		
+                'message' => 'Already logged in',	
+                'code' => '7',
             ), JSON_PRETTY_PRINT));
         }
         

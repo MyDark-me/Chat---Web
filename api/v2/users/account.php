@@ -34,14 +34,15 @@ default:
 /**
  * Prüft ob notoken oder token übergeben wurde sonst unautorisiert
  */
-$token = $request['token'] ?? null;
-if(isset($request['notoken']) && !isset($request['token']) || !isset($request['notoken']) && isset($request['token'])) {
-    http_response_code(401);
-    die(json_encode(array(
-        'status'=>'failure',	
-        'message' => 'Unauthorized',	
-        'code' => '401',
-    ), JSON_PRETTY_PRINT));
+if(!isset($request['notoken'])) {
+    if(!isset($request['token'])) {
+        http_response_code(401);
+        die(json_encode(array(
+            'status'=>'failure',	
+            'message' => 'Unauthorized',	
+            'code' => '401',
+        ), JSON_PRETTY_PRINT));
+    }
 }
  
 switch($type) {
@@ -191,6 +192,7 @@ switch($type) {
     * Prüft ob der Token gültig ist
     */
     case 'token':
+        $token = $request['token'] ?? null;
         // Abfrage ob der Token gecheckt werden soll
         if($data != "check") {
             http_response_code(200);

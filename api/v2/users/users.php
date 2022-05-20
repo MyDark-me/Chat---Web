@@ -193,6 +193,7 @@ class Users {
      * Prüft ob der Token gültig ist
      *
      * @param string $token Der zu prüfende Token
+     * @param bool $bot Ob es nach einen Bot token gefragt ist
      * @return bool True wenn der Token gültig ist, sonst false
      */
     public static function verifyToken($token, $bot) {

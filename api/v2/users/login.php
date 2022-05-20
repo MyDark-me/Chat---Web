@@ -59,8 +59,8 @@ switch ($BFBresponse['status']){
             http_response_code(202);
             die(json_encode(array(
                 'status'=>'failure',				
-                'message' => 'Field is missing',
-                'code' => '1',
+                'message' => 'No Account',
+                'code' => '2',
             ), JSON_PRETTY_PRINT));
         }
 
@@ -69,10 +69,10 @@ switch ($BFBresponse['status']){
             // Falls der Einloggversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
             http_response_code(202);
             // Der liste hinzufügen, dass ein Falscher Loginversuch statt gefunden hat
-            $BFBresponse = BruteForceBlock::addFailedLoginAttempt($users->useridOf($username), BruteForceBlock::GetRealUserIp());
+            $BFBresponse = BruteForceBlock::addFailedLoginAttempt(Users::useridOf($username), BruteForceBlock::GetRealUserIp());
             die(json_encode(array(
                 'status'=>'failure',			
-                'message' => ' Password is invalid',	
+                'message' => 'Password is invalid',	
                 'code' => '3',
             ), JSON_PRETTY_PRINT)); 
         }

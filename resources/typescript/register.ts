@@ -70,7 +70,9 @@ $(function() {
     });
 
     // Wenn der Button gedrückt wird
-    $('#form-register #btn-register').on('submit', function(){
+    $('#form-register').on('submit', function(event){
+        // Form daran hindern zu senden auf normalen weg
+        event.preventDefault();
         // Die Daten aus dem Formular holen
         const data = $("#form-login").serialize();
         // Sende eine AJAX-Request zum Server (XML)
@@ -83,7 +85,7 @@ $(function() {
              async: true,
              contentType: "javascript/json",
              dataType: "json",
-             success: function (response) {
+             success: function (response) { //alert("I don't got any COOKIES :(");
                  // Filtern nach der Antwort des Servers
                  /**
                   * 
