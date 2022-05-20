@@ -47,21 +47,33 @@ $router->map( 'GET', '/resources/[*:datei]', function( $datei ) {
 
 
     // Mit prüfen ob diese Datei bekann ist, sonst file suchen.
+
+    // Prüfen ob die Datei mit jquery startet
     if(str_starts_with($datei, "jquery")) {
+        // Falls die datei mit jquery startet, dann wird die datei in node_modules verzeichnis gesucht
         die(file_get_contents(ROOTPATH . '/node_modules/jquery/dist/' . $datei));
     }
+    // Prüfen ob die Datei mit bootstrap startet
     else if(str_starts_with($datei, "bootstrap")) {
+        // Falls die Datei css enthält, dann wird die datei in node_modules verzeichnis gesucht mit css
         if(str_contains($datei, 'css')) {
             die(file_get_contents(ROOTPATH . '/node_modules/bootstrap/dist/css/' . $datei));
         }
+        // Alles andere ist eine js datei. Somit wird die datei in node_modules verzeichnis gesucht mit js
         die(file_get_contents(ROOTPATH . '/node_modules/bootstrap/dist/js/' . $datei));
     }
+    // Falls es keine dieser dateien ist, dann wird die datei in public/resources verzeichnis gesucht
     else {
+        // Es werden alle ordner durchsucht, die in public/resources liegen
         foreach (scandir(ROOTPATH . "/public/resources") as $dianory) {
+            // Kein fehler bei der Suche
             if ($dianory === ".." or $dianory === ".") continue;
           
+            // Im ordner werden alle dateien durchsucht
             foreach (scandir(ROOTPATH . "/public/resources/" . $dianory) as $file) {
+                // Kein fehler bei der Suche
                 if ($file === ".." or $file === ".") continue;
+                // Falls die datei mit der datei die gesucht wird übereinstimmt, dann wird die datei ausgegeben
                 if($file === $datei) {
                     // Gebe den Inhalt der Datei aus
                     die(file_get_contents(ROOTPATH . '/public/resources/' . $dianory . '/' . $file));
