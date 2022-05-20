@@ -13,24 +13,22 @@
  * In PHP (Javascript) - $url = "/api/{version}/users/register"
  * Ohne Webbrowser - $url = "{server}/api/{version}/users/register"
  * 
- * GET:
- * In PHP (Javascript) - $url = "/api/{version}/users/register?username={username}&password={password}&email={email}r"
- * Ohne Webbrowser - $url = "{server}/api/{version}/users/register?username={username}&password={password}&email={email}"
- * 
  * Timestamp: 2020-05-18
  */
 
 use ejfrancis\BruteForceBlock;
 use Chat\Users;
 
-// Bekomme Request methode
-$request = null;
-switch($_SERVER['REQUEST_METHOD'])
-{
-    case 'GET': $request = &$_GET; break;
-    case 'POST': $request = &$_POST; break;
+// Request methode get blockieren
+if($_SERVER['REQUEST_METHOD'] == 'GET') {
+    // Gebe eine Fehlermeldung, dass GET nicht erlaubt ist
+    http_response_code(406);
+    die(json_encode(array(
+        'status'=>'failure',				
+        'message' => 'GET is not Allowed',
+        'code' => '406',
+    ), JSON_PRETTY_PRINT));
 
-default:
 }
 
 // Erstellen Sie eine Instanz der BruteForceBlock-Klasse ob ein Registrierungsversuch möglich ist
@@ -42,7 +40,7 @@ switch ($BFBresponse['status']){
         // Der liste hinzufügen, dass ein Registrierungsversuch statt gefunden hat
         $BFBresponse = BruteForceBlock::addRegisterRequestAttempt(BruteForceBlock::GetRealUserIp());
         // Abfrage ob username und password gesendet wurden
-        if (!(isset($request['username']) && isset($request['password']) && isset($request['email']))) {
+        if (!(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']))) {
             // Falls nicht gebe eine Fehlermeldung zurück
             http_response_code(202);
             die(json_encode(array(
@@ -53,9 +51,9 @@ switch ($BFBresponse['status']){
         }
         
         // Die Eingaben werden in variablen gespeichert
-        $username = $request['username'] ?? null;
-        $password = $request['password'] ?? null;
-        $email = $requestT['email'] ?? null;
+        $username = $_POST['username'] ?? null;
+        $password = $_POST['password'] ?? null;
+        $email = $_POST['email'] ?? null;
 
         // Prüfen ob der Username den richrlinien entspricht
         if(!Users::verifyUsername($username)) {

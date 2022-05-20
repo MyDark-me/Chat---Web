@@ -87,6 +87,7 @@ $router->map( 'GET', '/resources/[*:datei]', function( $datei ) {
 // ****************APIs****************
 
 /**
+ * Wie es genutzt werden kann:
  * // map homepage
  * $router->map('GET', '/', function() {
  *     require __DIR__ . '/views/home.php';
@@ -103,14 +104,14 @@ $router->map( 'GET', '/resources/[*:datei]', function( $datei ) {
  */
 
 // Register
-$router->map('POST|GET', AJAXPATH . '/users/register', function() { 
+$router->map('POST', AJAXPATH . '/users/register', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH . AJAXPATH . '/users/register.php'; 
 }, 'register');
 
 // Login
-$router->map('POST|GET', AJAXPATH . '/users/login', function() { 
+$router->map('POST', AJAXPATH . '/users/login', function() { 
     // Rückgabe erfolgt nur als json
     header('Content-type: application/json');
     require_once ROOTPATH . AJAXPATH . '/users/login.php'; 

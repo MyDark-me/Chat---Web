@@ -13,24 +13,22 @@
  * In PHP (Javascript) - $url = "/api/{version}/users/login?cookie"
  * Ohne Webbrowser - $url = "{server}/api/{version}/users/login"
  * 
- * GET:
- * In PHP (Javascript) - $url = "/api/{version}/users/login?cookie&username={username}&password={password}"
- * Ohne Webbrowser - $url = "{server}/api/{version}/users/login?username={username}&password={password}"
- * 
  * Timestamp: 2020-05-18
  */
 
 use ejfrancis\BruteForceBlock;
 use Chat\Users;
 
-// Bekomme Request methode
-$request = null;
-switch($_SERVER['REQUEST_METHOD'])
-{
-    case 'GET': $request = &$_GET; break;
-    case 'POST': $request = &$_POST; break;
+// Request methode get blockieren
+if($_SERVER['REQUEST_METHOD'] == 'GET') {
+    // Gebe eine Fehlermeldung, dass GET nicht erlaubt ist
+    http_response_code(406);
+    die(json_encode(array(
+        'status'=>'failure',				
+        'message' => 'GET is not Allowed',
+        'code' => '406',
+    ), JSON_PRETTY_PRINT));
 
-default:
 }
 
 // Erstellen Sie eine Instanz der BruteForceBlock-Klasse ob ein Loginversuch möglich ist
@@ -40,7 +38,7 @@ switch ($BFBresponse['status']){
     // Falls es sicher ist
     case 'safe':
         // Abfrage ob username und password gesendet wurden
-        if (!(isset($request['username']) && isset($request['password']))) {
+        if (!(isset($_POST['username']) && isset($_POST['password']))) {
             // Falls nicht gebe eine Fehlermeldung zurück
             http_response_code(202);
             die(json_encode(array(
@@ -51,8 +49,8 @@ switch ($BFBresponse['status']){
         }
         
         // Die Eingaben werden in variablen gespeichert
-        $username = $request['username'] ?? null;
-        $password = $request['password'] ?? null;
+        $username = $_POST['username'] ?? null;
+        $password = $_POST['password'] ?? null;
         $token = $_COOKIE['chat_token'] ?? null;
             
         // Abfrage ob der Benutzer existiert, wird die Passwortprüfung durchgeführt
@@ -94,7 +92,7 @@ switch ($BFBresponse['status']){
         // Login erfolgreich, Cookie wird erstellt
         $token = Users::createToken(Users::useridOf($username), false);
         $expire = Users::getExpiredSeconds();
-        isset($request['cookie']) ? setcookie('chat_token', $token, $expire, $_SERVER['HTTP_HOST']) : null;
+        isset($_GET['cookie']) ? setcookie('chat_token', $token, $expire, $_SERVER['HTTP_HOST']) : null;
                             
         // Erfolgreich eingeloggt
         http_response_code(200);
