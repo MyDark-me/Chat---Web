@@ -71,12 +71,15 @@ $(function() {
 
     // Wenn der Button gedrückt wird
     $('#form-register #btn-register').on('submit', function(){
+        // Die Daten aus dem Formular holen
         const data = $("#form-login").serialize();
         // Sende eine AJAX-Request zum Server (XML)
          $.ajax({
              type: 'POST',
-             // URL zum Server
+             // URL zum Server. Automatisch in einen Cookie schreiben
              url: "/api/v2/users/register?cookie",
+             // Die Daten die an den Server gesendet werden
+             data: data,
              async: true,
              contentType: "javascript/json",
              dataType: "json",

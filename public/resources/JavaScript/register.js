@@ -59,6 +59,7 @@ $(function () {
         $.ajax({
             type: 'POST',
             url: "/api/v2/users/register?cookie",
+            data: data,
             async: true,
             contentType: "javascript/json",
             dataType: "json",
