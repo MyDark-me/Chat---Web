@@ -120,29 +120,6 @@ switch($type) {
         }
         break;
     /**
-    * Prüft ob der Benutzername benutzbar ist
-    */
-    case 'verifyUsername':
-        // Abfrage ob der Username nutzbar ist
-        if(Users::verifyUsername($data)) {
-            // Falls der Username nutzbar ist, wird eine nutzbar Meldung ausgegeben
-            http_response_code(200);
-            die(json_encode(array(
-                'status' => 'success',	
-                'message' => 'Username is usable',	
-                'code' => '200'
-            ), JSON_PRETTY_PRINT));
-        } else {
-            // Falls der Username nicht nutzbar ist, wird eine nicht nutzbar Meldung ausgegeben
-            http_response_code(200);
-            die(json_encode(array(
-                'status' => 'failure',	
-                'message' => 'Username is not usable',	
-                'code' => '406'
-            ), JSON_PRETTY_PRINT));
-        }
-        break;
-    /**
     * Prüft ob die E-Mail Adresse benutzbar ist
     */
     case 'verifyEmail':

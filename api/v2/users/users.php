@@ -242,22 +242,37 @@ class Users {
      * Prüft ob die E-Mail Adresse den richtlinen entspricht
      *
      * @param string $email Der zu prüfende E-Mail Adresse
-     * @return bool True wenn der Benutzername gültig ist, sonst false
+     * @return bool True wenn die E-Mail Adresse gültig ist, sonst false
      */
     public static function verifyEmail($email) {
         if(preg_match('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/', $email))
             return true;
         return false;
     }
+
     /**
      * 
-     * Prüft ob die E-Mail Adresse den richtlinen entspricht
+     * Prüft ob das Passwort den richtlinen entspricht
      *
-     * @param string $email Der zu prüfende E-Mail Adresse
-     * @return bool True wenn der Benutzername gültig ist, sonst false
+     * @param string $password Das zu prüfende Passwort
+     * @return bool True wenn das Passwort gültig ist, sonst false
      */
     public static function verifyPassword($password) {
         if(preg_match('/^[a-zA-Z0-9]{6,20}$/', $password))
+            return true;
+        return false;
+    }
+    
+    /**
+     * 
+     * Prüft ob das Passwort gleich ist
+     *
+     * @param string $password_1 Das erste Passwort
+     * @param string $password_2 Das zweite Passwort
+     * @return bool True wenn das Passwort gleich ist, sonst false
+     */
+    public static function verifyTwoPasswords($password_1, $password_2) {
+        if($password_1 == $password_2)
             return true;
         return false;
     }

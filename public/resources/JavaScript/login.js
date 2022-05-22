@@ -7,6 +7,8 @@ $(function () {
             type: 'POST',
             url: "/api/v2/users/login?cookie",
             data: data,
+            async: true,
+            dataType: "json",
             success: function (response) {
                 console.log(response);
             }

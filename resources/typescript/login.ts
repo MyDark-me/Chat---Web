@@ -13,9 +13,9 @@ $(function() {
              url: "/api/v2/users/login?cookie",
              // Die Daten die an den Server gesendet werden
              data: data,
-             //async: true,
+             async: true,
              //contentType: "javascript/json",
-             //dataType: "json",
+             dataType: "json",
              success: function (response) { //alert("THX for a Token COOKIE :)");
                  // Filtern nach der Antwort des Servers
                  /**

@@ -1,36 +1,37 @@
 // Einmal die Events registrieren wenn das Document geladen wird
 $(function() {
     // Password Check
-    $('#form-register #fistpassword, #form-register #secondpassword').on('change', function(){
+    $('#form-register #password_1, #form-register #password_2').on('change', function(){
         // Passwort als Variable speichern
-        const pwd = new String($("#fistpassword").val());
-        const pwd2 = new String($("#secondpassword").val());
-
+        const pwd = $("#form-register #password_1").val();
+        const pwd2 = $("#form-register #password_2").val();
         // Passwort muss übereinstimmen
         if (pwd != pwd2) {
             $("#pwdcheck").html("Die angegebenen Passwörter stimmen nicht überein!");
             $("#pwdcheck").css("color", "red");
-            $("#btn-register").attr('disabled', 'true');
+            $("#btn-register").attr('disabled');
         } else {
             // Passwort muss mindestens 8 Zeichen lang sein
-            if (pwd.length < 8) {
+            if (new String(pwd).length < 8) {
                 $("#pwdcheck").html("Das Passwort muss mindestens 8 Zeichen lang sein!");
                 $("#pwdcheck").css("color", "red");
-                $("#btn-register").attr('disabled', 'false');
+                $("#btn-register").attr('disabled');
             } else {
                 $("#pwdcheck").html(" ");
-                $("#btn-register").attr('disabled', 'false');
+                $("#btn-register").removeAttr('disabled');
             }
         }
     });
 
     // Filter den Username in der HTML
     $('#form-register #username').on('change', function(){
+        // Username als Variable speichern
+        const username = $("#form-register #username").val();
         // Sende eine AJAX-Request zum Server (XML)
         $.ajax({
             type: 'GET',
             // URL zum Server
-            url: "/api/v2/users/account/username/" + $("#username").val + "?notoken",
+            url: "/api/v2/users/account/username/" + username + "?notoken",
             // Die Daten die an den Server gesendet werden
             async: true,
             contentType: "javascript/json",
@@ -49,11 +50,13 @@ $(function() {
 
     // Filter den E-Mail in der HTML
     $('#form-register #email').on('change', function(){
+        // E-Mail als Variable speichern
+        const email = $("#form-register #email").val();
        // Sende eine AJAX-Request zum Server (XML)
         $.ajax({
             type: 'GET',
             // URL zum Server
-            url: "/api/v2/users/account/email/" + $("#email").val + "?notoken",
+            url: "/api/v2/users/account/email/" + email + "?notoken",
             async: true,
             contentType: "javascript/json",
             dataType: "json",
@@ -74,7 +77,7 @@ $(function() {
         // Form daran hindern zu senden auf normalen weg
         event.preventDefault();
         // Die Daten aus dem Formular holen
-        const data = $("#form-login").serialize();
+        const data = $("#form-register").serialize();
         // Sende eine AJAX-Request zum Server (XML)
          $.ajax({
              type: 'POST',
@@ -83,7 +86,7 @@ $(function() {
              // Die Daten die an den Server gesendet werden
              data: data,
              async: true,
-             contentType: "javascript/json",
+             //contentType: "javascript/json",
              dataType: "json",
              success: function (response) { //alert("I don't got any COOKIES :(");
                  // Filtern nach der Antwort des Servers

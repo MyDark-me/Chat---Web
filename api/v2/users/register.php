@@ -9,7 +9,7 @@
  * Benutzen Sie diesen Code für das Registrierung:
  * Sende ein AJAX Request zum Server
  * 
- * POST: mit username password email
+ * POST: mit username password_1 password_2 email
  * In PHP (Javascript) - $url = "/api/{version}/users/register"
  * Ohne Webbrowser - $url = "{server}/api/{version}/users/register"
  * 
@@ -40,7 +40,7 @@ switch ($BFBresponse['status']){
         // Der liste hinzufügen, dass ein Registrierungsversuch statt gefunden hat
         $BFBresponse = BruteForceBlock::addRegisterRequestAttempt(BruteForceBlock::GetRealUserIp());
         // Abfrage ob username und password gesendet wurden
-        if (!(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']))) {
+        if (!(isset($_POST['username']) && isset($_POST['password_1']) && isset($_POST['password_2']) && isset($_POST['email']))) {
             // Falls nicht gebe eine Fehlermeldung zurück
             http_response_code(202);
             die(json_encode(array(
@@ -52,7 +52,8 @@ switch ($BFBresponse['status']){
         
         // Die Eingaben werden in variablen gespeichert
         $username = $_POST['username'] ?? null;
-        $password = $_POST['password'] ?? null;
+        $password_1 = $_POST['password_1'] ?? null;
+        $password_2 = $_POST['password_2'] ?? null;
         $email = $_POST['email'] ?? null;
         $token = $_COOKIE['chat_token'] ?? null;
 
@@ -78,8 +79,18 @@ switch ($BFBresponse['status']){
             ), JSON_PRETTY_PRINT));
         }
 
+        if(!Users::verifyTwoPasswords($password_1, $password_2)) {
+            // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
+            http_response_code(202);
+            die(json_encode(array(
+                'status'=>'failure',			
+                'message' => 'Password is invalid',	
+                'code' => '6',
+            ), JSON_PRETTY_PRINT));
+        }
+
         // Prüfen ob das Passwort den richrlinien entspricht
-        if(!verifyPassword($password)) {
+        if(!Users::verifyPassword($password_1)) {
             // Falls der Registrierungsversuch fehlschlägt, wird eine Fellernmeldung ausgegeben
             http_response_code(202);
             die(json_encode(array(
@@ -124,7 +135,7 @@ switch ($BFBresponse['status']){
         }
         
         // Danach wird der user angelegt
-        $users->addUser($username, $password, $email);
+        Users::addUser($username, $password_1, $email);
                             
         // Erfolgreich registriert
         http_response_code(200);

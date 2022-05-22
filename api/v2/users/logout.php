@@ -40,7 +40,7 @@ if(!empty($token)) {
     $db = app_db();
     
     // Abfrage ob der Token existiert
-    $result = $db->select("SELECT `ID` FROM `Nutzerdatenbank` WHERE `Token`= '$token';");
+    $result = $db->select("SELECT `ID` FROM `Tokendatenbank` WHERE `Token`= '$token';");
     // Wenn er Existiert dann ungültig machen
     if($result != false && $result != 0)
         $db->query("UPDATE `Tokendatenbank` SET `Expiration`= '-1' WHERE `Token`= '$token';");
