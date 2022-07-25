@@ -24,7 +24,7 @@ $(function () {
         const username = $("#form-register #username").val();
         $.ajax({
             type: 'GET',
-            url: "/api/v2/users/account/username/" + username + "?notoken",
+            url: "api/v2/users/account/username/" + username + "?notoken",
             async: true,
             contentType: "javascript/json",
             dataType: "json",
@@ -42,7 +42,7 @@ $(function () {
         const email = $("#form-register #email").val();
         $.ajax({
             type: 'GET',
-            url: "/api/v2/users/account/email/" + email + "?notoken",
+            url: "api/v2/users/account/email/" + email + "?notoken",
             async: true,
             contentType: "javascript/json",
             dataType: "json",
@@ -61,7 +61,7 @@ $(function () {
         const data = $("#form-register").serialize();
         $.ajax({
             type: 'POST',
-            url: "/api/v2/users/register?cookie",
+            url: "api/v2/users/register?cookie",
             data: data,
             async: true,
             dataType: "json",

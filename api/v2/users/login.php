@@ -92,7 +92,18 @@ switch ($BFBresponse['status']){
         // Login erfolgreich, Cookie wird erstellt
         $token = Users::createToken(Users::useridOf($username), false);
         $expire = Users::getExpiredSeconds();
-        isset($_GET['cookie']) ? setcookie('chat_token', $token, $expire, $_SERVER['HTTP_HOST']) : null;
+
+        $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
+        $cookie_options = array (
+            'expires' => $expire,
+            'path' => '/',
+            'domain' => $domain . "", // führender Punkt für Kompatibilität oder Subdomain verwenden
+            'secure' => true,     // or false
+            'httponly' => true,    // or false
+            'samesite' => 'Strict' // None || Lax  || Strict
+            );
+
+        isset($_GET['cookie']) ? setcookie('chat_token', $token, $cookie_options) : null;
                             
         // Erfolgreich eingeloggt
         http_response_code(200);
