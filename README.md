@@ -119,6 +119,11 @@ Dieser Bereich wird entstehen sobald das erste Release entstanden ist!
 
 ### Voraussetzungen
 
+1. Es wird nodejs benötigt [herunterladen](https://nodejs.org)
+2. Es wird zusätzlich der Composer benötigt [herunterladen](https://getcomposer.org/download/)
+3. In der console "npm update" und "composer install" eingeben
+4. In protected in der config.php die Daten anpassen und die datenbank.sql inportieren
+
 Hier werden alle Vorbereitungen später einmal stehen. 
 * Coming Soon
   ```sh
@@ -176,6 +181,14 @@ Vergessen Sie nicht, dem Projekt einen Stern zu geben! Nochmals vielen Dank!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+## Abhängigkeiten installieren
+
+1. Es wird nodejs benötigt [herunterladen](https://nodejs.org)
+2. Es wird zusätzlich der Composer benötigt [herunterladen](https://getcomposer.org/download/)
+3. Anschlißend in der condole "npm install oder npm update" und "composer install oder composer update" ausführen
+
+
+
 <p align="right">(<a href="#top">Zurück zum Anfang ⤴️</a>)</p>
 
 
@@ -183,7 +196,7 @@ Vergessen Sie nicht, dem Projekt einen Stern zu geben! Nochmals vielen Dank!
 <!-- LICENSE -->
 ## Lizenz
 
-Geteilt unter der MIT-Lizenz. Siehe `LICENSE.txt` für weitere Informationen.
+Geteilt unter der MIT-Lizenz. Siehe `LICENSE` für weitere Informationen.
 
 <p align="right">(<a href="#top">Zurück zum Anfang ⤴️</a>)</p>
 
