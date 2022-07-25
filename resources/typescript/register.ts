@@ -31,7 +31,7 @@ $(function() {
         $.ajax({
             type: 'GET',
             // URL zum Server
-            url: "/api/v2/users/account/username/" + username + "?notoken",
+            url: "api/v2/users/account/username/" + username + "?notoken",
             // Die Daten die an den Server gesendet werden
             async: true,
             contentType: "javascript/json",
@@ -56,7 +56,7 @@ $(function() {
         $.ajax({
             type: 'GET',
             // URL zum Server
-            url: "/api/v2/users/account/email/" + email + "?notoken",
+            url: "api/v2/users/account/email/" + email + "?notoken",
             async: true,
             contentType: "javascript/json",
             dataType: "json",
@@ -82,7 +82,7 @@ $(function() {
          $.ajax({
              type: 'POST',
              // URL zum Server. Automatisch in einen Cookie schreiben
-             url: "/api/v2/users/register?cookie",
+             url: "api/v2/users/register?cookie",
              // Die Daten die an den Server gesendet werden
              data: data,
              async: true,
