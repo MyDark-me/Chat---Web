@@ -23,11 +23,19 @@ $(function() {
                   * HIER SIND DIE DATEN VOM SERVER
                   * z.B. response['status']
                   * 
+                  * Codes:
+                  *     status: failure
+                  *     message: Could not delete cookie
+                  *     code: 202
+                  *     ---
+                  *     status: success
+                  *     message: Logged out succesfully
+                  *     code: 200
                   */
                 console.log(response); // Für alle werte die zurückkommen
-
-                if (response['code'] == 200) {
+                if (response['code'] == 200) { // Logged out succesfully
                     $("#form-logout #btn-logout").attr('disabled');
+                    // Hier sollte code für Feedback stehen
 
                     window.setTimeout(function () {
                         window.location.reload();

@@ -93,8 +93,57 @@ $(function() {
                  /**
                   * 
                   * HIER SIND DIE DATEN VOM SERVER
-                  * z.B. reponse['status']
+                  * z.B. response['status']
                   * 
+                  * Codes:
+                  *     status: failure
+                  *     message: GET is not Allowed
+                  *     code: 406
+                  *     ---
+                  *     status: failure
+                  *     message: Field is missing
+                  *     code: 1
+                  *     ---
+                  *     status: failure
+                  *     message: Username is invalid
+                  *     code: 4
+                  *     ---
+                  *     status: failure
+                  *     message: E-Mail is invalid
+                  *     code: 5
+                  *     ---
+                  *     status: failure
+                  *     message: Password is invalid
+                  *     code: 6
+                  *     ---
+                  *     status: failure
+                  *     message: Email already exists
+                  *     code: 10_005
+                  *     ---
+                  *     status: failure
+                  *     message: Username already exists
+                  *     code: 10_005
+                  *     ---
+                  *     status: failure
+                  *     message: Already logged in
+                  *     code: 7
+                  *     ---
+                  *     status: succes
+                  *     message: Successfully registered
+                  *     code: 201
+                  *     ---
+                  *     status: failure
+                  *     message: ? // Fehler nachricht
+                  *     code: 500
+                  *     ---
+                  *     status: failure
+                  *     message: Request Blocked
+                  *     code: 203
+                  *     delay: ? // verbleibende Verzögerung in Sekunden
+                  *     ---
+                  *     status: failure
+                  *     message: Captcha required
+                  *     code: 203
                   */
                 console.log(response); // Für alle werte die zurückkommen
                  
