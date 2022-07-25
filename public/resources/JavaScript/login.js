@@ -5,7 +5,7 @@ $(function () {
         const data = $("#form-login").serialize();
         $.ajax({
             type: 'POST',
-            url: "/api/v2/users/login?cookie",
+            url: "api/v2/users/login?cookie",
             data: data,
             async: true,
             dataType: "json",

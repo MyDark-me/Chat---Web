@@ -10,7 +10,7 @@ $(function() {
          $.ajax({
              type: 'POST',
              // URL zum Server. Automatisch in einen Cookie schreiben
-             url: "/api/v2/users/login?cookie",
+             url: "api/v2/users/login?cookie",
              // Die Daten die an den Server gesendet werden
              data: data,
              async: true,

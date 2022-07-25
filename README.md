@@ -185,7 +185,9 @@ Vergessen Sie nicht, dem Projekt einen Stern zu geben! Nochmals vielen Dank!
 
 1. Es wird nodejs benötigt [herunterladen](https://nodejs.org)
 2. Es wird zusätzlich der Composer benötigt [herunterladen](https://getcomposer.org/download/)
-3. Anschlißend in der condole "npm install oder npm update" und "composer install oder composer update" ausführen
+4. Es wird auch TypeScript benutzt. Installiere den [TypeScript npm paket](https://www.npmjs.com/package/typescript)
+Kommt die Ausführung von Skripts auf diesem System deaktiviert ist. Schau [hier](https://lycantec.com/wissen/scripting/powershell-skript-kann-nicht-geladen-werden/) vorbei
+5. Anschlißend in der condole "npm install oder npm update" und "composer install oder composer update" ausführen
 
 
 
