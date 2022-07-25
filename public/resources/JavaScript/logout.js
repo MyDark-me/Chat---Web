@@ -11,6 +11,12 @@ $(function () {
             dataType: "json",
             success: function (response) {
                 console.log(response);
+                if (response['code'] == 200) {
+                    $("#form-logout #btn-logout").attr('disabled');
+                    window.setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+                }
             }
         });
     });
