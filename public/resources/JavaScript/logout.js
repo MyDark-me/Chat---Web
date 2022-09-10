@@ -1,27 +1,24 @@
 "use strict";
 $(function () {
-    $('#form-login').on('submit', function (event) {
+    $('#form-logout').on('submit', function (event) {
         event.preventDefault();
-        const data = $("#form-login").serialize();
+        const data = $("#form-logout").serialize();
         $.ajax({
             type: 'POST',
-            url: "api/v2/users/login?cookie",
+            url: "api/v2/users/logout",
             data: data,
             async: true,
             dataType: "json",
             success: function (response) {
                 console.log(response);
-                if (response['code'] == 201) {
-                    $("#form-login #btn-login").attr('disabled');
+                if (response['code'] == 200) {
+                    $("#form-logout #btn-logout").attr('disabled');
                     window.setTimeout(function () {
                         window.location.reload();
                     }, 2000);
-                }
-                if (response['code'] == 7) {
-                    window.location.reload();
                 }
             }
         });
     });
 });
-//# sourceMappingURL=login.js.map
+//# sourceMappingURL=logout.js.map

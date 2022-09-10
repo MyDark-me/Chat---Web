@@ -10,7 +10,7 @@ $(function() {
          $.ajax({
              type: 'POST',
              // URL zum Server. Automatisch in einen Cookie schreiben
-             url: "/api/v2/users/login?cookie",
+             url: "api/v2/users/login?cookie",
              // Die Daten die an den Server gesendet werden
              data: data,
              async: true,
@@ -21,10 +21,58 @@ $(function() {
                  /**
                   * 
                   * HIER SIND DIE DATEN VOM SERVER
-                  * z.B. reponse['status']
+                  * z.B. response['status']
                   * 
+                  * Codes:
+                  *     status: failure
+                  *     message: GET is not Allowed
+                  *     code: 406
+                  *     ---
+                  *     status: failure
+                  *     message: No Account
+                  *     code: 2
+                  *     ---
+                  *     status: failure
+                  *     message: Password is invalid
+                  *     code: 3
+                  *     ---
+                  *     status: failure
+                  *     message: Already logged in
+                  *     code: 7
+                  *     ---
+                  *     status: succes
+                  *     message: Logged in succesfully
+                  *     token: token? // Der generiete Token
+                  *     expire: ? // Die verfallszeit
+                  *     code: 201
+                  *     ---
+                  *     status: failure
+                  *     message: ? // Fehler nachricht
+                  *     code: 500
+                  *     ---
+                  *     status: failure
+                  *     message: Request Blocked
+                  *     code: 203
+                  *     delay: ? // verbleibende Verzögerung in Sekunden
+                  *     ---
+                  *     status: failure
+                  *     message: Captcha required
+                  *     code: 203
                   */
                 console.log(response); // Für alle werte die zurückkommen
+                if (response['code'] == 201) {
+                    $("#form-login #btn-login").attr('disabled');
+                    // Hier sollte code für Feedback stehen
+
+                    window.setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+                }
+
+                if (response['code'] == 7) {
+                    window.location.reload();
+                }
+                
             }
          });
      });

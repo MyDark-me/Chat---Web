@@ -8,7 +8,8 @@
  * 
  */
 
- use codewithmark\SimpleDB;
+use Chat\Users;
+use codewithmark\SimpleDB;
 
 // MySQL Verbindung
 function app_db ()
@@ -29,8 +30,20 @@ function app_db ()
 
 // ****************Weiterleitung zur richtigen Seite****************
 
-$router->map('GET',  '/', function() { require ROOTPATH . '/public/dashboard/index.html'; } ,'home');
-$router->map('GET',  '/impressum', function() { require ROOTPATH . '/public/dashboard/impressum.html'; } ,'impressum');
+$router->map('GET',  '/', function() { 
+    require ROOTPATH . '/public/init/header.html'; 
+    // Hier muss zwischen eingeloggt und ob der user eingeloggt ist entschieden werden
+    $token = $_COOKIE['chat_token'] ?? "no-token";
+    if(Users::verifyToken($token, false)) {
+        require ROOTPATH . '/public/dashboard/dashboard.html'; 
+    } else {
+        require ROOTPATH . '/public/dashboard/login.html'; 
+    }
+    require ROOTPATH . '/public/init/footer.html'; 
+} ,'home');
+$router->map('GET',  '/impressum', function() { 
+    require ROOTPATH . '/public/dashboard/impressum.html'; 
+} ,'impressum');
 
 // Hier werden die css/js/map resources freigeschaltet
 /**

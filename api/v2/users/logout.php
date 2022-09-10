@@ -49,7 +49,17 @@ if(!empty($token)) {
 // Cookie löschen
 if(isset($_COOKIE['chat_token'])) {
     
-    setcookie('chat_token', null, -1, $_SERVER['HTTP_HOST']); 
+    $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
+    $cookie_options = array (
+        'expires' => -1,
+        'path' => '/',
+        'domain' => $domain . "", // führender Punkt für Kompatibilität oder Subdomain verwenden
+        'secure' => true,     // or false
+        'httponly' => true,    // or false
+        'samesite' => 'Strict' // None || Lax  || Strict
+        );
+
+    setcookie('chat_token', null, $cookie_options); 
     unset($_COOKIE['chat_token']);
 }
 
